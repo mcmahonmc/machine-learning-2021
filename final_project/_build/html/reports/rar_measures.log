@@ -1,0 +1,70 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 1117, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/local/lib/python3.9/site-packages/nbclient/util.py", line 78, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/usr/local/lib/python3.9/site-packages/nbclient/util.py", line 57, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 558, in async_execute
+    await self.async_execute_cell(
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 862, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from wearables import fitcosinor, npmetrics
+from datetime import datetime
+
+rar = pd.DataFrame()
+
+for subject in actdf.columns:
+    
+    df = pd.DataFrame(actdf[subject][:-2]).set_index(pd.to_datetime(
+        pd.date_range(start = pd.to_datetime('2021-01-01 00:00:00'),
+                      end = pd.to_datetime('2021-01-01 00:00:00') + pd.Timedelta(days=7),
+                      freq='30S'),
+        format = '%Y-%m-%d %H:%M:%S'))
+    
+    df.columns = ['Activity']
+    
+    cr = np.array(fitcosinor.fitcosinor(df)[0].T.values).T[0]
+    nonp = npmetrics.np_metrics_all(df['Activity'])
+    
+    rar[subject] = np.concatenate((cr, nonp[:3]))
+    
+rar = rar.T
+rar.columns = ['actmin', 'amp', 'alpha', 'beta', 'phi', 'IS', 'IV', 'RA']
+rar
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_68811/2543959315.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      6[0m [0;32mfor[0m [0msubject[0m [0;32min[0m [0mactdf[0m[0;34m.[0m[0mcolumns[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;34m[0m[0m
+[0;32m----> 8[0;31m     df = pd.DataFrame(actdf[subject][:-2]).set_index(pd.to_datetime(
+[0m[1;32m      9[0m         pd.date_range(start = pd.to_datetime('2021-01-01 00:00:00'),
+[1;32m     10[0m                       [0mend[0m [0;34m=[0m [0mpd[0m[0;34m.[0m[0mto_datetime[0m[0;34m([0m[0;34m'2021-01-01 00:00:00'[0m[0;34m)[0m [0;34m+[0m [0mpd[0m[0;34m.[0m[0mTimedelta[0m[0;34m([0m[0mdays[0m[0;34m=[0m[0;36m7[0m[0;34m)[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/usr/local/lib/python3.9/site-packages/pandas/util/_decorators.py[0m in [0;36mwrapper[0;34m(*args, **kwargs)[0m
+[1;32m    309[0m                     [0mstacklevel[0m[0;34m=[0m[0mstacklevel[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    310[0m                 )
+[0;32m--> 311[0;31m             [0;32mreturn[0m [0mfunc[0m[0;34m([0m[0;34m*[0m[0margs[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    312[0m [0;34m[0m[0m
+[1;32m    313[0m         [0;32mreturn[0m [0mwrapper[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/usr/local/lib/python3.9/site-packages/pandas/core/frame.py[0m in [0;36mset_index[0;34m(self, keys, drop, append, inplace, verify_integrity)[0m
+[1;32m   5494[0m                 [0;31m# check newest element against length of calling frame, since[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   5495[0m                 [0;31m# ensure_index_from_sequences would not raise for append=False.[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 5496[0;31m                 raise ValueError(
+[0m[1;32m   5497[0m                     [0;34mf"Length mismatch: Expected {len(self)} rows, "[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   5498[0m                     [0;34mf"received array of length {len(arrays[-1])}"[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: Length mismatch: Expected 167 rows, received array of length 20161
+ValueError: Length mismatch: Expected 167 rows, received array of length 20161
+

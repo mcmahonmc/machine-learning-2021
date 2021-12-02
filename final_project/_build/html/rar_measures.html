@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Standard rest-activity measure calculation &#8212; PSY 394S Final Project</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data-driven assessment of rest-activity patterns" href="final_project.html" />
+    <link rel="prev" title="Actigraphy Preprocessing" href="Preprocessing.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">PSY 394S Final Project</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Project Idea
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Preprocessing.html">
+   Actigraphy Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Standard rest-activity measure calculation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="final_project.html">
+   Data-driven assessment of rest-activity patterns
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/rar_measures.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Frar_measures.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/rar_measures.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="standard-rest-activity-measure-calculation">
+<h1>Standard rest-activity measure calculation<a class="headerlink" href="#standard-rest-activity-measure-calculation" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.dates</span> <span class="kn">import</span> <span class="n">WeekdayLocator</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/actigraphy_data_hourly_df.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;actigraphy df&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>actigraphy df
+(169, 125)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">wearables</span> <span class="kn">import</span> <span class="n">fitcosinor</span><span class="p">,</span> <span class="n">npmetrics</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">rar</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">),</span>
+                      <span class="n">end</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">),</span>
+                      <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30S&#39;</span><span class="p">),</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">))</span>
+    
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Activity&#39;</span><span class="p">]</span>
+    
+    <span class="n">cr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fitcosinor</span><span class="o">.</span><span class="n">fitcosinor</span><span class="p">(</span><span class="n">df</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nonp</span> <span class="o">=</span> <span class="n">npmetrics</span><span class="o">.</span><span class="n">np_metrics_all</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Activity&#39;</span><span class="p">])</span>
+    
+    <span class="n">rar</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">cr</span><span class="p">,</span> <span class="n">nonp</span><span class="p">[:</span><span class="mi">3</span><span class="p">]))</span>
+    
+<span class="n">rar</span> <span class="o">=</span> <span class="n">rar</span><span class="o">.</span><span class="n">T</span>
+<span class="n">rar</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;actmin&#39;</span><span class="p">,</span> <span class="s1">&#39;amp&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="s1">&#39;phi&#39;</span><span class="p">,</span> <span class="s1">&#39;IS&#39;</span><span class="p">,</span> <span class="s1">&#39;IV&#39;</span><span class="p">,</span> <span class="s1">&#39;RA&#39;</span><span class="p">]</span>
+<span class="n">rar</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_68811</span><span class="o">/</span><span class="mf">2543959315.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> 
+<span class="ne">----&gt; </span><span class="mi">8</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>                       <span class="n">end</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;2021-01-01 00:00:00&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">),</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/util/_decorators.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span>                     <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span>                 <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">311</span>             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">312</span> 
+<span class="g g-Whitespace">    </span><span class="mi">313</span>         <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/frame.py</span> in <span class="ni">set_index</span><span class="nt">(self, keys, drop, append, inplace, verify_integrity)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5494</span>                 <span class="c1"># check newest element against length of calling frame, since</span>
+<span class="g g-Whitespace">   </span><span class="mi">5495</span>                 <span class="c1"># ensure_index_from_sequences would not raise for append=False.</span>
+<span class="ne">-&gt; </span><span class="mi">5496</span>                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">5497</span>                     <span class="sa">f</span><span class="s2">&quot;Length mismatch: Expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows, &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">5498</span>                     <span class="sa">f</span><span class="s2">&quot;received array of length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="ne">ValueError</span>: Length mismatch: Expected 167 rows, received array of length 20161
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rar</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">drop_subs</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">rar</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
+<span class="n">drop_subs</span>
+
+<span class="n">rar2</span> <span class="o">=</span> <span class="p">(</span><span class="n">rar</span><span class="p">[</span><span class="o">~</span><span class="n">rar</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">drop_subs</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rar2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(116, 8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_active&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_active&#39;, &#39;total_ac_mean_active&#39;, &#39;sleep_time_mean_active&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_sleep&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_sleep&#39;,
+ &#39;total_ac_mean_sleep&#39;,
+ &#39;onset_latency_mean_sleep&#39;,
+ &#39;efficiency_mean_sleep&#39;,
+ &#39;sleep_time_mean_sleep&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rar2</span> <span class="o">=</span> <span class="n">rar2</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="s1">&#39;total_ac_mean_active&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;duration_mean_sleep&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;total_ac_mean_sleep&#39;</span><span class="p">,</span> 
+                   <span class="s1">&#39;efficiency_mean_sleep&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;sleep_time_mean_sleep&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;sleep_time_sd_sleep&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;onset_latency_mean_sleep&#39;</span><span class="p">]],</span>
+          <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">rar2</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;terrain&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/rar_measures_7_1.png" src="_images/rar_measures_7_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># rar.to_csv(&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rar</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;</span><span class="p">)</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/target_data.csv&#39;</span><span class="p">)</span>
+<span class="n">targets</span><span class="p">[</span><span class="s1">&#39;edge_mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;edge_&#39;</span><span class="p">)]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">rar</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;subject&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0_x</th>
+      <th>actmin</th>
+      <th>amp</th>
+      <th>alpha</th>
+      <th>beta</th>
+      <th>phi</th>
+      <th>IS</th>
+      <th>IV</th>
+      <th>RA</th>
+      <th>Unnamed: 0_y</th>
+      <th>...</th>
+      <th>Left.hippocampal.fissure</th>
+      <th>Left.Whole_hippocampal_body</th>
+      <th>Left.Whole_hippocampal_head</th>
+      <th>Left.Whole_hippocampus</th>
+      <th>Right.Hippocampal_tail</th>
+      <th>Right.hippocampal.fissure</th>
+      <th>Right.Whole_hippocampal_body</th>
+      <th>Right.Whole_hippocampal_head</th>
+      <th>Right.Whole_hippocampus</th>
+      <th>cc_fa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30004</td>
+      <td>0.696391</td>
+      <td>2.000000</td>
+      <td>-0.839879</td>
+      <td>12.174420</td>
+      <td>15.700554</td>
+      <td>0.237301</td>
+      <td>0.497090</td>
+      <td>0.978493</td>
+      <td>0</td>
+      <td>...</td>
+      <td>103.610701</td>
+      <td>1044.195719</td>
+      <td>1398.964955</td>
+      <td>2907.251396</td>
+      <td>468.379186</td>
+      <td>106.077142</td>
+      <td>1020.857892</td>
+      <td>1441.995366</td>
+      <td>2931.232444</td>
+      <td>0.582804</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30008</td>
+      <td>1.047358</td>
+      <td>1.552863</td>
+      <td>-0.853070</td>
+      <td>325.423752</td>
+      <td>16.600185</td>
+      <td>0.261227</td>
+      <td>0.524768</td>
+      <td>0.961466</td>
+      <td>1</td>
+      <td>...</td>
+      <td>144.813418</td>
+      <td>1204.042983</td>
+      <td>1634.228393</td>
+      <td>3445.750080</td>
+      <td>618.218806</td>
+      <td>145.052717</td>
+      <td>1213.668913</td>
+      <td>1635.260923</td>
+      <td>3467.148642</td>
+      <td>0.559800</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30009</td>
+      <td>1.088250</td>
+      <td>1.621375</td>
+      <td>-0.839957</td>
+      <td>385.754408</td>
+      <td>14.813229</td>
+      <td>0.236853</td>
+      <td>0.194339</td>
+      <td>0.965710</td>
+      <td>2</td>
+      <td>...</td>
+      <td>136.160494</td>
+      <td>1192.518585</td>
+      <td>1599.914291</td>
+      <td>3328.766941</td>
+      <td>543.045786</td>
+      <td>146.643748</td>
+      <td>1232.700746</td>
+      <td>1807.269141</td>
+      <td>3583.015674</td>
+      <td>0.601367</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>30012</td>
+      <td>1.384584</td>
+      <td>1.437337</td>
+      <td>-0.613403</td>
+      <td>7.015407</td>
+      <td>15.689278</td>
+      <td>0.268342</td>
+      <td>0.299328</td>
+      <td>0.954806</td>
+      <td>3</td>
+      <td>...</td>
+      <td>161.352783</td>
+      <td>1288.481710</td>
+      <td>1835.814889</td>
+      <td>3751.599484</td>
+      <td>663.701747</td>
+      <td>133.943847</td>
+      <td>1328.224316</td>
+      <td>1944.852320</td>
+      <td>3936.778383</td>
+      <td>0.587033</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30015</td>
+      <td>1.070629</td>
+      <td>1.605177</td>
+      <td>-0.690900</td>
+      <td>419.617253</td>
+      <td>14.554844</td>
+      <td>0.214801</td>
+      <td>0.286109</td>
+      <td>0.974820</td>
+      <td>4</td>
+      <td>...</td>
+      <td>148.140462</td>
+      <td>1356.785914</td>
+      <td>1886.936232</td>
+      <td>3894.608270</td>
+      <td>704.116073</td>
+      <td>154.378972</td>
+      <td>1418.849716</td>
+      <td>1858.631846</td>
+      <td>3981.597634</td>
+      <td>0.586247</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>40855</td>
+      <td>0.968828</td>
+      <td>1.611690</td>
+      <td>-0.441357</td>
+      <td>278.707630</td>
+      <td>15.357639</td>
+      <td>0.281765</td>
+      <td>0.393956</td>
+      <td>0.929667</td>
+      <td>111</td>
+      <td>...</td>
+      <td>170.593990</td>
+      <td>1076.777270</td>
+      <td>1435.407917</td>
+      <td>3107.817477</td>
+      <td>635.886503</td>
+      <td>175.417475</td>
+      <td>1094.449991</td>
+      <td>1575.843183</td>
+      <td>3306.179677</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>40859</td>
+      <td>1.762660</td>
+      <td>0.910938</td>
+      <td>-0.580580</td>
+      <td>435.862944</td>
+      <td>14.358228</td>
+      <td>0.260628</td>
+      <td>0.715527</td>
+      <td>0.881364</td>
+      <td>112</td>
+      <td>...</td>
+      <td>134.776211</td>
+      <td>1083.616531</td>
+      <td>1292.730790</td>
+      <td>2990.671483</td>
+      <td>588.987373</td>
+      <td>131.490185</td>
+      <td>1022.651680</td>
+      <td>1264.980072</td>
+      <td>2876.619125</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>40861</td>
+      <td>2.000000</td>
+      <td>0.557801</td>
+      <td>-0.612585</td>
+      <td>10.996928</td>
+      <td>11.843457</td>
+      <td>0.211993</td>
+      <td>0.442061</td>
+      <td>0.719981</td>
+      <td>113</td>
+      <td>...</td>
+      <td>194.849007</td>
+      <td>1233.935858</td>
+      <td>1884.858216</td>
+      <td>3705.570884</td>
+      <td>606.106704</td>
+      <td>199.832531</td>
+      <td>1257.263536</td>
+      <td>1893.275499</td>
+      <td>3756.645739</td>
+      <td>0.488233</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>40876</td>
+      <td>0.601127</td>
+      <td>2.000000</td>
+      <td>-0.899820</td>
+      <td>8.769209</td>
+      <td>16.459194</td>
+      <td>0.259224</td>
+      <td>0.467280</td>
+      <td>0.885357</td>
+      <td>114</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.524456</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>40878</td>
+      <td>1.154834</td>
+      <td>1.431509</td>
+      <td>-0.865762</td>
+      <td>10.464622</td>
+      <td>14.759844</td>
+      <td>0.254082</td>
+      <td>0.611118</td>
+      <td>0.878301</td>
+      <td>115</td>
+      <td>...</td>
+      <td>173.884635</td>
+      <td>957.505865</td>
+      <td>1449.357878</td>
+      <td>2856.082443</td>
+      <td>453.440177</td>
+      <td>156.191287</td>
+      <td>948.369133</td>
+      <td>1403.563066</td>
+      <td>2805.372376</td>
+      <td>0.511366</td>
+    </tr>
+  </tbody>
+</table>
+<p>116 rows × 289 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_active&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_active&#39;, &#39;total_ac_mean_active&#39;, &#39;sleep_time_mean_active&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">rar</span><span class="p">,</span> <span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;z_score&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+                                   <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;zscore&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span> 
+                             <span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]],</span>
+                <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;subject&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/rar_measures_12_1.png" src="_images/rar_measures_12_1.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="Preprocessing.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Actigraphy Preprocessing</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="final_project.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Data-driven assessment of rest-activity patterns</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Megan McMahon<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

@@ -301,67 +301,65 @@
 
 <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">actig_files</span><span class="p">:</span>
     
-    <span class="k">try</span><span class="p">:</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1">#     print(subject)</span>
+
+    <span class="c1"># read in actigraphy data</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+    <span class="c1"># find first Monday midnight and start data from there so all subjects starting on same day of the week</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">act</span><span class="p">[(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># cyclically wrap days that were cut off so not losing data</span>
+    <span class="n">wrap</span> <span class="o">=</span> <span class="n">act</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span>
+    <span class="n">wrap</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+                                  <span class="n">end</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">wrap</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">wrap</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+                                  <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30S&#39;</span><span class="p">)</span>
+
+    <span class="n">act</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:],</span> <span class="n">wrap</span><span class="p">))</span>
+
+    <span class="c1"># keep only seven days of data</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))]</span>
+
+    <span class="c1"># interpolate outliers</span>
+    <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
+
+    <span class="c1"># plot</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     
-        <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
-    <span class="c1">#     print(subject)</span>
+    <span class="c1"># if subject has &lt; 7 days data, discard, else add to dataset</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="p">):</span>
 
-        <span class="c1"># read in actigraphy data</span>
-        <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+        <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">values</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-        <span class="c1"># find first Monday midnight and start data from there so all subjects starting on same day of the week</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">act</span><span class="p">[(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-        <span class="c1"># cyclically wrap days that were cut off so not losing data</span>
-        <span class="n">wrap</span> <span class="o">=</span> <span class="n">act</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span>
-        <span class="n">wrap</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                                      <span class="n">end</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">wrap</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">wrap</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                                      <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30S&#39;</span><span class="p">)</span>
-
-        <span class="n">act</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:],</span> <span class="n">wrap</span><span class="p">))</span>
-
-        <span class="c1"># keep only seven days of data</span>
-        <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))]</span>
-
-        <span class="c1"># interpolate outliers</span>
-        <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
-
-        <span class="c1"># plot</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
 
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex_hourly.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="c1"># if subject has &lt; 7 days data, discard, else add to dataset</span>
-        <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="p">):</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> discarded, recording period </span><span class="si">%s</span><span class="s1"> days&#39;</span> <span class="o">%</span> 
+              <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">()))</span>
     
-            <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-            <span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">values</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-            <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
-
-            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex_hourly.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-        <span class="k">else</span><span class="p">:</span>
-        
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> discarded, recording period </span><span class="si">%s</span><span class="s1"> days&#39;</span> <span class="o">%</span> 
-                  <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">()))</span>
-    
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     
     
 </pre></div>
@@ -379,7 +377,7 @@ interpolated - now missing 0 values out of 29404 total (0.0 percent)
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----- success: 0.00 percent NaN, 10 recording period
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_759/2595648484.py:42: UserWarning: FixedFormatter should only be used together with FixedLocator
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_1034/3569606880.py:40: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
@@ -388,7 +386,7 @@ interpolated - now missing 0 values out of 29404 total (0.0 percent)
 (169, 1)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_759/2595648484.py:58: UserWarning: FixedFormatter should only be used together with FixedLocator
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_1034/3569606880.py:57: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
@@ -406,12 +404,12 @@ interpolated - now missing 0 values out of 31919 total (0.0 percent)
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_759</span><span class="o">/</span><span class="mf">2595648484.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span>         <span class="c1"># interpolate outliers</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span>         <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="ne">---&gt; </span><span class="mi">35</span>         <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span> 
-<span class="g g-Whitespace">     </span><span class="mi">37</span>         <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1034</span><span class="o">/</span><span class="mf">3569606880.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="c1"># interpolate outliers</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="ne">---&gt; </span><span class="mi">33</span>     <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> 
+<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
 
 <span class="nn">/usr/local/lib/python3.9/site-packages/hampel.py</span> in <span class="ni">hampel</span><span class="nt">(ts, window_size, n, imputation)</span>
 <span class="g g-Whitespace">     </span><span class="mi">48</span>     <span class="n">rolling_ts</span> <span class="o">=</span> <span class="n">ts_cleaned</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_size</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -485,44 +483,40 @@ interpolated - now missing 0 values out of 31919 total (0.0 percent)
 <span class="g g-Whitespace">     </span><span class="mi">12</span> 
 <span class="g g-Whitespace">     </span><span class="mi">13</span> 
 
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">median</span><span class="nt">(*args, **kwargs)</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/ops/common.py</span> in <span class="ni">new_method</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">     </span><span class="mi">67</span>         <span class="n">other</span> <span class="o">=</span> <span class="n">item_from_zerodim</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">68</span> 
+<span class="ne">---&gt; </span><span class="mi">69</span>         <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span> 
+<span class="g g-Whitespace">     </span><span class="mi">71</span>     <span class="k">return</span> <span class="n">new_method</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">median</span><span class="nt">(a, axis, out, overwrite_input, keepdims)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3604</span> 
-<span class="g g-Whitespace">   </span><span class="mi">3605</span>     <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">3606</span><span class="s2">     r, k = _ureduce(a, func=_median, axis=axis, out=out,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3607</span><span class="s2">                     overwrite_input=overwrite_input)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3608</span><span class="s2">     if keepdims:</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/arraylike.py</span> in <span class="ni">__sub__</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="nd">@unpack_zerodim_and_defer</span><span class="p">(</span><span class="s2">&quot;__sub__&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">100</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arith_method</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> 
+<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="nd">@unpack_zerodim_and_defer</span><span class="p">(</span><span class="s2">&quot;__rsub__&quot;</span><span class="p">)</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">_ureduce</span><span class="nt">(a, func, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3513</span><span class="s2">         keepdim = (1,) * a.ndim</span>
-<span class="g g-Whitespace">   </span><span class="mi">3514</span><span class="s2"> </span>
-<span class="ne">-&gt; </span><span class="mi">3515</span><span class="s2">     r = func(a, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3516</span><span class="s2">     return r, keepdim</span>
-<span class="g g-Whitespace">   </span><span class="mi">3517</span><span class="s2"> </span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">_arith_method</span><span class="nt">(self, other, op)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5525</span>             <span class="n">result</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">arithmetic_op</span><span class="p">(</span><span class="n">lvalues</span><span class="p">,</span> <span class="n">rvalues</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5526</span> 
+<span class="ne">-&gt; </span><span class="mi">5527</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_result</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">res_name</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5528</span> 
+<span class="g g-Whitespace">   </span><span class="mi">5529</span> 
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">_median</span><span class="nt">(a, axis, out, overwrite_input)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3659</span><span class="s2">     if np.issubdtype(a.dtype, np.inexact) and sz &gt; 0:</span>
-<span class="g g-Whitespace">   </span><span class="mi">3660</span><span class="s2">         # warn and return nans like mean would</span>
-<span class="ne">-&gt; </span><span class="mi">3661</span><span class="s2">         rout = mean(part[indexer], axis=axis, out=out)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3662</span><span class="s2">         return np.lib.utils._median_nancheck(part, rout, axis, out)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3663</span><span class="s2">     else:</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">_construct_result</span><span class="nt">(self, result, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2942</span>         <span class="c1"># We do not pass dtype to ensure that the Series constructor</span>
+<span class="g g-Whitespace">   </span><span class="mi">2943</span>         <span class="c1">#  does inference in the case where `result` has object-dtype.</span>
+<span class="ne">-&gt; </span><span class="mi">2944</span>         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constructor</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2945</span>         <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">__finalize__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2946</span> 
 
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">mean</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/core/fromnumeric.py</span> in <span class="ni">mean</span><span class="nt">(a, axis, dtype, out, keepdims, where)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3417</span><span class="s2">             return mean(axis=axis, dtype=dtype, out=out, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3418</span><span class="s2"> </span>
-<span class="ne">-&gt; </span><span class="mi">3419</span><span class="s2">     return _methods._mean(a, axis=axis, dtype=dtype,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3420</span><span class="s2">                           out=out, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3421</span><span class="s2"> </span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/core/_methods.py</span> in <span class="ni">_mean</span><span class="nt">(a, axis, dtype, out, keepdims, where)</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span><span class="s2">             ret = arr.dtype.type(ret / rcount)</span>
-<span class="g g-Whitespace">    </span><span class="mi">187</span><span class="s2">         else:</span>
-<span class="ne">--&gt; </span><span class="mi">188</span><span class="s2">             ret = ret.dtype.type(ret / rcount)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="s2">     else:</span>
-<span class="g g-Whitespace">    </span><span class="mi">190</span><span class="s2">         ret = ret / rcount</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">__init__</span><span class="nt">(self, data, index, dtype, name, copy, fastpath)</span>
+<span class="g g-Whitespace">    </span><span class="mi">446</span> 
+<span class="g g-Whitespace">    </span><span class="mi">447</span>         <span class="n">generic</span><span class="o">.</span><span class="n">NDFrame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">448</span>         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="g g-Whitespace">    </span><span class="mi">449</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_set_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">fastpath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span> 
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

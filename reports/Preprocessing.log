@@ -1,4 +1,15 @@
 Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 627, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+  File "/usr/local/lib/python3.9/site-packages/nbclient/util.py", line 89, in ensure_async
+    result = await obj
+  File "/usr/local/lib/python3.9/site-packages/jupyter_client/asynchronous/channels.py", line 48, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "/usr/local/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 1117, in execute
@@ -11,90 +22,18 @@ Traceback (most recent call last):
     return future.result()
   File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 558, in async_execute
     await self.async_execute_cell(
-  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 862, in async_execute_cell
-    self._check_raise_for_error(cell, exec_reply)
-  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-import scipy.stats as stats
-from scipy.interpolate import interp1d
-
-actdf = pd.DataFrame()
-
-weekday_map= {0:'Mon', 1:'Tue', 2:'Wed', 3:'Thu',
-              4:'Fri', 5:'Sat', 6:'Sun'}
-
-for file in actig_files:
-    
-    subject = file.split('raw/')[1][:5]
-#     print(subject)
-    
-    # read in actigraphy data
-    act = preproc.preproc(file, 'actiwatch', sr='.5T', truncate=False, write=False, plot=True, recording_period_min=7)
-    
-    # find first Monday midnight and start data from there so all subjects starting on same day of the week
-    start = act[(act.index.dayofweek == 1) & (act.index.hour == 0)].index[0]
-    
-    # cyclically wrap days that were cut off so not losing data
-    wrap = act[:start]
-    wrap.index = pd.date_range(start=act[start:].last_valid_index() + pd.Timedelta(seconds=30),
-                                  end=act[start:].last_valid_index() + (wrap.last_valid_index() - wrap.first_valid_index()) + pd.Timedelta(seconds=30),
-                                  freq='30S')
-    
-    act = pd.concat((act[start:], wrap))
-    
-    # keep only seven days of data
-    act = act[act.index <= (act.index[2] + pd.Timedelta(days=7))]
-    
-    # interpolate outliers
-    act0 = act.copy()
-    act = hampel(act, window_size=5, n=1, imputation=True)
-    
-    # plot
-    fig, ax = plt.subplots()
-    fig = sns.lineplot(x=act.index, y=act)#.set(title='sub-%s' % subject)
-    ax.set_xticklabels(labels=x_dates, rotation=45, ha='left')
-    ax.set_xlabel(''); ax.set_ylabel('Activity')
-    
-    plt.savefig('/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex.png', dpi=300, bbox_inches='tight', facecolor='w')
-    plt.show()
-    plt.close()
-    # if subject has < 7 days data, discard, else add to dataset
-    if ( (act.last_valid_index() - act.first_valid_index()) >= pd.Timedelta(days=7) ):
-    
-        act = act.resample('60min').sum()
-        print(act.shape)
-        actdf[subject] = act.values
-        print(actdf.shape)
-        
-        fig, ax = plt.subplots()
-        fig = sns.lineplot(x=act.index, y=act, drawstyle='steps-post')#.set(title='sub-%s' % subject)
-        ax.set_xticklabels(labels=x_dates, rotation=45, ha='left')
-        ax.set_xlabel(''); ax.set_ylabel('Activity')
-
-        plt.savefig('/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex_hourly.png', dpi=300, bbox_inches='tight', facecolor='w')
-        plt.show()
-        plt.close()
-
-    else:
-        
-        print('sub-%s discarded, recording period %s days' % 
-              (subject, act.last_valid_index() - act.first_valid_index()))
-    
-    
-
-------------------
-
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_98989/32053737.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     36[0m     [0mfig[0m[0;34m,[0m [0max[0m [0;34m=[0m [0mplt[0m[0;34m.[0m[0msubplots[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     37[0m     [0mfig[0m [0;34m=[0m [0msns[0m[0;34m.[0m[0mlineplot[0m[0;34m([0m[0mx[0m[0;34m=[0m[0mact[0m[0;34m.[0m[0mindex[0m[0;34m,[0m [0my[0m[0;34m=[0m[0mact[0m[0;34m)[0m[0;31m#.set(title='sub-%s' % subject)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 38[0;31m     [0max[0m[0;34m.[0m[0mset_xticklabels[0m[0;34m([0m[0mlabels[0m[0;34m=[0m[0mx_dates[0m[0;34m,[0m [0mrotation[0m[0;34m=[0m[0;36m45[0m[0;34m,[0m [0mha[0m[0;34m=[0m[0;34m'left'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     39[0m     [0max[0m[0;34m.[0m[0mset_xlabel[0m[0;34m([0m[0;34m''[0m[0;34m)[0m[0;34m;[0m [0max[0m[0;34m.[0m[0mset_ylabel[0m[0;34m([0m[0;34m'Activity'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     40[0m [0;34m[0m[0m
-
-[0;31mNameError[0m: name 'x_dates' is not defined
-NameError: name 'x_dates' is not defined
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 846, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 651, in _async_poll_for_reply
+    await self._async_handle_timeout(timeout, cell)
+  File "/usr/local/lib/python3.9/site-packages/nbclient/client.py", line 701, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['import scipy.stats as stats', 'from scipy.interpolate import interp1d', '', 'actdf = pd.DataFrame()', '']
+...
+['', '    else:', '        ', "        print('sub-%s discarded, recording period %s days' % ", '              (subject, act.last_valid_index() - act.first_valid_index()))']
+-------------------
 

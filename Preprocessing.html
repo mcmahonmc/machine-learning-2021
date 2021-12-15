@@ -209,26 +209,19 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Actigraphy Preprocessing
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#week-data">
+   Week Data
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#week-data">
-     Week Data
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hour-day-data">
-     24 Hour Day Data
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#hr-non-cyclic">
-   24 hr non-cyclic
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cyclic-week">
+   Cyclic week
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hr-day">
+   24 hr day
   </a>
  </li>
 </ul>
@@ -283,154 +276,9 @@
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">actig_files</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">101</span><span class="p">]:</span>
-    
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
-<span class="c1">#     print(subject)</span>
-    
-    <span class="c1"># read in actigraphy data</span>
-    <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-    
-    <span class="c1"># find first Monday midnight and start data from there so all subjects starting on same day of the week</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">act</span><span class="p">[(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    
-    <span class="c1"># cyclically wrap days that were cut off so not losing data</span>
-    <span class="n">wrap</span> <span class="o">=</span> <span class="n">act</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span>
-    <span class="n">wrap</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                                  <span class="n">end</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">wrap</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">wrap</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                                  <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30S&#39;</span><span class="p">)</span>
-    
-    <span class="n">act</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:],</span> <span class="n">wrap</span><span class="p">))</span>
-    
-    <span class="c1"># keep only seven days of data</span>
-    <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))]</span>
-    
-    <span class="c1"># interpolate outliers</span>
-    <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">act</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-    <span class="n">act_new</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>created output directory /Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/preproc_2021-12-14/
-successfully read Actiware data file
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>record 40694
-40694 missing 0 values out of 34676 total (0.00 percent)
-interpolated - now missing 0 values out of 34676 total (0.0 percent)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----- success: 0.00 percent NaN, 12 recording period
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_46915</span><span class="o">/</span><span class="mf">1606506020.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> 
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="c1"># interpolate outliers</span>
-<span class="ne">---&gt; </span><span class="mi">24</span>     <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="n">act</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">act_new</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/hampel.py</span> in <span class="ni">hampel</span><span class="nt">(ts, window_size, n, imputation)</span>
-<span class="g g-Whitespace">     </span><span class="mi">48</span>     <span class="n">rolling_ts</span> <span class="o">=</span> <span class="n">ts_cleaned</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_size</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">49</span>     <span class="n">rolling_median</span> <span class="o">=</span> <span class="n">rolling_ts</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">50</span>     <span class="n">rolling_sigma</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">rolling_ts</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">median_absolute_deviation</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">51</span> 
-<span class="g g-Whitespace">     </span><span class="mi">52</span>     <span class="n">outlier_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">apply</span><span class="nt">(self, func, raw, engine, engine_kwargs, args, kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1640</span>         <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1641</span>     <span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">1642</span>         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1643</span>             <span class="n">func</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1644</span>             <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">apply</span><span class="nt">(self, func, raw, engine, engine_kwargs, args, kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1181</span>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;engine must be either &#39;numba&#39; or &#39;cython&#39;&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1182</span> 
-<span class="ne">-&gt; </span><span class="mi">1183</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1184</span>             <span class="n">apply_func</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1185</span>             <span class="n">numba_cache_key</span><span class="o">=</span><span class="n">numba_cache_key</span><span class="p">,</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">_apply</span><span class="nt">(self, func, name, numba_cache_key, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">537</span> 
-<span class="g g-Whitespace">    </span><span class="mi">538</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;single&quot;</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">539</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_blockwise</span><span class="p">(</span><span class="n">homogeneous_func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">540</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">541</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_tablewise</span><span class="p">(</span><span class="n">homogeneous_func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">_apply_blockwise</span><span class="nt">(self, homogeneous_func, name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">415</span>         <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span><span class="sd">         if self._selected_obj.ndim == 1:</span>
-<span class="ne">--&gt; </span><span class="mi">417</span><span class="sd">             return self._apply_series(homogeneous_func, name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">418</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span><span class="sd">         obj = self._create_data(self._selected_obj)</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">_apply_series</span><span class="nt">(self, homogeneous_func, name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">404</span><span class="sd">             raise DataError(&quot;No numeric types to aggregate&quot;) from err</span>
-<span class="g g-Whitespace">    </span><span class="mi">405</span><span class="sd"> </span>
-<span class="ne">--&gt; </span><span class="mi">406</span><span class="sd">         result = homogeneous_func(values)</span>
-<span class="g g-Whitespace">    </span><span class="mi">407</span><span class="sd">         return obj._constructor(result, index=obj.index, name=obj.name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">408</span><span class="sd"> </span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">homogeneous_func</span><span class="nt">(values)</span>
-<span class="g g-Whitespace">    </span><span class="mi">529</span><span class="sd">                     result = np.apply_along_axis(calc, self.axis, values)</span>
-<span class="g g-Whitespace">    </span><span class="mi">530</span><span class="sd">                 else:</span>
-<span class="ne">--&gt; </span><span class="mi">531</span><span class="sd">                     result = calc(values)</span>
-<span class="g g-Whitespace">    </span><span class="mi">532</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">533</span><span class="sd">             if numba_cache_key is not None:</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">calc</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">523</span><span class="sd">                     closed=self.closed,</span>
-<span class="g g-Whitespace">    </span><span class="mi">524</span><span class="sd">                 )</span>
-<span class="ne">--&gt; </span><span class="mi">525</span><span class="sd">                 return func(x, start, end, min_periods)</span>
-<span class="g g-Whitespace">    </span><span class="mi">526</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">527</span><span class="sd">             with np.errstate(all=&quot;ignore&quot;):</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">apply_func</span><span class="nt">(values, begin, end, min_periods, raw)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1206</span><span class="sd">             if not raw:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1207</span><span class="sd">                 values = Series(values, index=self.obj.index)</span>
-<span class="ne">-&gt; </span><span class="mi">1208</span><span class="sd">             return window_func(values, begin, end, min_periods)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1209</span><span class="sd"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1210</span><span class="sd">         return apply_func</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/_libs/window/aggregations.pyx</span> in <span class="ni">pandas._libs.window.aggregations.roll_apply</span><span class="nt">()</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/hampel.py</span> in <span class="ni">median_absolute_deviation</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span><span class="sd">     :return: MAD</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">11</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> 
-<span class="g g-Whitespace">     </span><span class="mi">13</span> 
-
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">median</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">median</span><span class="nt">(a, axis, out, overwrite_input, keepdims)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3604</span> 
-<span class="g g-Whitespace">   </span><span class="mi">3605</span>     <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">3606</span><span class="s2">     r, k = _ureduce(a, func=_median, axis=axis, out=out,</span>
-<span class="g g-Whitespace">   </span><span class="mi">3607</span><span class="s2">                     overwrite_input=overwrite_input)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3608</span><span class="s2">     if keepdims:</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">_ureduce</span><span class="nt">(a, func, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3511</span><span class="s2">         keepdim = tuple(keepdim)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3512</span><span class="s2">     else:</span>
-<span class="ne">-&gt; </span><span class="mi">3513</span><span class="s2">         keepdim = (1,) * a.ndim</span>
-<span class="g g-Whitespace">   </span><span class="mi">3514</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">3515</span><span class="s2">     r = func(a, **kwargs)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
-</div>
+<div class="section" id="cyclic-week">
+<h2>Cyclic week<a class="headerlink" href="#cyclic-week" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
@@ -441,7 +289,7 @@ interpolated - now missing 0 values out of 34676 total (0.0 percent)
 <span class="n">weekday_map</span><span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;Mon&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Tue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Wed&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Thu&#39;</span><span class="p">,</span>
               <span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="s1">&#39;Sun&#39;</span><span class="p">}</span>
 
-<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">actig_files</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">101</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">actig_files</span><span class="p">:</span>
     
     <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
 <span class="c1">#     print(subject)</span>
@@ -504,363 +352,41 @@ interpolated - now missing 0 values out of 34676 total (0.0 percent)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>successfully read Actiware data file
-record 40694
-40694 missing 0 values out of 34676 total (0.00 percent)
-interpolated - now missing 0 values out of 34676 total (0.0 percent)
------ success: 0.00 percent NaN, 12 recording period
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/1724524193.py:33: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_4_2.png" src="_images/Preprocessing_4_2.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(169,)
-(169, 1)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/1724524193.py:49: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_4_5.png" src="_images/Preprocessing_4_5.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/actigraphy_data_hourly_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="hour-day-data">
-<h2>24 Hour Day Data<a class="headerlink" href="#hour-day-data" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actig_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/*.csv&#39;</span><span class="p">))</span>
-
-<span class="c1"># actig_files_ = random.sample(actig_files, 10)</span>
-
-<span class="n">actig_files</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30004_10_23_2017_10_20_00_AM_New_Analysis.csv&#39;,
- &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30008_11_9_2017_11_38_00_AM_New_Analysis.csv&#39;,
- &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30009_10_27_2017_6_35_00_PM_New_Analysis.csv&#39;,
- &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30012_10_30_2017_6_24_00_PM_New_Analysis.csv&#39;,
- &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30015_11_10_2017_4_15_00_PM_New_Analysis.csv&#39;]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">actig_files</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
-    
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">subject</span> <span class="o">==</span> <span class="s1">&#39;30090&#39;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-
-<span class="n">weekday_map</span><span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;Mon&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Tue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Wed&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Thu&#39;</span><span class="p">,</span>
-              <span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="s1">&#39;Sun&#39;</span><span class="p">}</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">actig_files</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
-    
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
-    
-    <span class="c1"># read in actigraphy data</span>
-    <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-    
-    <span class="c1"># find first Monday midnight and start data from there so all subjects starting on same day of the week</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">act</span><span class="p">[(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    
-    <span class="c1"># cyclically wrap days that were cut off so not losing data</span>
-    <span class="n">wrap</span> <span class="o">=</span> <span class="n">act</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span>
-    <span class="n">wrap</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                                  <span class="n">end</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">wrap</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">wrap</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
-                                  <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30S&#39;</span><span class="p">)</span>
-    
-    <span class="n">act</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:],</span> <span class="n">wrap</span><span class="p">))</span>
-    
-    <span class="c1"># keep only seven days of data</span>
-    <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))]</span>
-    
-    <span class="c1"># interpolate outliers</span>
-    <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
-    
-    <span class="c1"># plot</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act0</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act0</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;original&#39;</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;w/o outliers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> week&#39;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
-    
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Day of Week&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_</span><span class="si">%s</span><span class="s1">_week.png&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    
-    <span class="c1"># if subject has &lt; 7 days data, discard, else add to dataset</span>
-    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="p">):</span>
-        
-        <span class="c1"># bin into hours and take activity mean</span>
-        <span class="n">act24_0</span> <span class="o">=</span> <span class="n">act0</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="n">act24</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-        
-        <span class="c1"># plot</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act24</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act24_0</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> 24 hr&#39;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act24</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act24</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;w/o outliers&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-        
-<span class="c1">#         ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Hour&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_</span><span class="si">%s</span><span class="s1">_24h.png&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        
-        <span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">act24</span><span class="o">.</span><span class="n">values</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    
-    <span class="k">else</span><span class="p">:</span>
-        
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> discarded, recording period </span><span class="si">%s</span><span class="s1"> days&#39;</span> <span class="o">%</span> 
-              <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">()))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30004
-successfully read Actiware data file
-record 30004
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>record 30004
 30004 missing 0 values out of 29404 total (0.00 percent)
 interpolated - now missing 0 values out of 29404 total (0.0 percent)
------ success: 0.00 percent NaN, 10 recording period
-30 iterations, 30 outliers remaining
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_9_1.png" src="_images/Preprocessing_9_1.png" />
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/2935147022.py:59: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_9_3.png" src="_images/Preprocessing_9_3.png" />
-<img alt="_images/Preprocessing_9_4.png" src="_images/Preprocessing_9_4.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 1)
-30008
-successfully read Actiware data file
-record 30008
-30008 missing 0 values out of 31919 total (0.00 percent)
-interpolated - now missing 0 values out of 31919 total (0.0 percent)
------ success: 0.00 percent NaN, 11 recording period
-30 iterations, 0 outliers remaining
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/2935147022.py:59: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_9_7.png" src="_images/Preprocessing_9_7.png" />
-<img alt="_images/Preprocessing_9_8.png" src="_images/Preprocessing_9_8.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 2)
-30009
-successfully read Actiware data file
-record 30009
-30009 missing 0 values out of 29134 total (0.00 percent)
-interpolated - now missing 0 values out of 29134 total (0.0 percent)
------ success: 0.00 percent NaN, 10 recording period
-30 iterations, 30 outliers remaining
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/2935147022.py:59: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_9_11.png" src="_images/Preprocessing_9_11.png" />
-<img alt="_images/Preprocessing_9_12.png" src="_images/Preprocessing_9_12.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 3)
-30012
-successfully read Actiware data file
-record 30012
-30012 missing 0 values out of 28788 total (0.00 percent)
-interpolated - now missing 0 values out of 28788 total (0.0 percent)
------ success: 0.00 percent NaN, 9 recording period
-30 iterations, 30 outliers remaining
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/2935147022.py:59: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_9_15.png" src="_images/Preprocessing_9_15.png" />
-<img alt="_images/Preprocessing_9_16.png" src="_images/Preprocessing_9_16.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 4)
-30015
-successfully read Actiware data file
-record 30015
-30015 missing 0 values out of 31899 total (0.00 percent)
-interpolated - now missing 0 values out of 31899 total (0.0 percent)
------ success: 0.00 percent NaN, 11 recording period
-30 iterations, 30 outliers remaining
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/2935147022.py:59: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_9_19.png" src="_images/Preprocessing_9_19.png" />
-<img alt="_images/Preprocessing_9_20.png" src="_images/Preprocessing_9_20.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 5)
-30015
-successfully read Actiware data file
-record 30015
-30015 missing 0 values out of 34422 total (0.00 percent)
-interpolated - now missing 0 values out of 34422 total (0.0 percent)
------ success: 0.00 percent NaN, 11 recording period
-30 iterations, 30 outliers remaining
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_11152/2935147022.py:59: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
-</pre></div>
-</div>
-<img alt="_images/Preprocessing_9_23.png" src="_images/Preprocessing_9_23.png" />
-<img alt="_images/Preprocessing_9_24.png" src="_images/Preprocessing_9_24.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 5)
-30019
-successfully read Actiware data file
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----- success: 0.00 percent NaN, 10 recording period
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_11152</span><span class="o">/</span><span class="mf">2935147022.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> 
-<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="c1"># read in actigraphy data</span>
-<span class="ne">---&gt; </span><span class="mi">12</span>     <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> 
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="c1"># find first Monday midnight and start data from there so all subjects starting on same day of the week</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_98989</span><span class="o">/</span><span class="mf">32053737.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span>     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
+<span class="ne">---&gt; </span><span class="mi">38</span>     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span>     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span> 
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/wearables/preproc.py</span> in <span class="ni">preproc</span><span class="nt">(in_file, device, sr, start_time_csv, end_time_csv, truncate, write, plot, recording_period_min, interpolate_method, interpolate_limit)</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span> 
-<span class="g g-Whitespace">     </span><span class="mi">76</span>             <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span>
-<span class="ne">---&gt; </span><span class="mi">77</span>             <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">])</span>
-<span class="g g-Whitespace">     </span><span class="mi">78</span> 
-<span class="g g-Whitespace">     </span><span class="mi">79</span>         <span class="k">elif</span> <span class="n">device</span> <span class="o">==</span> <span class="s1">&#39;fitbit&#39;</span><span class="p">:</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/tools/datetimes.py</span> in <span class="ni">to_datetime</span><span class="nt">(arg, errors, dayfirst, yearfirst, utc, format, exact, unit, infer_datetime_format, origin, cache)</span>
-<span class="g g-Whitespace">    </span><span class="mi">885</span>             <span class="n">result</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">cache_array</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">886</span>         <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">887</span>             <span class="n">values</span> <span class="o">=</span> <span class="n">convert_listlike</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">_values</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">888</span>             <span class="n">result</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">_constructor</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">arg</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">arg</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">889</span>     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="p">(</span><span class="n">ABCDataFrame</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">)):</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/tools/datetimes.py</span> in <span class="ni">_convert_listlike_datetimes</span><span class="nt">(arg, format, name, tz, unit, errors, infer_datetime_format, dayfirst, yearfirst, exact)</span>
-<span class="g g-Whitespace">    </span><span class="mi">399</span>     <span class="k">assert</span> <span class="nb">format</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">infer_datetime_format</span>
-<span class="g g-Whitespace">    </span><span class="mi">400</span>     <span class="n">utc</span> <span class="o">=</span> <span class="n">tz</span> <span class="o">==</span> <span class="s2">&quot;utc&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">401</span>     <span class="n">result</span><span class="p">,</span> <span class="n">tz_parsed</span> <span class="o">=</span> <span class="n">objects_to_datetime64ns</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">402</span>         <span class="n">arg</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">403</span>         <span class="n">dayfirst</span><span class="o">=</span><span class="n">dayfirst</span><span class="p">,</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/arrays/datetimes.py</span> in <span class="ni">objects_to_datetime64ns</span><span class="nt">(data, dayfirst, yearfirst, utc, errors, require_iso8601, allow_object, allow_mixed)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2173</span>     <span class="n">order</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;F&quot;</span> <span class="k">if</span> <span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span> <span class="k">else</span> <span class="s2">&quot;C&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">2174</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2175</span>         <span class="n">result</span><span class="p">,</span> <span class="n">tz_parsed</span> <span class="o">=</span> <span class="n">tslib</span><span class="o">.</span><span class="n">array_to_datetime</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">2176</span>             <span class="n">data</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">2177</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/_libs/tslib.pyx</span> in <span class="ni">pandas._libs.tslib.array_to_datetime</span><span class="nt">()</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/_libs/tslib.pyx</span> in <span class="ni">pandas._libs.tslib.array_to_datetime</span><span class="nt">()</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/_libs/tslibs/parsing.pyx</span> in <span class="ni">pandas._libs.tslibs.parsing.parse_datetime_string</span><span class="nt">()</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">parse</span><span class="nt">(timestr, parserinfo, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1366</span>         <span class="k">return</span> <span class="n">parser</span><span class="p">(</span><span class="n">parserinfo</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">timestr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1367</span>     <span class="k">else</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1368</span>         <span class="k">return</span> <span class="n">DEFAULTPARSER</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">timestr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1369</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1370</span> 
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">parse</span><span class="nt">(self, timestr, default, ignoretz, tzinfos, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">638</span>                                                       <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">639</span> 
-<span class="ne">--&gt; </span><span class="mi">640</span>         <span class="n">res</span><span class="p">,</span> <span class="n">skipped_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">timestr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">641</span> 
-<span class="g g-Whitespace">    </span><span class="mi">642</span>         <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">_parse</span><span class="nt">(self, timestr, dayfirst, yearfirst, fuzzy, fuzzy_with_tokens)</span>
-<span class="g g-Whitespace">    </span><span class="mi">717</span> 
-<span class="g g-Whitespace">    </span><span class="mi">718</span>         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">719</span>         <span class="n">l</span> <span class="o">=</span> <span class="n">_timelex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">timestr</span><span class="p">)</span>         <span class="c1"># Splits the timestr into tokens</span>
-<span class="g g-Whitespace">    </span><span class="mi">720</span> 
-<span class="g g-Whitespace">    </span><span class="mi">721</span>         <span class="n">skipped_idxs</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">split</span><span class="nt">(cls, s)</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span>     <span class="nd">@classmethod</span>
-<span class="g g-Whitespace">    </span><span class="mi">200</span>     <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">201</span>         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span> 
-<span class="g g-Whitespace">    </span><span class="mi">203</span>     <span class="nd">@classmethod</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">__next__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">188</span> 
-<span class="g g-Whitespace">    </span><span class="mi">189</span>     <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">190</span>         <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>         <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>             <span class="k">raise</span> <span class="ne">StopIteration</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">get_token</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">115</span>                 <span class="c1"># to parse a word, a number or something else.</span>
-<span class="g g-Whitespace">    </span><span class="mi">116</span>                 <span class="n">token</span> <span class="o">=</span> <span class="n">nextchar</span>
-<span class="ne">--&gt; </span><span class="mi">117</span>                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isword</span><span class="p">(</span><span class="n">nextchar</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">118</span>                     <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
-<span class="g g-Whitespace">    </span><span class="mi">119</span>                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">isnum</span><span class="p">(</span><span class="n">nextchar</span><span class="p">):</span>
-
-<span class="nn">/usr/local/lib/python3.9/site-packages/dateutil/parser/_parser.py</span> in <span class="ni">isword</span><span class="nt">(cls, nextchar)</span>
-<span class="g g-Whitespace">    </span><span class="mi">204</span>     <span class="k">def</span> <span class="nf">isword</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">nextchar</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span>         <span class="sd">&quot;&quot;&quot; Whether or not the next character is part of a word &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">206</span>         <span class="k">return</span> <span class="n">nextchar</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">207</span> 
-<span class="g g-Whitespace">    </span><span class="mi">208</span>     <span class="nd">@classmethod</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<span class="ne">NameError</span>: name &#39;x_dates&#39; is not defined
 </pre></div>
 </div>
+<img alt="_images/Preprocessing_4_4.png" src="_images/Preprocessing_4_4.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/data/actigraphy_data_24hrday_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/data/actigraphy_data_week-hourly_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="hr-non-cyclic">
-<h1>24 hr non-cyclic<a class="headerlink" href="#hr-non-cyclic" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="hr-day">
+<h2>24 hr day<a class="headerlink" href="#hr-day" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -936,8 +462,8 @@ interpolated - now missing 0 values out of 29404 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_2.png" src="_images/Preprocessing_12_2.png" />
-<img alt="_images/Preprocessing_12_3.png" src="_images/Preprocessing_12_3.png" />
+<img alt="_images/Preprocessing_7_2.png" src="_images/Preprocessing_7_2.png" />
+<img alt="_images/Preprocessing_7_3.png" src="_images/Preprocessing_7_3.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 1)
 successfully read Actiware data file
 record 30008
@@ -950,8 +476,8 @@ interpolated - now missing 0 values out of 31919 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_6.png" src="_images/Preprocessing_12_6.png" />
-<img alt="_images/Preprocessing_12_7.png" src="_images/Preprocessing_12_7.png" />
+<img alt="_images/Preprocessing_7_6.png" src="_images/Preprocessing_7_6.png" />
+<img alt="_images/Preprocessing_7_7.png" src="_images/Preprocessing_7_7.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 2)
 successfully read Actiware data file
 record 30009
@@ -964,8 +490,8 @@ interpolated - now missing 0 values out of 29134 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_10.png" src="_images/Preprocessing_12_10.png" />
-<img alt="_images/Preprocessing_12_11.png" src="_images/Preprocessing_12_11.png" />
+<img alt="_images/Preprocessing_7_10.png" src="_images/Preprocessing_7_10.png" />
+<img alt="_images/Preprocessing_7_11.png" src="_images/Preprocessing_7_11.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 3)
 successfully read Actiware data file
 record 30012
@@ -978,8 +504,8 @@ interpolated - now missing 0 values out of 28788 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_14.png" src="_images/Preprocessing_12_14.png" />
-<img alt="_images/Preprocessing_12_15.png" src="_images/Preprocessing_12_15.png" />
+<img alt="_images/Preprocessing_7_14.png" src="_images/Preprocessing_7_14.png" />
+<img alt="_images/Preprocessing_7_15.png" src="_images/Preprocessing_7_15.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 4)
 successfully read Actiware data file
 record 30015
@@ -992,8 +518,8 @@ interpolated - now missing 0 values out of 31899 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_18.png" src="_images/Preprocessing_12_18.png" />
-<img alt="_images/Preprocessing_12_19.png" src="_images/Preprocessing_12_19.png" />
+<img alt="_images/Preprocessing_7_18.png" src="_images/Preprocessing_7_18.png" />
+<img alt="_images/Preprocessing_7_19.png" src="_images/Preprocessing_7_19.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 5)
 successfully read Actiware data file
 record 30015
@@ -1006,8 +532,8 @@ interpolated - now missing 0 values out of 34422 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_22.png" src="_images/Preprocessing_12_22.png" />
-<img alt="_images/Preprocessing_12_23.png" src="_images/Preprocessing_12_23.png" />
+<img alt="_images/Preprocessing_7_22.png" src="_images/Preprocessing_7_22.png" />
+<img alt="_images/Preprocessing_7_23.png" src="_images/Preprocessing_7_23.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 5)
 successfully read Actiware data file
 record 30019
@@ -1020,8 +546,8 @@ interpolated - now missing 0 values out of 32118 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_26.png" src="_images/Preprocessing_12_26.png" />
-<img alt="_images/Preprocessing_12_27.png" src="_images/Preprocessing_12_27.png" />
+<img alt="_images/Preprocessing_7_26.png" src="_images/Preprocessing_7_26.png" />
+<img alt="_images/Preprocessing_7_27.png" src="_images/Preprocessing_7_27.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 6)
 successfully read Actiware data file
 record 30020
@@ -1034,8 +560,8 @@ interpolated - now missing 0 values out of 28913 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_30.png" src="_images/Preprocessing_12_30.png" />
-<img alt="_images/Preprocessing_12_31.png" src="_images/Preprocessing_12_31.png" />
+<img alt="_images/Preprocessing_7_30.png" src="_images/Preprocessing_7_30.png" />
+<img alt="_images/Preprocessing_7_31.png" src="_images/Preprocessing_7_31.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 7)
 successfully read Actiware data file
 record 30023
@@ -1048,8 +574,8 @@ interpolated - now missing 0 values out of 28874 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_34.png" src="_images/Preprocessing_12_34.png" />
-<img alt="_images/Preprocessing_12_35.png" src="_images/Preprocessing_12_35.png" />
+<img alt="_images/Preprocessing_7_34.png" src="_images/Preprocessing_7_34.png" />
+<img alt="_images/Preprocessing_7_35.png" src="_images/Preprocessing_7_35.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 8)
 successfully read Actiware data file
 record 30027
@@ -1062,8 +588,8 @@ interpolated - now missing 0 values out of 34716 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_38.png" src="_images/Preprocessing_12_38.png" />
-<img alt="_images/Preprocessing_12_39.png" src="_images/Preprocessing_12_39.png" />
+<img alt="_images/Preprocessing_7_38.png" src="_images/Preprocessing_7_38.png" />
+<img alt="_images/Preprocessing_7_39.png" src="_images/Preprocessing_7_39.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 9)
 successfully read Actiware data file
 record 30040
@@ -1076,8 +602,8 @@ interpolated - now missing 0 values out of 29813 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_42.png" src="_images/Preprocessing_12_42.png" />
-<img alt="_images/Preprocessing_12_43.png" src="_images/Preprocessing_12_43.png" />
+<img alt="_images/Preprocessing_7_42.png" src="_images/Preprocessing_7_42.png" />
+<img alt="_images/Preprocessing_7_43.png" src="_images/Preprocessing_7_43.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 10)
 successfully read Actiware data file
 record 30057
@@ -1090,8 +616,8 @@ interpolated - now missing 0 values out of 29359 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_46.png" src="_images/Preprocessing_12_46.png" />
-<img alt="_images/Preprocessing_12_47.png" src="_images/Preprocessing_12_47.png" />
+<img alt="_images/Preprocessing_7_46.png" src="_images/Preprocessing_7_46.png" />
+<img alt="_images/Preprocessing_7_47.png" src="_images/Preprocessing_7_47.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 11)
 successfully read Actiware data file
 record 30064
@@ -1104,8 +630,8 @@ interpolated - now missing 0 values out of 31880 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_50.png" src="_images/Preprocessing_12_50.png" />
-<img alt="_images/Preprocessing_12_51.png" src="_images/Preprocessing_12_51.png" />
+<img alt="_images/Preprocessing_7_50.png" src="_images/Preprocessing_7_50.png" />
+<img alt="_images/Preprocessing_7_51.png" src="_images/Preprocessing_7_51.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 12)
 successfully read Actiware data file
 record 30066
@@ -1118,8 +644,8 @@ interpolated - now missing 0 values out of 28615 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_54.png" src="_images/Preprocessing_12_54.png" />
-<img alt="_images/Preprocessing_12_55.png" src="_images/Preprocessing_12_55.png" />
+<img alt="_images/Preprocessing_7_54.png" src="_images/Preprocessing_7_54.png" />
+<img alt="_images/Preprocessing_7_55.png" src="_images/Preprocessing_7_55.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 13)
 successfully read Actiware data file
 record 30069
@@ -1132,8 +658,8 @@ interpolated - now missing 0 values out of 34292 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_58.png" src="_images/Preprocessing_12_58.png" />
-<img alt="_images/Preprocessing_12_59.png" src="_images/Preprocessing_12_59.png" />
+<img alt="_images/Preprocessing_7_58.png" src="_images/Preprocessing_7_58.png" />
+<img alt="_images/Preprocessing_7_59.png" src="_images/Preprocessing_7_59.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 14)
 successfully read Actiware data file
 record 30074
@@ -1146,8 +672,8 @@ interpolated - now missing 0 values out of 40250 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_62.png" src="_images/Preprocessing_12_62.png" />
-<img alt="_images/Preprocessing_12_63.png" src="_images/Preprocessing_12_63.png" />
+<img alt="_images/Preprocessing_7_62.png" src="_images/Preprocessing_7_62.png" />
+<img alt="_images/Preprocessing_7_63.png" src="_images/Preprocessing_7_63.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 15)
 successfully read Actiware data file
 record 30085
@@ -1160,8 +686,8 @@ interpolated - now missing 0 values out of 28779 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_66.png" src="_images/Preprocessing_12_66.png" />
-<img alt="_images/Preprocessing_12_67.png" src="_images/Preprocessing_12_67.png" />
+<img alt="_images/Preprocessing_7_66.png" src="_images/Preprocessing_7_66.png" />
+<img alt="_images/Preprocessing_7_67.png" src="_images/Preprocessing_7_67.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 16)
 successfully read Actiware data file
 record 30088
@@ -1174,8 +700,8 @@ interpolated - now missing 0 values out of 40314 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_70.png" src="_images/Preprocessing_12_70.png" />
-<img alt="_images/Preprocessing_12_71.png" src="_images/Preprocessing_12_71.png" />
+<img alt="_images/Preprocessing_7_70.png" src="_images/Preprocessing_7_70.png" />
+<img alt="_images/Preprocessing_7_71.png" src="_images/Preprocessing_7_71.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 17)
 successfully read Actiware data file
 record 30090
@@ -1188,8 +714,8 @@ interpolated - now missing 0 values out of 29517 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_74.png" src="_images/Preprocessing_12_74.png" />
-<img alt="_images/Preprocessing_12_75.png" src="_images/Preprocessing_12_75.png" />
+<img alt="_images/Preprocessing_7_74.png" src="_images/Preprocessing_7_74.png" />
+<img alt="_images/Preprocessing_7_75.png" src="_images/Preprocessing_7_75.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 18)
 successfully read Actiware data file
 record 30091
@@ -1202,8 +728,8 @@ interpolated - now missing 0 values out of 39897 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_78.png" src="_images/Preprocessing_12_78.png" />
-<img alt="_images/Preprocessing_12_79.png" src="_images/Preprocessing_12_79.png" />
+<img alt="_images/Preprocessing_7_78.png" src="_images/Preprocessing_7_78.png" />
+<img alt="_images/Preprocessing_7_79.png" src="_images/Preprocessing_7_79.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 19)
 successfully read Actiware data file
 record 30091
@@ -1216,8 +742,8 @@ interpolated - now missing 0 values out of 34504 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_82.png" src="_images/Preprocessing_12_82.png" />
-<img alt="_images/Preprocessing_12_83.png" src="_images/Preprocessing_12_83.png" />
+<img alt="_images/Preprocessing_7_82.png" src="_images/Preprocessing_7_82.png" />
+<img alt="_images/Preprocessing_7_83.png" src="_images/Preprocessing_7_83.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 19)
 successfully read Actiware data file
 record 30095
@@ -1230,8 +756,8 @@ interpolated - now missing 0 values out of 40298 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_86.png" src="_images/Preprocessing_12_86.png" />
-<img alt="_images/Preprocessing_12_87.png" src="_images/Preprocessing_12_87.png" />
+<img alt="_images/Preprocessing_7_86.png" src="_images/Preprocessing_7_86.png" />
+<img alt="_images/Preprocessing_7_87.png" src="_images/Preprocessing_7_87.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 20)
 successfully read Actiware data file
 record 30096
@@ -1244,8 +770,8 @@ interpolated - now missing 0 values out of 31775 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_90.png" src="_images/Preprocessing_12_90.png" />
-<img alt="_images/Preprocessing_12_91.png" src="_images/Preprocessing_12_91.png" />
+<img alt="_images/Preprocessing_7_90.png" src="_images/Preprocessing_7_90.png" />
+<img alt="_images/Preprocessing_7_91.png" src="_images/Preprocessing_7_91.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 21)
 successfully read Actiware data file
 record 30101
@@ -1258,8 +784,8 @@ interpolated - now missing 0 values out of 28105 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_94.png" src="_images/Preprocessing_12_94.png" />
-<img alt="_images/Preprocessing_12_95.png" src="_images/Preprocessing_12_95.png" />
+<img alt="_images/Preprocessing_7_94.png" src="_images/Preprocessing_7_94.png" />
+<img alt="_images/Preprocessing_7_95.png" src="_images/Preprocessing_7_95.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 22)
 successfully read Actiware data file
 record 30116
@@ -1272,8 +798,8 @@ interpolated - now missing 0 values out of 32569 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_98.png" src="_images/Preprocessing_12_98.png" />
-<img alt="_images/Preprocessing_12_99.png" src="_images/Preprocessing_12_99.png" />
+<img alt="_images/Preprocessing_7_98.png" src="_images/Preprocessing_7_98.png" />
+<img alt="_images/Preprocessing_7_99.png" src="_images/Preprocessing_7_99.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 23)
 successfully read Actiware data file
 record 30118
@@ -1286,8 +812,8 @@ interpolated - now missing 0 values out of 28530 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_102.png" src="_images/Preprocessing_12_102.png" />
-<img alt="_images/Preprocessing_12_103.png" src="_images/Preprocessing_12_103.png" />
+<img alt="_images/Preprocessing_7_102.png" src="_images/Preprocessing_7_102.png" />
+<img alt="_images/Preprocessing_7_103.png" src="_images/Preprocessing_7_103.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 24)
 successfully read Actiware data file
 record 30119
@@ -1300,8 +826,8 @@ interpolated - now missing 0 values out of 34829 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_106.png" src="_images/Preprocessing_12_106.png" />
-<img alt="_images/Preprocessing_12_107.png" src="_images/Preprocessing_12_107.png" />
+<img alt="_images/Preprocessing_7_106.png" src="_images/Preprocessing_7_106.png" />
+<img alt="_images/Preprocessing_7_107.png" src="_images/Preprocessing_7_107.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 25)
 successfully read Actiware data file
 record 30119
@@ -1314,8 +840,8 @@ interpolated - now missing 0 values out of 35158 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_110.png" src="_images/Preprocessing_12_110.png" />
-<img alt="_images/Preprocessing_12_111.png" src="_images/Preprocessing_12_111.png" />
+<img alt="_images/Preprocessing_7_110.png" src="_images/Preprocessing_7_110.png" />
+<img alt="_images/Preprocessing_7_111.png" src="_images/Preprocessing_7_111.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 25)
 successfully read Actiware data file
 record 30128
@@ -1328,8 +854,8 @@ interpolated - now missing 0 values out of 28788 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_114.png" src="_images/Preprocessing_12_114.png" />
-<img alt="_images/Preprocessing_12_115.png" src="_images/Preprocessing_12_115.png" />
+<img alt="_images/Preprocessing_7_114.png" src="_images/Preprocessing_7_114.png" />
+<img alt="_images/Preprocessing_7_115.png" src="_images/Preprocessing_7_115.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 26)
 successfully read Actiware data file
 record 30181
@@ -1342,8 +868,8 @@ interpolated - now missing 0 values out of 29933 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_118.png" src="_images/Preprocessing_12_118.png" />
-<img alt="_images/Preprocessing_12_119.png" src="_images/Preprocessing_12_119.png" />
+<img alt="_images/Preprocessing_7_118.png" src="_images/Preprocessing_7_118.png" />
+<img alt="_images/Preprocessing_7_119.png" src="_images/Preprocessing_7_119.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 27)
 successfully read Actiware data file
 record 30217
@@ -1356,8 +882,8 @@ interpolated - now missing 0 values out of 37960 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_122.png" src="_images/Preprocessing_12_122.png" />
-<img alt="_images/Preprocessing_12_123.png" src="_images/Preprocessing_12_123.png" />
+<img alt="_images/Preprocessing_7_122.png" src="_images/Preprocessing_7_122.png" />
+<img alt="_images/Preprocessing_7_123.png" src="_images/Preprocessing_7_123.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 28)
 successfully read Actiware data file
 record 30227
@@ -1370,8 +896,8 @@ interpolated - now missing 0 values out of 34368 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_126.png" src="_images/Preprocessing_12_126.png" />
-<img alt="_images/Preprocessing_12_127.png" src="_images/Preprocessing_12_127.png" />
+<img alt="_images/Preprocessing_7_126.png" src="_images/Preprocessing_7_126.png" />
+<img alt="_images/Preprocessing_7_127.png" src="_images/Preprocessing_7_127.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 29)
 successfully read Actiware data file
 record 30236
@@ -1384,8 +910,8 @@ interpolated - now missing 0 values out of 35048 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_130.png" src="_images/Preprocessing_12_130.png" />
-<img alt="_images/Preprocessing_12_131.png" src="_images/Preprocessing_12_131.png" />
+<img alt="_images/Preprocessing_7_130.png" src="_images/Preprocessing_7_130.png" />
+<img alt="_images/Preprocessing_7_131.png" src="_images/Preprocessing_7_131.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 30)
 successfully read Actiware data file
 record 30242
@@ -1398,8 +924,8 @@ interpolated - now missing 0 values out of 31757 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_134.png" src="_images/Preprocessing_12_134.png" />
-<img alt="_images/Preprocessing_12_135.png" src="_images/Preprocessing_12_135.png" />
+<img alt="_images/Preprocessing_7_134.png" src="_images/Preprocessing_7_134.png" />
+<img alt="_images/Preprocessing_7_135.png" src="_images/Preprocessing_7_135.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 31)
 successfully read Actiware data file
 record 30242
@@ -1412,8 +938,8 @@ interpolated - now missing 0 values out of 37316 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_138.png" src="_images/Preprocessing_12_138.png" />
-<img alt="_images/Preprocessing_12_139.png" src="_images/Preprocessing_12_139.png" />
+<img alt="_images/Preprocessing_7_138.png" src="_images/Preprocessing_7_138.png" />
+<img alt="_images/Preprocessing_7_139.png" src="_images/Preprocessing_7_139.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 31)
 successfully read Actiware data file
 record 30255
@@ -1426,8 +952,8 @@ interpolated - now missing 0 values out of 28951 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_142.png" src="_images/Preprocessing_12_142.png" />
-<img alt="_images/Preprocessing_12_143.png" src="_images/Preprocessing_12_143.png" />
+<img alt="_images/Preprocessing_7_142.png" src="_images/Preprocessing_7_142.png" />
+<img alt="_images/Preprocessing_7_143.png" src="_images/Preprocessing_7_143.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 32)
 successfully read Actiware data file
 record 30274
@@ -1440,8 +966,8 @@ interpolated - now missing 0 values out of 31471 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_146.png" src="_images/Preprocessing_12_146.png" />
-<img alt="_images/Preprocessing_12_147.png" src="_images/Preprocessing_12_147.png" />
+<img alt="_images/Preprocessing_7_146.png" src="_images/Preprocessing_7_146.png" />
+<img alt="_images/Preprocessing_7_147.png" src="_images/Preprocessing_7_147.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 33)
 successfully read Actiware data file
 record 30283
@@ -1454,8 +980,8 @@ interpolated - now missing 0 values out of 31814 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_150.png" src="_images/Preprocessing_12_150.png" />
-<img alt="_images/Preprocessing_12_151.png" src="_images/Preprocessing_12_151.png" />
+<img alt="_images/Preprocessing_7_150.png" src="_images/Preprocessing_7_150.png" />
+<img alt="_images/Preprocessing_7_151.png" src="_images/Preprocessing_7_151.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 34)
 successfully read Actiware data file
 record 30295
@@ -1468,8 +994,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_154.png" src="_images/Preprocessing_12_154.png" />
-<img alt="_images/Preprocessing_12_155.png" src="_images/Preprocessing_12_155.png" />
+<img alt="_images/Preprocessing_7_154.png" src="_images/Preprocessing_7_154.png" />
+<img alt="_images/Preprocessing_7_155.png" src="_images/Preprocessing_7_155.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 35)
 successfully read Actiware data file
 record 30330
@@ -1482,8 +1008,8 @@ interpolated - now missing 0 values out of 31950 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_158.png" src="_images/Preprocessing_12_158.png" />
-<img alt="_images/Preprocessing_12_159.png" src="_images/Preprocessing_12_159.png" />
+<img alt="_images/Preprocessing_7_158.png" src="_images/Preprocessing_7_158.png" />
+<img alt="_images/Preprocessing_7_159.png" src="_images/Preprocessing_7_159.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 36)
 successfully read Actiware data file
 record 30346
@@ -1496,8 +1022,8 @@ interpolated - now missing 0 values out of 40133 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_162.png" src="_images/Preprocessing_12_162.png" />
-<img alt="_images/Preprocessing_12_163.png" src="_images/Preprocessing_12_163.png" />
+<img alt="_images/Preprocessing_7_162.png" src="_images/Preprocessing_7_162.png" />
+<img alt="_images/Preprocessing_7_163.png" src="_images/Preprocessing_7_163.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 37)
 successfully read Actiware data file
 record 30376
@@ -1510,8 +1036,8 @@ interpolated - now missing 0 values out of 40216 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_166.png" src="_images/Preprocessing_12_166.png" />
-<img alt="_images/Preprocessing_12_167.png" src="_images/Preprocessing_12_167.png" />
+<img alt="_images/Preprocessing_7_166.png" src="_images/Preprocessing_7_166.png" />
+<img alt="_images/Preprocessing_7_167.png" src="_images/Preprocessing_7_167.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 38)
 successfully read Actiware data file
 record 30395
@@ -1524,8 +1050,8 @@ interpolated - now missing 0 values out of 32249 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_170.png" src="_images/Preprocessing_12_170.png" />
-<img alt="_images/Preprocessing_12_171.png" src="_images/Preprocessing_12_171.png" />
+<img alt="_images/Preprocessing_7_170.png" src="_images/Preprocessing_7_170.png" />
+<img alt="_images/Preprocessing_7_171.png" src="_images/Preprocessing_7_171.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 39)
 successfully read Actiware data file
 record 30400
@@ -1538,8 +1064,8 @@ interpolated - now missing 0 values out of 40251 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_174.png" src="_images/Preprocessing_12_174.png" />
-<img alt="_images/Preprocessing_12_175.png" src="_images/Preprocessing_12_175.png" />
+<img alt="_images/Preprocessing_7_174.png" src="_images/Preprocessing_7_174.png" />
+<img alt="_images/Preprocessing_7_175.png" src="_images/Preprocessing_7_175.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 40)
 successfully read Actiware data file
 record 30403
@@ -1552,8 +1078,8 @@ interpolated - now missing 0 values out of 40307 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_178.png" src="_images/Preprocessing_12_178.png" />
-<img alt="_images/Preprocessing_12_179.png" src="_images/Preprocessing_12_179.png" />
+<img alt="_images/Preprocessing_7_178.png" src="_images/Preprocessing_7_178.png" />
+<img alt="_images/Preprocessing_7_179.png" src="_images/Preprocessing_7_179.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 41)
 successfully read Actiware data file
 record 30407
@@ -1566,8 +1092,8 @@ interpolated - now missing 0 values out of 31308 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_182.png" src="_images/Preprocessing_12_182.png" />
-<img alt="_images/Preprocessing_12_183.png" src="_images/Preprocessing_12_183.png" />
+<img alt="_images/Preprocessing_7_182.png" src="_images/Preprocessing_7_182.png" />
+<img alt="_images/Preprocessing_7_183.png" src="_images/Preprocessing_7_183.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 42)
 successfully read Actiware data file
 record 30412
@@ -1580,8 +1106,8 @@ interpolated - now missing 0 values out of 40147 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_186.png" src="_images/Preprocessing_12_186.png" />
-<img alt="_images/Preprocessing_12_187.png" src="_images/Preprocessing_12_187.png" />
+<img alt="_images/Preprocessing_7_186.png" src="_images/Preprocessing_7_186.png" />
+<img alt="_images/Preprocessing_7_187.png" src="_images/Preprocessing_7_187.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 43)
 successfully read Actiware data file
 record 30417
@@ -1594,8 +1120,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_190.png" src="_images/Preprocessing_12_190.png" />
-<img alt="_images/Preprocessing_12_191.png" src="_images/Preprocessing_12_191.png" />
+<img alt="_images/Preprocessing_7_190.png" src="_images/Preprocessing_7_190.png" />
+<img alt="_images/Preprocessing_7_191.png" src="_images/Preprocessing_7_191.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 44)
 successfully read Actiware data file
 record 30426
@@ -1608,8 +1134,8 @@ interpolated - now missing 0 values out of 40182 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_194.png" src="_images/Preprocessing_12_194.png" />
-<img alt="_images/Preprocessing_12_195.png" src="_images/Preprocessing_12_195.png" />
+<img alt="_images/Preprocessing_7_194.png" src="_images/Preprocessing_7_194.png" />
+<img alt="_images/Preprocessing_7_195.png" src="_images/Preprocessing_7_195.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 45)
 successfully read Actiware data file
 record 30432
@@ -1622,8 +1148,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_198.png" src="_images/Preprocessing_12_198.png" />
-<img alt="_images/Preprocessing_12_199.png" src="_images/Preprocessing_12_199.png" />
+<img alt="_images/Preprocessing_7_198.png" src="_images/Preprocessing_7_198.png" />
+<img alt="_images/Preprocessing_7_199.png" src="_images/Preprocessing_7_199.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 46)
 successfully read Actiware data file
 record 30433
@@ -1636,8 +1162,8 @@ interpolated - now missing 0 values out of 40293 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_202.png" src="_images/Preprocessing_12_202.png" />
-<img alt="_images/Preprocessing_12_203.png" src="_images/Preprocessing_12_203.png" />
+<img alt="_images/Preprocessing_7_202.png" src="_images/Preprocessing_7_202.png" />
+<img alt="_images/Preprocessing_7_203.png" src="_images/Preprocessing_7_203.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 47)
 successfully read Actiware data file
 record 30466
@@ -1650,8 +1176,8 @@ interpolated - now missing 0 values out of 32176 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_206.png" src="_images/Preprocessing_12_206.png" />
-<img alt="_images/Preprocessing_12_207.png" src="_images/Preprocessing_12_207.png" />
+<img alt="_images/Preprocessing_7_206.png" src="_images/Preprocessing_7_206.png" />
+<img alt="_images/Preprocessing_7_207.png" src="_images/Preprocessing_7_207.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 48)
 successfully read Actiware data file
 record 30469
@@ -1664,8 +1190,8 @@ interpolated - now missing 0 values out of 39773 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_210.png" src="_images/Preprocessing_12_210.png" />
-<img alt="_images/Preprocessing_12_211.png" src="_images/Preprocessing_12_211.png" />
+<img alt="_images/Preprocessing_7_210.png" src="_images/Preprocessing_7_210.png" />
+<img alt="_images/Preprocessing_7_211.png" src="_images/Preprocessing_7_211.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 49)
 successfully read Actiware data file
 record 30476
@@ -1678,8 +1204,8 @@ interpolated - now missing 0 values out of 32408 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_214.png" src="_images/Preprocessing_12_214.png" />
-<img alt="_images/Preprocessing_12_215.png" src="_images/Preprocessing_12_215.png" />
+<img alt="_images/Preprocessing_7_214.png" src="_images/Preprocessing_7_214.png" />
+<img alt="_images/Preprocessing_7_215.png" src="_images/Preprocessing_7_215.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 50)
 successfully read Actiware data file
 record 30478
@@ -1692,8 +1218,8 @@ interpolated - now missing 0 values out of 40237 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_218.png" src="_images/Preprocessing_12_218.png" />
-<img alt="_images/Preprocessing_12_219.png" src="_images/Preprocessing_12_219.png" />
+<img alt="_images/Preprocessing_7_218.png" src="_images/Preprocessing_7_218.png" />
+<img alt="_images/Preprocessing_7_219.png" src="_images/Preprocessing_7_219.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 51)
 successfully read Actiware data file
 record 30568
@@ -1706,8 +1232,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_222.png" src="_images/Preprocessing_12_222.png" />
-<img alt="_images/Preprocessing_12_223.png" src="_images/Preprocessing_12_223.png" />
+<img alt="_images/Preprocessing_7_222.png" src="_images/Preprocessing_7_222.png" />
+<img alt="_images/Preprocessing_7_223.png" src="_images/Preprocessing_7_223.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 52)
 successfully read Actiware data file
 record 30570
@@ -1720,8 +1246,8 @@ interpolated - now missing 0 values out of 34547 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_226.png" src="_images/Preprocessing_12_226.png" />
-<img alt="_images/Preprocessing_12_227.png" src="_images/Preprocessing_12_227.png" />
+<img alt="_images/Preprocessing_7_226.png" src="_images/Preprocessing_7_226.png" />
+<img alt="_images/Preprocessing_7_227.png" src="_images/Preprocessing_7_227.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 53)
 successfully read Actiware data file
 record 30581
@@ -1734,8 +1260,8 @@ interpolated - now missing 0 values out of 29244 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_230.png" src="_images/Preprocessing_12_230.png" />
-<img alt="_images/Preprocessing_12_231.png" src="_images/Preprocessing_12_231.png" />
+<img alt="_images/Preprocessing_7_230.png" src="_images/Preprocessing_7_230.png" />
+<img alt="_images/Preprocessing_7_231.png" src="_images/Preprocessing_7_231.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 54)
 successfully read Actiware data file
 record 30584
@@ -1748,8 +1274,8 @@ interpolated - now missing 0 values out of 40099 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_234.png" src="_images/Preprocessing_12_234.png" />
-<img alt="_images/Preprocessing_12_235.png" src="_images/Preprocessing_12_235.png" />
+<img alt="_images/Preprocessing_7_234.png" src="_images/Preprocessing_7_234.png" />
+<img alt="_images/Preprocessing_7_235.png" src="_images/Preprocessing_7_235.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 55)
 successfully read Actiware data file
 record 30588
@@ -1762,8 +1288,8 @@ interpolated - now missing 0 values out of 21829 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_238.png" src="_images/Preprocessing_12_238.png" />
-<img alt="_images/Preprocessing_12_239.png" src="_images/Preprocessing_12_239.png" />
+<img alt="_images/Preprocessing_7_238.png" src="_images/Preprocessing_7_238.png" />
+<img alt="_images/Preprocessing_7_239.png" src="_images/Preprocessing_7_239.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 56)
 successfully read Actiware data file
 record 40160
@@ -1776,8 +1302,8 @@ interpolated - now missing 0 values out of 20560 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_242.png" src="_images/Preprocessing_12_242.png" />
-<img alt="_images/Preprocessing_12_243.png" src="_images/Preprocessing_12_243.png" />
+<img alt="_images/Preprocessing_7_242.png" src="_images/Preprocessing_7_242.png" />
+<img alt="_images/Preprocessing_7_243.png" src="_images/Preprocessing_7_243.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 57)
 successfully read Actiware data file
 record 40160
@@ -1790,8 +1316,8 @@ interpolated - now missing 0 values out of 37677 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_246.png" src="_images/Preprocessing_12_246.png" />
-<img alt="_images/Preprocessing_12_247.png" src="_images/Preprocessing_12_247.png" />
+<img alt="_images/Preprocessing_7_246.png" src="_images/Preprocessing_7_246.png" />
+<img alt="_images/Preprocessing_7_247.png" src="_images/Preprocessing_7_247.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 57)
 successfully read Actiware data file
 record 40170
@@ -1804,8 +1330,8 @@ interpolated - now missing 0 values out of 31771 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_250.png" src="_images/Preprocessing_12_250.png" />
-<img alt="_images/Preprocessing_12_251.png" src="_images/Preprocessing_12_251.png" />
+<img alt="_images/Preprocessing_7_250.png" src="_images/Preprocessing_7_250.png" />
+<img alt="_images/Preprocessing_7_251.png" src="_images/Preprocessing_7_251.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 58)
 successfully read Actiware data file
 record 40175
@@ -1818,8 +1344,8 @@ interpolated - now missing 0 values out of 40309 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_254.png" src="_images/Preprocessing_12_254.png" />
-<img alt="_images/Preprocessing_12_255.png" src="_images/Preprocessing_12_255.png" />
+<img alt="_images/Preprocessing_7_254.png" src="_images/Preprocessing_7_254.png" />
+<img alt="_images/Preprocessing_7_255.png" src="_images/Preprocessing_7_255.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 59)
 successfully read Actiware data file
 record 40288
@@ -1832,8 +1358,8 @@ interpolated - now missing 0 values out of 40170 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_258.png" src="_images/Preprocessing_12_258.png" />
-<img alt="_images/Preprocessing_12_259.png" src="_images/Preprocessing_12_259.png" />
+<img alt="_images/Preprocessing_7_258.png" src="_images/Preprocessing_7_258.png" />
+<img alt="_images/Preprocessing_7_259.png" src="_images/Preprocessing_7_259.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 60)
 successfully read Actiware data file
 record 40351
@@ -1846,8 +1372,8 @@ interpolated - now missing 0 values out of 29423 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_262.png" src="_images/Preprocessing_12_262.png" />
-<img alt="_images/Preprocessing_12_263.png" src="_images/Preprocessing_12_263.png" />
+<img alt="_images/Preprocessing_7_262.png" src="_images/Preprocessing_7_262.png" />
+<img alt="_images/Preprocessing_7_263.png" src="_images/Preprocessing_7_263.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 61)
 successfully read Actiware data file
 record 40490
@@ -1860,8 +1386,8 @@ interpolated - now missing 0 values out of 35015 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_266.png" src="_images/Preprocessing_12_266.png" />
-<img alt="_images/Preprocessing_12_267.png" src="_images/Preprocessing_12_267.png" />
+<img alt="_images/Preprocessing_7_266.png" src="_images/Preprocessing_7_266.png" />
+<img alt="_images/Preprocessing_7_267.png" src="_images/Preprocessing_7_267.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 62)
 successfully read Actiware data file
 record 40496
@@ -1874,8 +1400,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_270.png" src="_images/Preprocessing_12_270.png" />
-<img alt="_images/Preprocessing_12_271.png" src="_images/Preprocessing_12_271.png" />
+<img alt="_images/Preprocessing_7_270.png" src="_images/Preprocessing_7_270.png" />
+<img alt="_images/Preprocessing_7_271.png" src="_images/Preprocessing_7_271.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 63)
 successfully read Actiware data file
 record 40500
@@ -1888,8 +1414,8 @@ interpolated - now missing 0 values out of 34786 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_274.png" src="_images/Preprocessing_12_274.png" />
-<img alt="_images/Preprocessing_12_275.png" src="_images/Preprocessing_12_275.png" />
+<img alt="_images/Preprocessing_7_274.png" src="_images/Preprocessing_7_274.png" />
+<img alt="_images/Preprocessing_7_275.png" src="_images/Preprocessing_7_275.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 64)
 successfully read Actiware data file
 record 40511
@@ -1902,8 +1428,8 @@ interpolated - now missing 0 values out of 36850 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_278.png" src="_images/Preprocessing_12_278.png" />
-<img alt="_images/Preprocessing_12_279.png" src="_images/Preprocessing_12_279.png" />
+<img alt="_images/Preprocessing_7_278.png" src="_images/Preprocessing_7_278.png" />
+<img alt="_images/Preprocessing_7_279.png" src="_images/Preprocessing_7_279.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 65)
 successfully read Actiware data file
 record 40512
@@ -1916,8 +1442,8 @@ interpolated - now missing 0 values out of 20679 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_282.png" src="_images/Preprocessing_12_282.png" />
-<img alt="_images/Preprocessing_12_283.png" src="_images/Preprocessing_12_283.png" />
+<img alt="_images/Preprocessing_7_282.png" src="_images/Preprocessing_7_282.png" />
+<img alt="_images/Preprocessing_7_283.png" src="_images/Preprocessing_7_283.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 66)
 successfully read Actiware data file
 record 40515
@@ -1930,8 +1456,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_286.png" src="_images/Preprocessing_12_286.png" />
-<img alt="_images/Preprocessing_12_287.png" src="_images/Preprocessing_12_287.png" />
+<img alt="_images/Preprocessing_7_286.png" src="_images/Preprocessing_7_286.png" />
+<img alt="_images/Preprocessing_7_287.png" src="_images/Preprocessing_7_287.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 67)
 successfully read Actiware data file
 record 40516
@@ -1944,8 +1470,8 @@ interpolated - now missing 0 values out of 39762 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_290.png" src="_images/Preprocessing_12_290.png" />
-<img alt="_images/Preprocessing_12_291.png" src="_images/Preprocessing_12_291.png" />
+<img alt="_images/Preprocessing_7_290.png" src="_images/Preprocessing_7_290.png" />
+<img alt="_images/Preprocessing_7_291.png" src="_images/Preprocessing_7_291.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 68)
 successfully read Actiware data file
 record 40519
@@ -1958,8 +1484,8 @@ interpolated - now missing 0 values out of 37402 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_294.png" src="_images/Preprocessing_12_294.png" />
-<img alt="_images/Preprocessing_12_295.png" src="_images/Preprocessing_12_295.png" />
+<img alt="_images/Preprocessing_7_294.png" src="_images/Preprocessing_7_294.png" />
+<img alt="_images/Preprocessing_7_295.png" src="_images/Preprocessing_7_295.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 69)
 successfully read Actiware data file
 record 40520
@@ -1972,8 +1498,8 @@ interpolated - now missing 0 values out of 40163 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_298.png" src="_images/Preprocessing_12_298.png" />
-<img alt="_images/Preprocessing_12_299.png" src="_images/Preprocessing_12_299.png" />
+<img alt="_images/Preprocessing_7_298.png" src="_images/Preprocessing_7_298.png" />
+<img alt="_images/Preprocessing_7_299.png" src="_images/Preprocessing_7_299.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 70)
 successfully read Actiware data file
 record 40522
@@ -1986,8 +1512,8 @@ interpolated - now missing 0 values out of 40247 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_302.png" src="_images/Preprocessing_12_302.png" />
-<img alt="_images/Preprocessing_12_303.png" src="_images/Preprocessing_12_303.png" />
+<img alt="_images/Preprocessing_7_302.png" src="_images/Preprocessing_7_302.png" />
+<img alt="_images/Preprocessing_7_303.png" src="_images/Preprocessing_7_303.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 71)
 successfully read Actiware data file
 record 40524
@@ -2000,8 +1526,8 @@ interpolated - now missing 0 values out of 40299 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_306.png" src="_images/Preprocessing_12_306.png" />
-<img alt="_images/Preprocessing_12_307.png" src="_images/Preprocessing_12_307.png" />
+<img alt="_images/Preprocessing_7_306.png" src="_images/Preprocessing_7_306.png" />
+<img alt="_images/Preprocessing_7_307.png" src="_images/Preprocessing_7_307.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 72)
 successfully read Actiware data file
 record 40538
@@ -2014,8 +1540,8 @@ interpolated - now missing 0 values out of 22609 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_310.png" src="_images/Preprocessing_12_310.png" />
-<img alt="_images/Preprocessing_12_311.png" src="_images/Preprocessing_12_311.png" />
+<img alt="_images/Preprocessing_7_310.png" src="_images/Preprocessing_7_310.png" />
+<img alt="_images/Preprocessing_7_311.png" src="_images/Preprocessing_7_311.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 73)
 successfully read Actiware data file
 record 40547
@@ -2028,8 +1554,8 @@ interpolated - now missing 0 values out of 40251 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_314.png" src="_images/Preprocessing_12_314.png" />
-<img alt="_images/Preprocessing_12_315.png" src="_images/Preprocessing_12_315.png" />
+<img alt="_images/Preprocessing_7_314.png" src="_images/Preprocessing_7_314.png" />
+<img alt="_images/Preprocessing_7_315.png" src="_images/Preprocessing_7_315.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 74)
 successfully read Actiware data file
 record 40547
@@ -2042,8 +1568,8 @@ interpolated - now missing 0 values out of 34482 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_318.png" src="_images/Preprocessing_12_318.png" />
-<img alt="_images/Preprocessing_12_319.png" src="_images/Preprocessing_12_319.png" />
+<img alt="_images/Preprocessing_7_318.png" src="_images/Preprocessing_7_318.png" />
+<img alt="_images/Preprocessing_7_319.png" src="_images/Preprocessing_7_319.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 74)
 successfully read Actiware data file
 record 40550
@@ -2056,8 +1582,8 @@ interpolated - now missing 0 values out of 40311 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_322.png" src="_images/Preprocessing_12_322.png" />
-<img alt="_images/Preprocessing_12_323.png" src="_images/Preprocessing_12_323.png" />
+<img alt="_images/Preprocessing_7_322.png" src="_images/Preprocessing_7_322.png" />
+<img alt="_images/Preprocessing_7_323.png" src="_images/Preprocessing_7_323.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 75)
 successfully read Actiware data file
 record 40564
@@ -2070,8 +1596,8 @@ interpolated - now missing 0 values out of 37716 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_326.png" src="_images/Preprocessing_12_326.png" />
-<img alt="_images/Preprocessing_12_327.png" src="_images/Preprocessing_12_327.png" />
+<img alt="_images/Preprocessing_7_326.png" src="_images/Preprocessing_7_326.png" />
+<img alt="_images/Preprocessing_7_327.png" src="_images/Preprocessing_7_327.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 76)
 successfully read Actiware data file
 record 40601
@@ -2084,8 +1610,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_330.png" src="_images/Preprocessing_12_330.png" />
-<img alt="_images/Preprocessing_12_331.png" src="_images/Preprocessing_12_331.png" />
+<img alt="_images/Preprocessing_7_330.png" src="_images/Preprocessing_7_330.png" />
+<img alt="_images/Preprocessing_7_331.png" src="_images/Preprocessing_7_331.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 77)
 successfully read Actiware data file
 record 40608
@@ -2098,8 +1624,8 @@ interpolated - now missing 0 values out of 35320 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_334.png" src="_images/Preprocessing_12_334.png" />
-<img alt="_images/Preprocessing_12_335.png" src="_images/Preprocessing_12_335.png" />
+<img alt="_images/Preprocessing_7_334.png" src="_images/Preprocessing_7_334.png" />
+<img alt="_images/Preprocessing_7_335.png" src="_images/Preprocessing_7_335.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 78)
 successfully read Actiware data file
 record 40615
@@ -2112,8 +1638,8 @@ interpolated - now missing 0 values out of 40318 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_338.png" src="_images/Preprocessing_12_338.png" />
-<img alt="_images/Preprocessing_12_339.png" src="_images/Preprocessing_12_339.png" />
+<img alt="_images/Preprocessing_7_338.png" src="_images/Preprocessing_7_338.png" />
+<img alt="_images/Preprocessing_7_339.png" src="_images/Preprocessing_7_339.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 79)
 successfully read Actiware data file
 record 40619
@@ -2126,8 +1652,8 @@ interpolated - now missing 0 values out of 29087 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_342.png" src="_images/Preprocessing_12_342.png" />
-<img alt="_images/Preprocessing_12_343.png" src="_images/Preprocessing_12_343.png" />
+<img alt="_images/Preprocessing_7_342.png" src="_images/Preprocessing_7_342.png" />
+<img alt="_images/Preprocessing_7_343.png" src="_images/Preprocessing_7_343.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 80)
 successfully read Actiware data file
 record 40623
@@ -2140,8 +1666,8 @@ interpolated - now missing 0 values out of 38013 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_346.png" src="_images/Preprocessing_12_346.png" />
-<img alt="_images/Preprocessing_12_347.png" src="_images/Preprocessing_12_347.png" />
+<img alt="_images/Preprocessing_7_346.png" src="_images/Preprocessing_7_346.png" />
+<img alt="_images/Preprocessing_7_347.png" src="_images/Preprocessing_7_347.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 81)
 successfully read Actiware data file
 record 40629
@@ -2154,8 +1680,8 @@ interpolated - now missing 0 values out of 40215 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_350.png" src="_images/Preprocessing_12_350.png" />
-<img alt="_images/Preprocessing_12_351.png" src="_images/Preprocessing_12_351.png" />
+<img alt="_images/Preprocessing_7_350.png" src="_images/Preprocessing_7_350.png" />
+<img alt="_images/Preprocessing_7_351.png" src="_images/Preprocessing_7_351.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 82)
 successfully read Actiware data file
 record 40638
@@ -2168,8 +1694,8 @@ interpolated - now missing 0 values out of 37843 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_354.png" src="_images/Preprocessing_12_354.png" />
-<img alt="_images/Preprocessing_12_355.png" src="_images/Preprocessing_12_355.png" />
+<img alt="_images/Preprocessing_7_354.png" src="_images/Preprocessing_7_354.png" />
+<img alt="_images/Preprocessing_7_355.png" src="_images/Preprocessing_7_355.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 83)
 successfully read Actiware data file
 record 40649
@@ -2182,8 +1708,8 @@ interpolated - now missing 0 values out of 21839 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_358.png" src="_images/Preprocessing_12_358.png" />
-<img alt="_images/Preprocessing_12_359.png" src="_images/Preprocessing_12_359.png" />
+<img alt="_images/Preprocessing_7_358.png" src="_images/Preprocessing_7_358.png" />
+<img alt="_images/Preprocessing_7_359.png" src="_images/Preprocessing_7_359.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 84)
 successfully read Actiware data file
 record 40650
@@ -2196,8 +1722,8 @@ interpolated - now missing 0 values out of 31822 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_362.png" src="_images/Preprocessing_12_362.png" />
-<img alt="_images/Preprocessing_12_363.png" src="_images/Preprocessing_12_363.png" />
+<img alt="_images/Preprocessing_7_362.png" src="_images/Preprocessing_7_362.png" />
+<img alt="_images/Preprocessing_7_363.png" src="_images/Preprocessing_7_363.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 85)
 successfully read Actiware data file
 record 40653
@@ -2210,8 +1736,8 @@ interpolated - now missing 0 values out of 30324 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_366.png" src="_images/Preprocessing_12_366.png" />
-<img alt="_images/Preprocessing_12_367.png" src="_images/Preprocessing_12_367.png" />
+<img alt="_images/Preprocessing_7_366.png" src="_images/Preprocessing_7_366.png" />
+<img alt="_images/Preprocessing_7_367.png" src="_images/Preprocessing_7_367.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 86)
 successfully read Actiware data file
 record 40655
@@ -2224,8 +1750,8 @@ interpolated - now missing 0 values out of 37963 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_370.png" src="_images/Preprocessing_12_370.png" />
-<img alt="_images/Preprocessing_12_371.png" src="_images/Preprocessing_12_371.png" />
+<img alt="_images/Preprocessing_7_370.png" src="_images/Preprocessing_7_370.png" />
+<img alt="_images/Preprocessing_7_371.png" src="_images/Preprocessing_7_371.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 87)
 successfully read Actiware data file
 record 40656
@@ -2238,8 +1764,8 @@ interpolated - now missing 0 values out of 40312 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_374.png" src="_images/Preprocessing_12_374.png" />
-<img alt="_images/Preprocessing_12_375.png" src="_images/Preprocessing_12_375.png" />
+<img alt="_images/Preprocessing_7_374.png" src="_images/Preprocessing_7_374.png" />
+<img alt="_images/Preprocessing_7_375.png" src="_images/Preprocessing_7_375.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 88)
 successfully read Actiware data file
 record 40658
@@ -2252,8 +1778,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_378.png" src="_images/Preprocessing_12_378.png" />
-<img alt="_images/Preprocessing_12_379.png" src="_images/Preprocessing_12_379.png" />
+<img alt="_images/Preprocessing_7_378.png" src="_images/Preprocessing_7_378.png" />
+<img alt="_images/Preprocessing_7_379.png" src="_images/Preprocessing_7_379.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 89)
 successfully read Actiware data file
 record 40664
@@ -2266,8 +1792,8 @@ interpolated - now missing 0 values out of 32254 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_382.png" src="_images/Preprocessing_12_382.png" />
-<img alt="_images/Preprocessing_12_383.png" src="_images/Preprocessing_12_383.png" />
+<img alt="_images/Preprocessing_7_382.png" src="_images/Preprocessing_7_382.png" />
+<img alt="_images/Preprocessing_7_383.png" src="_images/Preprocessing_7_383.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 90)
 successfully read Actiware data file
 record 40665
@@ -2280,8 +1806,8 @@ interpolated - now missing 0 values out of 40133 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_386.png" src="_images/Preprocessing_12_386.png" />
-<img alt="_images/Preprocessing_12_387.png" src="_images/Preprocessing_12_387.png" />
+<img alt="_images/Preprocessing_7_386.png" src="_images/Preprocessing_7_386.png" />
+<img alt="_images/Preprocessing_7_387.png" src="_images/Preprocessing_7_387.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 91)
 successfully read Actiware data file
 record 40668
@@ -2294,8 +1820,8 @@ interpolated - now missing 0 values out of 31564 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_390.png" src="_images/Preprocessing_12_390.png" />
-<img alt="_images/Preprocessing_12_391.png" src="_images/Preprocessing_12_391.png" />
+<img alt="_images/Preprocessing_7_390.png" src="_images/Preprocessing_7_390.png" />
+<img alt="_images/Preprocessing_7_391.png" src="_images/Preprocessing_7_391.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 92)
 successfully read Actiware data file
 record 40672
@@ -2308,8 +1834,8 @@ interpolated - now missing 0 values out of 31772 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_394.png" src="_images/Preprocessing_12_394.png" />
-<img alt="_images/Preprocessing_12_395.png" src="_images/Preprocessing_12_395.png" />
+<img alt="_images/Preprocessing_7_394.png" src="_images/Preprocessing_7_394.png" />
+<img alt="_images/Preprocessing_7_395.png" src="_images/Preprocessing_7_395.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 93)
 successfully read Actiware data file
 record 40685
@@ -2322,8 +1848,8 @@ interpolated - now missing 0 values out of 28623 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_398.png" src="_images/Preprocessing_12_398.png" />
-<img alt="_images/Preprocessing_12_399.png" src="_images/Preprocessing_12_399.png" />
+<img alt="_images/Preprocessing_7_398.png" src="_images/Preprocessing_7_398.png" />
+<img alt="_images/Preprocessing_7_399.png" src="_images/Preprocessing_7_399.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 94)
 successfully read Actiware data file
 record 40694
@@ -2336,8 +1862,8 @@ interpolated - now missing 0 values out of 34676 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_402.png" src="_images/Preprocessing_12_402.png" />
-<img alt="_images/Preprocessing_12_403.png" src="_images/Preprocessing_12_403.png" />
+<img alt="_images/Preprocessing_7_402.png" src="_images/Preprocessing_7_402.png" />
+<img alt="_images/Preprocessing_7_403.png" src="_images/Preprocessing_7_403.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 95)
 successfully read Actiware data file
 record 40707
@@ -2350,8 +1876,8 @@ interpolated - now missing 0 values out of 34508 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_406.png" src="_images/Preprocessing_12_406.png" />
-<img alt="_images/Preprocessing_12_407.png" src="_images/Preprocessing_12_407.png" />
+<img alt="_images/Preprocessing_7_406.png" src="_images/Preprocessing_7_406.png" />
+<img alt="_images/Preprocessing_7_407.png" src="_images/Preprocessing_7_407.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 96)
 successfully read Actiware data file
 record 40720
@@ -2364,8 +1890,8 @@ interpolated - now missing 0 values out of 39995 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_410.png" src="_images/Preprocessing_12_410.png" />
-<img alt="_images/Preprocessing_12_411.png" src="_images/Preprocessing_12_411.png" />
+<img alt="_images/Preprocessing_7_410.png" src="_images/Preprocessing_7_410.png" />
+<img alt="_images/Preprocessing_7_411.png" src="_images/Preprocessing_7_411.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 97)
 successfully read Actiware data file
 record 40728
@@ -2378,8 +1904,8 @@ interpolated - now missing 0 values out of 40278 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_414.png" src="_images/Preprocessing_12_414.png" />
-<img alt="_images/Preprocessing_12_415.png" src="_images/Preprocessing_12_415.png" />
+<img alt="_images/Preprocessing_7_414.png" src="_images/Preprocessing_7_414.png" />
+<img alt="_images/Preprocessing_7_415.png" src="_images/Preprocessing_7_415.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 98)
 successfully read Actiware data file
 record 40730
@@ -2392,8 +1918,8 @@ interpolated - now missing 0 values out of 40255 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_418.png" src="_images/Preprocessing_12_418.png" />
-<img alt="_images/Preprocessing_12_419.png" src="_images/Preprocessing_12_419.png" />
+<img alt="_images/Preprocessing_7_418.png" src="_images/Preprocessing_7_418.png" />
+<img alt="_images/Preprocessing_7_419.png" src="_images/Preprocessing_7_419.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 99)
 successfully read Actiware data file
 record 40733
@@ -2406,8 +1932,8 @@ interpolated - now missing 0 values out of 37582 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_422.png" src="_images/Preprocessing_12_422.png" />
-<img alt="_images/Preprocessing_12_423.png" src="_images/Preprocessing_12_423.png" />
+<img alt="_images/Preprocessing_7_422.png" src="_images/Preprocessing_7_422.png" />
+<img alt="_images/Preprocessing_7_423.png" src="_images/Preprocessing_7_423.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 100)
 successfully read Actiware data file
 record 40738
@@ -2420,8 +1946,8 @@ interpolated - now missing 0 values out of 37749 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_426.png" src="_images/Preprocessing_12_426.png" />
-<img alt="_images/Preprocessing_12_427.png" src="_images/Preprocessing_12_427.png" />
+<img alt="_images/Preprocessing_7_426.png" src="_images/Preprocessing_7_426.png" />
+<img alt="_images/Preprocessing_7_427.png" src="_images/Preprocessing_7_427.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2438,8 +1964,8 @@ interpolated - now missing 0 values out of 31131 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_431.png" src="_images/Preprocessing_12_431.png" />
-<img alt="_images/Preprocessing_12_432.png" src="_images/Preprocessing_12_432.png" />
+<img alt="_images/Preprocessing_7_431.png" src="_images/Preprocessing_7_431.png" />
+<img alt="_images/Preprocessing_7_432.png" src="_images/Preprocessing_7_432.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2456,8 +1982,8 @@ interpolated - now missing 0 values out of 20212 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_436.png" src="_images/Preprocessing_12_436.png" />
-<img alt="_images/Preprocessing_12_437.png" src="_images/Preprocessing_12_437.png" />
+<img alt="_images/Preprocessing_7_436.png" src="_images/Preprocessing_7_436.png" />
+<img alt="_images/Preprocessing_7_437.png" src="_images/Preprocessing_7_437.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2474,8 +2000,8 @@ interpolated - now missing 0 values out of 37659 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_441.png" src="_images/Preprocessing_12_441.png" />
-<img alt="_images/Preprocessing_12_442.png" src="_images/Preprocessing_12_442.png" />
+<img alt="_images/Preprocessing_7_441.png" src="_images/Preprocessing_7_441.png" />
+<img alt="_images/Preprocessing_7_442.png" src="_images/Preprocessing_7_442.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2492,8 +2018,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_446.png" src="_images/Preprocessing_12_446.png" />
-<img alt="_images/Preprocessing_12_447.png" src="_images/Preprocessing_12_447.png" />
+<img alt="_images/Preprocessing_7_446.png" src="_images/Preprocessing_7_446.png" />
+<img alt="_images/Preprocessing_7_447.png" src="_images/Preprocessing_7_447.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2510,8 +2036,8 @@ interpolated - now missing 0 values out of 40261 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_451.png" src="_images/Preprocessing_12_451.png" />
-<img alt="_images/Preprocessing_12_452.png" src="_images/Preprocessing_12_452.png" />
+<img alt="_images/Preprocessing_7_451.png" src="_images/Preprocessing_7_451.png" />
+<img alt="_images/Preprocessing_7_452.png" src="_images/Preprocessing_7_452.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2528,8 +2054,8 @@ interpolated - now missing 0 values out of 40278 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_456.png" src="_images/Preprocessing_12_456.png" />
-<img alt="_images/Preprocessing_12_457.png" src="_images/Preprocessing_12_457.png" />
+<img alt="_images/Preprocessing_7_456.png" src="_images/Preprocessing_7_456.png" />
+<img alt="_images/Preprocessing_7_457.png" src="_images/Preprocessing_7_457.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2546,8 +2072,8 @@ interpolated - now missing 0 values out of 35185 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_461.png" src="_images/Preprocessing_12_461.png" />
-<img alt="_images/Preprocessing_12_462.png" src="_images/Preprocessing_12_462.png" />
+<img alt="_images/Preprocessing_7_461.png" src="_images/Preprocessing_7_461.png" />
+<img alt="_images/Preprocessing_7_462.png" src="_images/Preprocessing_7_462.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2564,8 +2090,8 @@ interpolated - now missing 0 values out of 29016 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_466.png" src="_images/Preprocessing_12_466.png" />
-<img alt="_images/Preprocessing_12_467.png" src="_images/Preprocessing_12_467.png" />
+<img alt="_images/Preprocessing_7_466.png" src="_images/Preprocessing_7_466.png" />
+<img alt="_images/Preprocessing_7_467.png" src="_images/Preprocessing_7_467.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2582,8 +2108,8 @@ interpolated - now missing 0 values out of 37239 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_471.png" src="_images/Preprocessing_12_471.png" />
-<img alt="_images/Preprocessing_12_472.png" src="_images/Preprocessing_12_472.png" />
+<img alt="_images/Preprocessing_7_471.png" src="_images/Preprocessing_7_471.png" />
+<img alt="_images/Preprocessing_7_472.png" src="_images/Preprocessing_7_472.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2600,8 +2126,8 @@ interpolated - now missing 0 values out of 31879 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_476.png" src="_images/Preprocessing_12_476.png" />
-<img alt="_images/Preprocessing_12_477.png" src="_images/Preprocessing_12_477.png" />
+<img alt="_images/Preprocessing_7_476.png" src="_images/Preprocessing_7_476.png" />
+<img alt="_images/Preprocessing_7_477.png" src="_images/Preprocessing_7_477.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2618,8 +2144,8 @@ interpolated - now missing 0 values out of 39861 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_481.png" src="_images/Preprocessing_12_481.png" />
-<img alt="_images/Preprocessing_12_482.png" src="_images/Preprocessing_12_482.png" />
+<img alt="_images/Preprocessing_7_481.png" src="_images/Preprocessing_7_481.png" />
+<img alt="_images/Preprocessing_7_482.png" src="_images/Preprocessing_7_482.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2636,8 +2162,8 @@ interpolated - now missing 0 values out of 40088 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_486.png" src="_images/Preprocessing_12_486.png" />
-<img alt="_images/Preprocessing_12_487.png" src="_images/Preprocessing_12_487.png" />
+<img alt="_images/Preprocessing_7_486.png" src="_images/Preprocessing_7_486.png" />
+<img alt="_images/Preprocessing_7_487.png" src="_images/Preprocessing_7_487.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2654,8 +2180,8 @@ interpolated - now missing 0 values out of 37492 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_491.png" src="_images/Preprocessing_12_491.png" />
-<img alt="_images/Preprocessing_12_492.png" src="_images/Preprocessing_12_492.png" />
+<img alt="_images/Preprocessing_7_491.png" src="_images/Preprocessing_7_491.png" />
+<img alt="_images/Preprocessing_7_492.png" src="_images/Preprocessing_7_492.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2672,8 +2198,8 @@ interpolated - now missing 0 values out of 37767 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_496.png" src="_images/Preprocessing_12_496.png" />
-<img alt="_images/Preprocessing_12_497.png" src="_images/Preprocessing_12_497.png" />
+<img alt="_images/Preprocessing_7_496.png" src="_images/Preprocessing_7_496.png" />
+<img alt="_images/Preprocessing_7_497.png" src="_images/Preprocessing_7_497.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2690,8 +2216,8 @@ interpolated - now missing 0 values out of 40265 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_501.png" src="_images/Preprocessing_12_501.png" />
-<img alt="_images/Preprocessing_12_502.png" src="_images/Preprocessing_12_502.png" />
+<img alt="_images/Preprocessing_7_501.png" src="_images/Preprocessing_7_501.png" />
+<img alt="_images/Preprocessing_7_502.png" src="_images/Preprocessing_7_502.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2708,8 +2234,8 @@ interpolated - now missing 0 values out of 34525 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_506.png" src="_images/Preprocessing_12_506.png" />
-<img alt="_images/Preprocessing_12_507.png" src="_images/Preprocessing_12_507.png" />
+<img alt="_images/Preprocessing_7_506.png" src="_images/Preprocessing_7_506.png" />
+<img alt="_images/Preprocessing_7_507.png" src="_images/Preprocessing_7_507.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2726,8 +2252,8 @@ interpolated - now missing 0 values out of 40318 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_511.png" src="_images/Preprocessing_12_511.png" />
-<img alt="_images/Preprocessing_12_512.png" src="_images/Preprocessing_12_512.png" />
+<img alt="_images/Preprocessing_7_511.png" src="_images/Preprocessing_7_511.png" />
+<img alt="_images/Preprocessing_7_512.png" src="_images/Preprocessing_7_512.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2744,8 +2270,8 @@ interpolated - now missing 0 values out of 40318 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_516.png" src="_images/Preprocessing_12_516.png" />
-<img alt="_images/Preprocessing_12_517.png" src="_images/Preprocessing_12_517.png" />
+<img alt="_images/Preprocessing_7_516.png" src="_images/Preprocessing_7_516.png" />
+<img alt="_images/Preprocessing_7_517.png" src="_images/Preprocessing_7_517.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2762,8 +2288,8 @@ interpolated - now missing 0 values out of 40319 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_521.png" src="_images/Preprocessing_12_521.png" />
-<img alt="_images/Preprocessing_12_522.png" src="_images/Preprocessing_12_522.png" />
+<img alt="_images/Preprocessing_7_521.png" src="_images/Preprocessing_7_521.png" />
+<img alt="_images/Preprocessing_7_522.png" src="_images/Preprocessing_7_522.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2780,8 +2306,8 @@ interpolated - now missing 0 values out of 29425 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_526.png" src="_images/Preprocessing_12_526.png" />
-<img alt="_images/Preprocessing_12_527.png" src="_images/Preprocessing_12_527.png" />
+<img alt="_images/Preprocessing_7_526.png" src="_images/Preprocessing_7_526.png" />
+<img alt="_images/Preprocessing_7_527.png" src="_images/Preprocessing_7_527.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2798,8 +2324,8 @@ interpolated - now missing 0 values out of 37464 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_531.png" src="_images/Preprocessing_12_531.png" />
-<img alt="_images/Preprocessing_12_532.png" src="_images/Preprocessing_12_532.png" />
+<img alt="_images/Preprocessing_7_531.png" src="_images/Preprocessing_7_531.png" />
+<img alt="_images/Preprocessing_7_532.png" src="_images/Preprocessing_7_532.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2816,8 +2342,8 @@ interpolated - now missing 0 values out of 40307 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_536.png" src="_images/Preprocessing_12_536.png" />
-<img alt="_images/Preprocessing_12_537.png" src="_images/Preprocessing_12_537.png" />
+<img alt="_images/Preprocessing_7_536.png" src="_images/Preprocessing_7_536.png" />
+<img alt="_images/Preprocessing_7_537.png" src="_images/Preprocessing_7_537.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2834,8 +2360,8 @@ interpolated - now missing 0 values out of 40147 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_541.png" src="_images/Preprocessing_12_541.png" />
-<img alt="_images/Preprocessing_12_542.png" src="_images/Preprocessing_12_542.png" />
+<img alt="_images/Preprocessing_7_541.png" src="_images/Preprocessing_7_541.png" />
+<img alt="_images/Preprocessing_7_542.png" src="_images/Preprocessing_7_542.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
   actdf[subject] = act24.values
 </pre></div>
@@ -2852,8 +2378,8 @@ interpolated - now missing 0 values out of 21821 total (0.0 percent)
   ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_12_546.png" src="_images/Preprocessing_12_546.png" />
-<img alt="_images/Preprocessing_12_547.png" src="_images/Preprocessing_12_547.png" />
+<img alt="_images/Preprocessing_7_546.png" src="_images/Preprocessing_7_546.png" />
+<img alt="_images/Preprocessing_7_547.png" src="_images/Preprocessing_7_547.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 125)
 </pre></div>
 </div>
@@ -2865,7 +2391,7 @@ interpolated - now missing 0 values out of 21821 total (0.0 percent)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/data/actigraphy_data_24hrday-noncyclic_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/data/actigraphy_data_24hrday_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2880,7 +2406,8 @@ interpolated - now missing 0 values out of 21821 total (0.0 percent)
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="_images/Preprocessing_14_1.png" src="_images/Preprocessing_14_1.png" />
+<img alt="_images/Preprocessing_9_1.png" src="_images/Preprocessing_9_1.png" />
+</div>
 </div>
 </div>
 </div>

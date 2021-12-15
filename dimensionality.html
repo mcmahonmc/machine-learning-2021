@@ -1,0 +1,2264 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dimensionality reduction for novel rest-activity measures &#8212; PSY 394S Final Project</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Classification of cogntive performance" href="classification.html" />
+    <link rel="prev" title="Standard rest-activity measure calculation" href="rar_measures.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">PSY 394S Final Project</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="rar_measures.html">
+   Standard rest-activity measure calculation
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Dimensionality reduction for novel rest-activity measures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification.html">
+   Classification of cogntive performance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="references.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/dimensionality.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdimensionality.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/dimensionality.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Dimensionality reduction for novel rest-activity measures
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-data">
+     Load data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-standard-rest-activity-measures">
+     Load standard rest-activity measures
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#define-targets">
+       Define targets
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dimensionality-reduction">
+   Dimensionality Reduction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pca">
+     PCA
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#isomap">
+     Isomap
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lle">
+     LLE
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dimensionality-reduction-random-noise">
+   Dimensionality reduction - random noise
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#comparison-with-traditional-sleep-and-rest-activity-measures">
+   Comparison with traditional sleep and rest-activity measures
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     PCA
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Isomap
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     LLE
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correlations">
+     Correlations
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="dimensionality-reduction-for-novel-rest-activity-measures">
+<h1>Dimensionality reduction for novel rest-activity measures<a class="headerlink" href="#dimensionality-reduction-for-novel-rest-activity-measures" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">QuantileTransformer</span><span class="p">,</span> <span class="n">Normalizer</span> 
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">manifold</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">LeaveOneOut</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="n">work_dir</span> <span class="o">=</span> <span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/&#39;</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">work_dir</span> <span class="o">+</span> <span class="s1">&#39;data/&#39;</span>
+<span class="n">results_dir</span> <span class="o">=</span> <span class="n">work_dir</span> <span class="o">+</span> <span class="s1">&#39;results/24hrday_ncomponents/&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Exclusion notes:</p>
+<p>Missing actigraphy data: <br></p>
+<ul class="simple">
+<li><p>30242</p></li>
+<li><p>30412</p></li>
+<li><p>30433</p></li>
+</ul>
+<p>Weird: <br></p>
+<ul class="simple">
+<li><p>40511 has extreme values at end</p></li>
+<li><p>40538 also has a huge spike</p></li>
+<li><p>40608</p></li>
+<li><p>40619</p></li>
+<li><p>40653</p></li>
+<li><p>40694</p></li>
+</ul>
+<div class="section" id="load-data">
+<h2>Load data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;actigraphy_data_24hrday_df.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;40768&#39;</span><span class="p">,</span> <span class="s1">&#39;30242&#39;</span><span class="p">,</span> <span class="s1">&#39;30412&#39;</span><span class="p">,</span> <span class="s1">&#39;30433&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;actigraphy df&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;target_data.csv&#39;</span><span class="p">)</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="mi">40768</span><span class="p">,</span> <span class="mi">30242</span><span class="p">,</span> <span class="mi">30412</span><span class="p">,</span> <span class="mi">30433</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;targets&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">targets</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>actigraphy df
+(24, 121)
+targets
+(112, 279)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>age</th>
+      <th>group</th>
+      <th>gender</th>
+      <th>trails_b_z_score_x</th>
+      <th>trails_b_group</th>
+      <th>duration_mean_active</th>
+      <th>duration_mean_daily</th>
+      <th>duration_mean_rest</th>
+      <th>duration_mean_sleep</th>
+      <th>...</th>
+      <th>Left.hippocampal.fissure</th>
+      <th>Left.Whole_hippocampal_body</th>
+      <th>Left.Whole_hippocampal_head</th>
+      <th>Left.Whole_hippocampus</th>
+      <th>Right.Hippocampal_tail</th>
+      <th>Right.hippocampal.fissure</th>
+      <th>Right.Whole_hippocampal_body</th>
+      <th>Right.Whole_hippocampal_head</th>
+      <th>Right.Whole_hippocampus</th>
+      <th>cc_fa</th>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>30004</th>
+      <td>0</td>
+      <td>27.0</td>
+      <td>Young Adults</td>
+      <td>2.0</td>
+      <td>-0.673139</td>
+      <td>Low</td>
+      <td>937.071429</td>
+      <td>1263.428571</td>
+      <td>436.428571</td>
+      <td>405.500000</td>
+      <td>...</td>
+      <td>103.610701</td>
+      <td>1044.195719</td>
+      <td>1398.964955</td>
+      <td>2907.251396</td>
+      <td>468.379186</td>
+      <td>106.077142</td>
+      <td>1020.857892</td>
+      <td>1441.995366</td>
+      <td>2931.232444</td>
+      <td>0.582804</td>
+    </tr>
+    <tr>
+      <th>30008</th>
+      <td>1</td>
+      <td>18.0</td>
+      <td>Young Adults</td>
+      <td>2.0</td>
+      <td>-0.869188</td>
+      <td>Low</td>
+      <td>872.928571</td>
+      <td>1251.214286</td>
+      <td>501.857143</td>
+      <td>446.071429</td>
+      <td>...</td>
+      <td>144.813418</td>
+      <td>1204.042983</td>
+      <td>1634.228393</td>
+      <td>3445.750080</td>
+      <td>618.218806</td>
+      <td>145.052717</td>
+      <td>1213.668913</td>
+      <td>1635.260923</td>
+      <td>3467.148642</td>
+      <td>0.559800</td>
+    </tr>
+    <tr>
+      <th>30009</th>
+      <td>2</td>
+      <td>25.0</td>
+      <td>Young Adults</td>
+      <td>2.0</td>
+      <td>-0.834951</td>
+      <td>Low</td>
+      <td>981.214286</td>
+      <td>1317.000000</td>
+      <td>455.142857</td>
+      <td>436.357143</td>
+      <td>...</td>
+      <td>136.160494</td>
+      <td>1192.518585</td>
+      <td>1599.914291</td>
+      <td>3328.766941</td>
+      <td>543.045786</td>
+      <td>146.643748</td>
+      <td>1232.700746</td>
+      <td>1807.269141</td>
+      <td>3583.015674</td>
+      <td>0.601367</td>
+    </tr>
+    <tr>
+      <th>30012</th>
+      <td>3</td>
+      <td>30.0</td>
+      <td>Young Adults</td>
+      <td>1.0</td>
+      <td>-0.268608</td>
+      <td>Medium</td>
+      <td>914.857143</td>
+      <td>1288.571429</td>
+      <td>465.000000</td>
+      <td>454.142857</td>
+      <td>...</td>
+      <td>161.352783</td>
+      <td>1288.481710</td>
+      <td>1835.814889</td>
+      <td>3751.599484</td>
+      <td>663.701747</td>
+      <td>133.943847</td>
+      <td>1328.224316</td>
+      <td>1944.852320</td>
+      <td>3936.778383</td>
+      <td>0.587033</td>
+    </tr>
+    <tr>
+      <th>30015</th>
+      <td>4</td>
+      <td>26.0</td>
+      <td>Young Adults</td>
+      <td>1.0</td>
+      <td>-1.563107</td>
+      <td>Low</td>
+      <td>899.857143</td>
+      <td>1438.714286</td>
+      <td>452.000000</td>
+      <td>435.642857</td>
+      <td>...</td>
+      <td>148.140462</td>
+      <td>1356.785914</td>
+      <td>1886.936232</td>
+      <td>3894.608270</td>
+      <td>704.116073</td>
+      <td>154.378972</td>
+      <td>1418.849716</td>
+      <td>1858.631846</td>
+      <td>3981.597634</td>
+      <td>0.586247</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 279 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">actdf</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">values</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;+1SD&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;+2SD&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;+3SD&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-1SD&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-2SD&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-3SD&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/dimensionality_5_1.png" src="_images/dimensionality_5_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="c1"># normalizing the features</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drop_subs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">subject</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
+<span class="n">drop_subs_idx</span> <span class="o">=</span> <span class="p">[</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
+
+<span class="n">actdf</span> <span class="o">=</span> <span class="n">actdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">drop_subs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">drop_subs_idx</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(21, 112)
+(112, 24)
+(112, 279)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;actigraphy_group_matrix.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_8_0.png" src="_images/dimensionality_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">100</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/dimensionality_9_1.png" src="_images/dimensionality_9_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.2915547608421248, 0.20850802084858336)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-standard-rest-activity-measures">
+<h2>Load standard rest-activity measures<a class="headerlink" href="#load-standard-rest-activity-measures" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rar</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;rar_df.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">drop_subs</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">rar</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
+<span class="n">drop_subs</span>
+
+<span class="n">rar2</span> <span class="o">=</span> <span class="p">(</span><span class="n">rar</span><span class="p">[</span><span class="o">~</span><span class="n">rar</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">drop_subs</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rar2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 8)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_active&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_active&#39;, &#39;total_ac_mean_active&#39;, &#39;sleep_time_mean_active&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_sleep&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_sleep&#39;,
+ &#39;total_ac_mean_sleep&#39;,
+ &#39;onset_latency_mean_sleep&#39;,
+ &#39;efficiency_mean_sleep&#39;,
+ &#39;sleep_time_mean_sleep&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>age</th>
+      <th>group</th>
+      <th>gender</th>
+      <th>trails_b_z_score_x</th>
+      <th>trails_b_group</th>
+      <th>duration_mean_active</th>
+      <th>duration_mean_daily</th>
+      <th>duration_mean_rest</th>
+      <th>duration_mean_sleep</th>
+      <th>...</th>
+      <th>Left.hippocampal.fissure</th>
+      <th>Left.Whole_hippocampal_body</th>
+      <th>Left.Whole_hippocampal_head</th>
+      <th>Left.Whole_hippocampus</th>
+      <th>Right.Hippocampal_tail</th>
+      <th>Right.hippocampal.fissure</th>
+      <th>Right.Whole_hippocampal_body</th>
+      <th>Right.Whole_hippocampal_head</th>
+      <th>Right.Whole_hippocampus</th>
+      <th>cc_fa</th>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>30004</th>
+      <td>0</td>
+      <td>27.0</td>
+      <td>Young Adults</td>
+      <td>2.0</td>
+      <td>-0.673139</td>
+      <td>Low</td>
+      <td>937.071429</td>
+      <td>1263.428571</td>
+      <td>436.428571</td>
+      <td>405.500000</td>
+      <td>...</td>
+      <td>103.610701</td>
+      <td>1044.195719</td>
+      <td>1398.964955</td>
+      <td>2907.251396</td>
+      <td>468.379186</td>
+      <td>106.077142</td>
+      <td>1020.857892</td>
+      <td>1441.995366</td>
+      <td>2931.232444</td>
+      <td>0.582804</td>
+    </tr>
+    <tr>
+      <th>30008</th>
+      <td>1</td>
+      <td>18.0</td>
+      <td>Young Adults</td>
+      <td>2.0</td>
+      <td>-0.869188</td>
+      <td>Low</td>
+      <td>872.928571</td>
+      <td>1251.214286</td>
+      <td>501.857143</td>
+      <td>446.071429</td>
+      <td>...</td>
+      <td>144.813418</td>
+      <td>1204.042983</td>
+      <td>1634.228393</td>
+      <td>3445.750080</td>
+      <td>618.218806</td>
+      <td>145.052717</td>
+      <td>1213.668913</td>
+      <td>1635.260923</td>
+      <td>3467.148642</td>
+      <td>0.559800</td>
+    </tr>
+    <tr>
+      <th>30009</th>
+      <td>2</td>
+      <td>25.0</td>
+      <td>Young Adults</td>
+      <td>2.0</td>
+      <td>-0.834951</td>
+      <td>Low</td>
+      <td>981.214286</td>
+      <td>1317.000000</td>
+      <td>455.142857</td>
+      <td>436.357143</td>
+      <td>...</td>
+      <td>136.160494</td>
+      <td>1192.518585</td>
+      <td>1599.914291</td>
+      <td>3328.766941</td>
+      <td>543.045786</td>
+      <td>146.643748</td>
+      <td>1232.700746</td>
+      <td>1807.269141</td>
+      <td>3583.015674</td>
+      <td>0.601367</td>
+    </tr>
+    <tr>
+      <th>30012</th>
+      <td>3</td>
+      <td>30.0</td>
+      <td>Young Adults</td>
+      <td>1.0</td>
+      <td>-0.268608</td>
+      <td>Medium</td>
+      <td>914.857143</td>
+      <td>1288.571429</td>
+      <td>465.000000</td>
+      <td>454.142857</td>
+      <td>...</td>
+      <td>161.352783</td>
+      <td>1288.481710</td>
+      <td>1835.814889</td>
+      <td>3751.599484</td>
+      <td>663.701747</td>
+      <td>133.943847</td>
+      <td>1328.224316</td>
+      <td>1944.852320</td>
+      <td>3936.778383</td>
+      <td>0.587033</td>
+    </tr>
+    <tr>
+      <th>30015</th>
+      <td>4</td>
+      <td>26.0</td>
+      <td>Young Adults</td>
+      <td>1.0</td>
+      <td>-1.563107</td>
+      <td>Low</td>
+      <td>899.857143</td>
+      <td>1438.714286</td>
+      <td>452.000000</td>
+      <td>435.642857</td>
+      <td>...</td>
+      <td>148.140462</td>
+      <td>1356.785914</td>
+      <td>1886.936232</td>
+      <td>3894.608270</td>
+      <td>704.116073</td>
+      <td>154.378972</td>
+      <td>1418.849716</td>
+      <td>1858.631846</td>
+      <td>3981.597634</td>
+      <td>0.586247</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>40855</th>
+      <td>111</td>
+      <td>80.0</td>
+      <td>Older Adults</td>
+      <td>2.0</td>
+      <td>0.935041</td>
+      <td>High</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>170.593990</td>
+      <td>1076.777270</td>
+      <td>1435.407917</td>
+      <td>3107.817477</td>
+      <td>635.886503</td>
+      <td>175.417475</td>
+      <td>1094.449991</td>
+      <td>1575.843183</td>
+      <td>3306.179677</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40859</th>
+      <td>112</td>
+      <td>71.0</td>
+      <td>Older Adults</td>
+      <td>1.0</td>
+      <td>1.465310</td>
+      <td>High</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>134.776211</td>
+      <td>1083.616531</td>
+      <td>1292.730790</td>
+      <td>2990.671483</td>
+      <td>588.987373</td>
+      <td>131.490185</td>
+      <td>1022.651680</td>
+      <td>1264.980072</td>
+      <td>2876.619125</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40861</th>
+      <td>113</td>
+      <td>69.0</td>
+      <td>Older Adults</td>
+      <td>1.0</td>
+      <td>-2.457573</td>
+      <td>Low</td>
+      <td>809.000000</td>
+      <td>1439.928571</td>
+      <td>569.428571</td>
+      <td>492.785714</td>
+      <td>...</td>
+      <td>194.849007</td>
+      <td>1233.935858</td>
+      <td>1884.858216</td>
+      <td>3705.570884</td>
+      <td>606.106704</td>
+      <td>199.832531</td>
+      <td>1257.263536</td>
+      <td>1893.275499</td>
+      <td>3756.645739</td>
+      <td>0.488233</td>
+    </tr>
+    <tr>
+      <th>40876</th>
+      <td>114</td>
+      <td>72.0</td>
+      <td>Older Adults</td>
+      <td>2.0</td>
+      <td>-1.858330</td>
+      <td>Low</td>
+      <td>829.214286</td>
+      <td>1268.500000</td>
+      <td>536.125000</td>
+      <td>495.625000</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.524456</td>
+    </tr>
+    <tr>
+      <th>40878</th>
+      <td>115</td>
+      <td>71.0</td>
+      <td>Older Adults</td>
+      <td>1.0</td>
+      <td>-2.273785</td>
+      <td>Low</td>
+      <td>877.000000</td>
+      <td>1440.000000</td>
+      <td>472.642857</td>
+      <td>435.714286</td>
+      <td>...</td>
+      <td>173.884635</td>
+      <td>957.505865</td>
+      <td>1449.357878</td>
+      <td>2856.082443</td>
+      <td>453.440177</td>
+      <td>156.191287</td>
+      <td>948.369133</td>
+      <td>1403.563066</td>
+      <td>2805.372376</td>
+      <td>0.511366</td>
+    </tr>
+  </tbody>
+</table>
+<p>112 rows × 279 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rar3</span> <span class="o">=</span> <span class="n">rar2</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="s1">&#39;total_ac_mean_active&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;duration_mean_sleep&#39;</span><span class="p">,</span> 
+                    <span class="s1">&#39;total_ac_mean_sleep&#39;</span><span class="p">,</span> 
+                   <span class="s1">&#39;efficiency_mean_sleep&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;sleep_time_sd_sleep&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;onset_latency_mean_sleep&#39;</span><span class="p">]],</span>
+          <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;subject&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rar3</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;total_ac_mean_active&#39;</span><span class="p">:</span> <span class="s1">&#39;physical_activity&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;duration_mean_sleep&#39;</span><span class="p">:</span> <span class="s1">&#39;TST&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;total_ac_mean_sleep&#39;</span><span class="p">:</span> <span class="s1">&#39;sleep_activity&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;efficiency_mean_sleep&#39;</span><span class="p">:</span> <span class="s1">&#39;sleep_efficiency&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;sleep_time_sd_sleep&#39;</span><span class="p">:</span> <span class="s1">&#39;TST_sd&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;onset_latency_mean_sleep&#39;</span><span class="p">:</span> <span class="s1">&#39;WASO&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;actmin&#39;</span><span class="p">:</span> <span class="s1">&#39;minimum&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;amp&#39;</span><span class="p">:</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="s1">&#39;width&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="s1">&#39;slope&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="s1">&#39;acrophase&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">rar3</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>minimum</th>
+      <th>amplitude</th>
+      <th>width</th>
+      <th>slope</th>
+      <th>acrophase</th>
+      <th>IS</th>
+      <th>IV</th>
+      <th>RA</th>
+      <th>physical_activity</th>
+      <th>TST</th>
+      <th>sleep_activity</th>
+      <th>sleep_efficiency</th>
+      <th>TST_sd</th>
+      <th>WASO</th>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>30004</th>
+      <td>0.696391</td>
+      <td>2.000000</td>
+      <td>-0.839879</td>
+      <td>12.174420</td>
+      <td>15.700554</td>
+      <td>0.237301</td>
+      <td>0.497090</td>
+      <td>0.978493</td>
+      <td>268200.4286</td>
+      <td>405.500000</td>
+      <td>3570.000000</td>
+      <td>87.394286</td>
+      <td>107.568472</td>
+      <td>8.642857</td>
+    </tr>
+    <tr>
+      <th>30008</th>
+      <td>1.047358</td>
+      <td>1.552863</td>
+      <td>-0.853070</td>
+      <td>325.423752</td>
+      <td>16.600185</td>
+      <td>0.261227</td>
+      <td>0.524768</td>
+      <td>0.961466</td>
+      <td>258591.1429</td>
+      <td>446.071429</td>
+      <td>3296.000000</td>
+      <td>83.851429</td>
+      <td>106.624675</td>
+      <td>28.428571</td>
+    </tr>
+    <tr>
+      <th>30009</th>
+      <td>1.088250</td>
+      <td>1.621375</td>
+      <td>-0.839957</td>
+      <td>385.754408</td>
+      <td>14.813229</td>
+      <td>0.236853</td>
+      <td>0.194339</td>
+      <td>0.965710</td>
+      <td>459317.2857</td>
+      <td>436.357143</td>
+      <td>6431.571429</td>
+      <td>86.574286</td>
+      <td>78.052333</td>
+      <td>9.857143</td>
+    </tr>
+    <tr>
+      <th>30012</th>
+      <td>1.384584</td>
+      <td>1.437337</td>
+      <td>-0.613403</td>
+      <td>7.015407</td>
+      <td>15.689278</td>
+      <td>0.268342</td>
+      <td>0.299328</td>
+      <td>0.954806</td>
+      <td>378916.8571</td>
+      <td>454.142857</td>
+      <td>6606.285714</td>
+      <td>88.382857</td>
+      <td>52.559490</td>
+      <td>5.500000</td>
+    </tr>
+    <tr>
+      <th>30015</th>
+      <td>1.070629</td>
+      <td>1.605177</td>
+      <td>-0.690900</td>
+      <td>419.617253</td>
+      <td>14.554844</td>
+      <td>0.214801</td>
+      <td>0.286109</td>
+      <td>0.974820</td>
+      <td>298735.5714</td>
+      <td>435.642857</td>
+      <td>4333.571429</td>
+      <td>89.585714</td>
+      <td>41.250974</td>
+      <td>2.500000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="section" id="define-targets">
+<h3>Define targets<a class="headerlink" href="#define-targets" title="Permalink to this headline">¶</a></h3>
+<p>target data uses output from rar dataframe merged with other variables of interest</p>
+<p><strong>Missing data</strong></p>
+<p>Missing data here for CESD (this is intended for young adults only), GDS (this is intended for older adults only), and some of the MRI measures (due to poor image quality).</p>
+<p>For targets of interest, will impute missing values with the mean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;terrain&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:ylabel=&#39;subject&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/dimensionality_20_1.png" src="_images/dimensionality_20_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># targets.to_csv(&#39;/Users/mcmahonmc/Github/machine-learning-2021/final/target_data.csv&#39;, index=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.2002318 , 0.04793943, 0.11931398, ..., 0.26151692, 0.28945745,
+        0.1887533 ],
+       [0.29950756, 0.28973993, 0.16320189, ..., 0.27785721, 0.35522225,
+        0.34705332],
+       [0.19277309, 0.01631981, 0.03518352, ..., 0.37017161, 0.33794286,
+        0.20155625],
+       ...,
+       [0.04965451, 0.27072128, 0.16623731, ..., 0.03892112, 0.1017058 ,
+        0.08058083],
+       [0.28302075, 0.15529792, 0.18473682, ..., 0.40175643, 0.25913707,
+        0.27841653],
+       [0.31244524, 0.07741772, 0.08202791, ..., 0.22334145, 0.24887319,
+        0.10058678]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="dimensionality-reduction">
+<h1>Dimensionality Reduction<a class="headerlink" href="#dimensionality-reduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pca">
+<h2>PCA<a class="headerlink" href="#pca" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">)</span>
+<span class="n">data_pcs</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">n_components_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.22427275 0.207631   0.12641621 0.06177867 0.03550251 0.03223477
+ 0.02430476 0.01832219]
+</pre></div>
+</div>
+<img alt="_images/dimensionality_24_1.png" src="_images/dimensionality_24_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">components_n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">neighbors_n</span> <span class="o">=</span> <span class="mi">6</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">components_n</span><span class="p">)</span>
+
+<span class="c1"># X: Xarray-like of shape (n_samples, n_features)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">manifold_2Da_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">manifold_2D_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">manifold_2Da_pca</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Component </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifold_2Da_pca</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+<span class="c1"># Left with 2 dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Component 1</th>
+      <th>Component 2</th>
+      <th>Component 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.168038</td>
+      <td>-0.198988</td>
+      <td>-0.112640</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.020272</td>
+      <td>0.116818</td>
+      <td>-0.164727</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.975086</td>
+      <td>-0.306216</td>
+      <td>0.099980</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.820116</td>
+      <td>-0.199341</td>
+      <td>-0.185912</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.159610</td>
+      <td>-0.287852</td>
+      <td>0.025626</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Explained variation per principal component: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Explained variation per principal component: [0.26646813 0.24669535 0.15020055]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="isomap">
+<h2>Isomap<a class="headerlink" href="#isomap" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://benalexkeen.com/isomap-for-dimensionality-reduction-in-python/">Benalexkeen resource</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iso</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">Isomap</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">neighbors_n</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">components_n</span><span class="p">)</span>
+<span class="n">iso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">manifold_2Da</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">manifold_2D_iso</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">manifold_2Da</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Component </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifold_2Da</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+
+<span class="c1"># Left with 2 dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">manifold_2D_iso</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Component 1</th>
+      <th>Component 2</th>
+      <th>Component 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.003161</td>
+      <td>0.597166</td>
+      <td>0.091590</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.627578</td>
+      <td>0.000196</td>
+      <td>-0.064510</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.247080</td>
+      <td>1.617190</td>
+      <td>0.036207</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.482555</td>
+      <td>1.355894</td>
+      <td>-0.613189</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.125824</td>
+      <td>0.221377</td>
+      <td>-0.152972</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;isomap.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="lle">
+<h2>LLE<a class="headerlink" href="#lle" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lle</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">LocallyLinearEmbedding</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">neighbors_n</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">components_n</span><span class="p">)</span>
+<span class="n">lle</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">manifold_2Da_lle</span> <span class="o">=</span> <span class="n">lle</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">manifold_2D_lle</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">manifold_2Da</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Component </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifold_2Da</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+
+
+<span class="c1"># Left with 2 dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">manifold_2D_lle</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Component 1</th>
+      <th>Component 2</th>
+      <th>Component 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.003161</td>
+      <td>0.597166</td>
+      <td>0.091590</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.627578</td>
+      <td>0.000196</td>
+      <td>-0.064510</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.247080</td>
+      <td>1.617190</td>
+      <td>0.036207</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.482555</td>
+      <td>1.355894</td>
+      <td>-0.613189</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.125824</td>
+      <td>0.221377</td>
+      <td>-0.152972</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="dimensionality-reduction-random-noise">
+<h1>Dimensionality reduction - random noise<a class="headerlink" href="#dimensionality-reduction-random-noise" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">random</span>
+
+<span class="n">x_n</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">x_n</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlGnBu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/dimensionality_36_1.png" src="_images/dimensionality_36_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">components_n</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_n</span><span class="p">)</span>
+<span class="n">manifold_2Da_pca_n</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x_n</span><span class="p">)</span>
+<span class="n">manifold_2D_pca_n</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">manifold_2Da_pca_n</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Component </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifold_2Da_pca_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+<span class="c1"># Left with 2 dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">manifold_2D_pca_n</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">manifold_2D_pca_n</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Component 1</th>
+      <th>Component 2</th>
+      <th>Component 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.202505</td>
+      <td>-0.003479</td>
+      <td>0.107151</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.106746</td>
+      <td>0.266976</td>
+      <td>-0.796555</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.560232</td>
+      <td>-0.172874</td>
+      <td>0.441914</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.566241</td>
+      <td>0.490803</td>
+      <td>0.135299</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.195556</td>
+      <td>-0.031638</td>
+      <td>0.082911</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iso</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">Isomap</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">neighbors_n</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">components_n</span><span class="p">)</span>
+<span class="n">iso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_n</span><span class="p">)</span>
+<span class="n">manifold_2Da_n</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_n</span><span class="p">)</span>
+<span class="n">manifold_2D_iso_n</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">manifold_2Da_n</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Component </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifold_2Da_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+
+<span class="c1"># Left with 2 dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">manifold_2D_iso_n</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">manifold_2D_iso_n</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Component 1</th>
+      <th>Component 2</th>
+      <th>Component 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.333577</td>
+      <td>-0.681737</td>
+      <td>-0.355299</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.538683</td>
+      <td>-1.426681</td>
+      <td>-0.250537</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.345845</td>
+      <td>1.214222</td>
+      <td>-1.134821</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.688153</td>
+      <td>0.379234</td>
+      <td>-1.343020</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.191596</td>
+      <td>-0.141007</td>
+      <td>-0.898969</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lle</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">LocallyLinearEmbedding</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">neighbors_n</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">components_n</span><span class="p">)</span>
+<span class="n">lle</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_n</span><span class="p">)</span>
+<span class="n">manifold_2Da_lle_n</span> <span class="o">=</span> <span class="n">lle</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_n</span><span class="p">)</span>
+<span class="n">manifold_2D_lle_n</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">manifold_2Da_n</span><span class="p">,</span> 
+                               <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Component </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">manifold_2Da_lle_n</span><span class="p">[</span><span class="mi">0</span><span class="p">]))])</span>
+
+
+
+<span class="c1"># Left with 2 dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">manifold_2D_lle_n</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">manifold_2D_lle_n</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(112, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Component 1</th>
+      <th>Component 2</th>
+      <th>Component 3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.333577</td>
+      <td>-0.681737</td>
+      <td>-0.355299</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.538683</td>
+      <td>-1.426681</td>
+      <td>-0.250537</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.345845</td>
+      <td>1.214222</td>
+      <td>-1.134821</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.688153</td>
+      <td>0.379234</td>
+      <td>-1.343020</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.191596</td>
+      <td>-0.141007</td>
+      <td>-0.898969</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca_random.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;isomap_random.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle_random.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="comparison-with-traditional-sleep-and-rest-activity-measures">
+<h1>Comparison with traditional sleep and rest-activity measures<a class="headerlink" href="#comparison-with-traditional-sleep-and-rest-activity-measures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>PCA<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Component 1 - total activity <br>
+Component 2 - acrophase (phi)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rar2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;PCA Component Correlations with Standard RAR and Sleep Measures&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca_rar_corrplot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_43_0.png" src="_images/dimensionality_43_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correlations with psqi components</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;component_&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;global_psqi&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;PCA Component Correlations with PSQI&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca_psqi_corrplot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_44_0.png" src="_images/dimensionality_44_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp1_high_idx</span><span class="p">,</span> <span class="n">comp1_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp1_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High PC1&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp1_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low PC1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca_c1_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_45_0.png" src="_images/dimensionality_45_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp2_high_idx</span><span class="p">,</span> <span class="n">comp2_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp2_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High PC2&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp2_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low PC2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca_c2_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_46_0.png" src="_images/dimensionality_46_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp3_high_idx</span><span class="p">,</span> <span class="n">comp3_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_pca</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp3_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High PC3&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp3_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low PC3&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;pca_c3_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_47_0.png" src="_images/dimensionality_47_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Isomap<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Isomap uses the above principle to create a similarity matrix for eigenvalue decomposition. Unlike other non-linear dimensionality reduction like LLE &amp; LPP which only use local information, isomap uses the local information to create a global similarity matrix. The isomap algorithm uses euclidean metrics to prepare the neighborhood graph. Then, it approximates the geodesic distance between two points by measuring shortest path between these points using graph distance. Thus, it approximates both global as well as the local structure of the dataset in the low dimensional embedding. -<a class="reference external" href="https://blog.paperspace.com/dimension-reduction-with-isomap/">Paperspace Blog</a></p>
+<p>Component 2 - phi</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_iso</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rar2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;iso_rar_corrplot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_49_0.png" src="_images/dimensionality_49_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correlations with psqi components</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_iso</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;component_&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;global_psqi&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Isomap Component Correlations with PSQI&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;iso_psqi_corrplot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_50_0.png" src="_images/dimensionality_50_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">manifold_2D_iso</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;z_score&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+                                   <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;zscore&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()),</span>
+                                            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Component 2&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;trails_b_z_score_x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Component 2&#39;, ylabel=&#39;trails_b_z_score_x&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/dimensionality_51_1.png" src="_images/dimensionality_51_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp1_high_idx</span><span class="p">,</span> <span class="n">comp1_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp1_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High C1&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp1_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low C1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;iso_c1_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_52_0.png" src="_images/dimensionality_52_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp2_high_idx</span><span class="p">,</span> <span class="n">comp2_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp2_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High C2&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp2_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low C2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;iso_c2_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_53_0.png" src="_images/dimensionality_53_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp3_high_idx</span><span class="p">,</span> <span class="n">comp3_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_iso</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp3_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High C3&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp3_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low C3&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;iso_c3_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_54_0.png" src="_images/dimensionality_54_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>LLE<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Component 2 - phi</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_lle</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rar2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle_rar_corrplot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_56_0.png" src="_images/dimensionality_56_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correlations with psqi components</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_lle</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;component_&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;global_psqi&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;LLE Component Correlations with PSQI&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle_psqi_corrplot.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_57_0.png" src="_images/dimensionality_57_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp1_high_idx</span><span class="p">,</span> <span class="n">comp1_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp1_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High C1&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp1_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low C1&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle_c1_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_58_0.png" src="_images/dimensionality_58_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp2_high_idx</span><span class="p">,</span> <span class="n">comp2_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp2_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High C2&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp2_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low C2&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle_c2_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_59_0.png" src="_images/dimensionality_59_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp3_high_idx</span><span class="p">,</span> <span class="n">comp3_low_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">manifold_2D_lle</span><span class="p">[</span><span class="s1">&#39;Component 3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp3_high_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High C3&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">comp3_low_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low C3&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;lle_c3_high_low_line.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dimensionality_60_0.png" src="_images/dimensionality_60_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="correlations">
+<h2>Correlations<a class="headerlink" href="#correlations" title="Permalink to this headline">¶</a></h2>
+<p>MAE: Average absolute error between the model prediction and the actual observed data. <br>
+RMSE: Lower the RMSE, the more closely a model is able to predict the actual observations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_pca</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;z_score&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+                                   <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;zscore&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;pvt_rt_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;cvlt_ldelay_cue_recall_zscore&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cvlt_recognition_hits_zscore&#39;</span><span class="p">,</span> <span class="s1">&#39;cvlt_recognition_fp_zscore&#39;</span><span class="p">,</span> 
+                               <span class="s1">&#39;cvlt_sdelay_cued_zscore&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;PCA Component Correlations with Cognitive Measures&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Text(0.5, 1.0, &#39;PCA Component Correlations with Cognitive Measures&#39;)]
+</pre></div>
+</div>
+<img alt="_images/dimensionality_64_1.png" src="_images/dimensionality_64_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_iso</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;z_score&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+                                   <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;zscore&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;pvt_rt_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;cvlt_ldelay_cue_recall_zscore&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cvlt_recognition_hits_zscore&#39;</span><span class="p">,</span> <span class="s1">&#39;cvlt_recognition_fp_zscore&#39;</span><span class="p">,</span> 
+                               <span class="s1">&#39;cvlt_sdelay_cued_zscore&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Isomap Component Correlations with Cognitive Measures&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Text(0.5, 1.0, &#39;Isomap Component Correlations with Cognitive Measures&#39;)]
+</pre></div>
+</div>
+<img alt="_images/dimensionality_65_1.png" src="_images/dimensionality_65_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">manifold_2D_lle</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;z_score&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+                                   <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;zscore&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;pvt_rt_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;cvlt_ldelay_cue_recall_zscore&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cvlt_recognition_hits_zscore&#39;</span><span class="p">,</span> <span class="s1">&#39;cvlt_recognition_fp_zscore&#39;</span><span class="p">,</span> 
+                               <span class="s1">&#39;cvlt_sdelay_cued_zscore&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">.2</span><span class="p">],</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">})</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;LLE Component Correlations with Cognitive Measures&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Text(0.5, 1.0, &#39;LLE Component Correlations with Cognitive Measures&#39;)]
+</pre></div>
+</div>
+<img alt="_images/dimensionality_66_1.png" src="_images/dimensionality_66_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="rar_measures.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Standard rest-activity measure calculation</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="classification.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Classification of cogntive performance</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Megan McMahon<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

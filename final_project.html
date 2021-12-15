@@ -83,7 +83,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Project Idea
+   Introduction
   </a>
  </li>
 </ul>
@@ -99,8 +99,18 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="final_project-24hrday.html">
-   Data-driven assessment of rest-activity patterns
+  <a class="reference internal" href="dimensionality.html">
+   Dimensionality reduction for novel rest-activity measures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification.html">
+   Classification of cogntive performance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="references.html">
+   References
   </a>
  </li>
 </ul>
@@ -1078,28 +1088,28 @@ targets
   <tbody>
     <tr>
       <th>0</th>
-      <td>-0.638636</td>
-      <td>-0.707684</td>
+      <td>0.671410</td>
+      <td>-0.159949</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.171358</td>
-      <td>-0.061190</td>
+      <td>-0.690534</td>
+      <td>-0.528207</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-0.308694</td>
-      <td>0.931104</td>
+      <td>0.312290</td>
+      <td>-0.008792</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.777138</td>
-      <td>-0.220342</td>
+      <td>0.043302</td>
+      <td>0.751024</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-0.143972</td>
-      <td>-1.349799</td>
+      <td>-0.693300</td>
+      <td>0.288288</td>
     </tr>
   </tbody>
 </table>
@@ -1149,28 +1159,28 @@ targets
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.080235</td>
-      <td>2.383533</td>
+      <td>-4.931244</td>
+      <td>-4.863459</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3.748583</td>
-      <td>-5.708392</td>
+      <td>8.028135</td>
+      <td>0.351966</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-5.102520</td>
-      <td>-3.574092</td>
+      <td>8.955425</td>
+      <td>-0.904680</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>6.774199</td>
-      <td>-1.258186</td>
+      <td>4.671409</td>
+      <td>3.437408</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-2.581750</td>
-      <td>8.101310</td>
+      <td>7.336685</td>
+      <td>-0.835916</td>
     </tr>
   </tbody>
 </table>
@@ -1221,28 +1231,28 @@ targets
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.080235</td>
-      <td>2.383533</td>
+      <td>-4.931244</td>
+      <td>-4.863459</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3.748583</td>
-      <td>-5.708392</td>
+      <td>8.028135</td>
+      <td>0.351966</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-5.102520</td>
-      <td>-3.574092</td>
+      <td>8.955425</td>
+      <td>-0.904680</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>6.774199</td>
-      <td>-1.258186</td>
+      <td>4.671409</td>
+      <td>3.437408</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-2.581750</td>
-      <td>8.101310</td>
+      <td>7.336685</td>
+      <td>-0.835916</td>
     </tr>
   </tbody>
 </table>
@@ -1615,13 +1625,17 @@ RMSE: Lower the RMSE, the more closely a model is able to predict the actual obs
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CVLT L Delay Recall, MAE: 0.80, RMSE: 0.90
 PCA components
-CVLT L Delay Recall, MAE: 0.79, RMSE: 0.89
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CVLT L Delay Recall, MAE: 0.79, RMSE: 0.89
 PCA component 1
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CVLT L Delay Recall, MAE: 0.78, RMSE: 0.89
 PCA component 2
-CVLT L Delay Recall, MAE: 0.80, RMSE: 0.89
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CVLT L Delay Recall, MAE: 0.80, RMSE: 0.89
 </pre></div>
 </div>
 </div>
@@ -2027,56 +2041,82 @@ CVLT L Delay Recall, MAE: 0.80, RMSE: 0.89
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_99008</span><span class="o">/</span><span class="mf">3473831324.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_499</span><span class="o">/</span><span class="mf">3473831324.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">12</span>         <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">na_idx</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span> 
 <span class="ne">---&gt; </span><span class="mi">14</span>         <span class="n">result</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">bootstrap_svm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">n_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">,</span> <span class="n">kernel_methods</span><span class="o">=</span><span class="n">kernel_methods</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">15</span>         <span class="n">result</span><span class="p">[</span><span class="s1">&#39;dim_redx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduction_method</span>
 <span class="g g-Whitespace">     </span><span class="mi">16</span>         <span class="n">result</span><span class="p">[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
 
-<span class="nn">/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_99008/2128346444.py</span> in <span class="ni">bootstrap_svm</span><span class="nt">(X, y_true, n_size, n_iterations, kernel_methods)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span>             <span class="n">stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iterations</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">13</span>                 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">14</span>                                                                     <span class="n">test_size</span><span class="o">=</span><span class="n">n_size</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>                                                                     <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="nn">/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_499/2128346444.py</span> in <span class="ni">bootstrap_svm</span><span class="nt">(X, y_true, n_size, n_iterations, kernel_methods)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>                 <span class="n">stats</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>                                      <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">),</span>
+<span class="ne">---&gt; </span><span class="mi">27</span>                                      <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)},</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span>                                      <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> 
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/model_selection/_split.py</span> in <span class="ni">train_test_split</span><span class="nt">(test_size, train_size, random_state, shuffle, stratify, *arrays)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2195</span>                      <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2196</span> 
-<span class="ne">-&gt; </span><span class="mi">2197</span>         <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">stratify</span><span class="p">))</span>
-<span class="g g-Whitespace">   </span><span class="mi">2198</span> 
-<span class="g g-Whitespace">   </span><span class="mi">2199</span>     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">((</span><span class="n">_safe_indexing</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">train</span><span class="p">),</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span>             <span class="n">extra_args</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_args</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>             <span class="k">if</span> <span class="n">extra_args</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">63</span>                 <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span> 
+<span class="g g-Whitespace">     </span><span class="mi">65</span>             <span class="c1"># extra_args &gt; 0</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/model_selection/_split.py</span> in <span class="ni">split</span><span class="nt">(self, X, y, groups)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1385</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1386</span><span class="s2">         X, y, groups = indexable(X, y, groups)</span>
-<span class="ne">-&gt; </span><span class="mi">1387</span><span class="s2">         for train, test in self._iter_indices(X, y, groups):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1388</span><span class="s2">             yield train, test</span>
-<span class="g g-Whitespace">   </span><span class="mi">1389</span><span class="s2"> </span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/metrics/_classification.py</span> in <span class="ni">recall_score</span><span class="nt">(y_true, y_pred, labels, pos_label, average, sample_weight, zero_division)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1772</span>     <span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.</span> <span class="p">,</span> <span class="mf">1.</span> <span class="p">])</span>
+<span class="g g-Whitespace">   </span><span class="mi">1773</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1774</span><span class="sd">     _, r, _, _ = precision_recall_fscore_support(y_true, y_pred,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1775</span><span class="sd">                                                  labels=labels,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1776</span><span class="sd">                                                  pos_label=pos_label,</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/model_selection/_split.py</span> in <span class="ni">_iter_indices</span><span class="nt">(self, X, y, groups)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1708</span><span class="s2">             y = np.array([&#39; &#39;.join(row.astype(&#39;str&#39;)) for row in y])</span>
-<span class="g g-Whitespace">   </span><span class="mi">1709</span><span class="s2"> </span>
-<span class="ne">-&gt; </span><span class="mi">1710</span><span class="s2">         classes, y_indices = np.unique(y, return_inverse=True)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1711</span><span class="s2">         n_classes = classes.shape[0]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1712</span><span class="s2"> </span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span><span class="sd">             extra_args = len(args) - len(all_args)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span><span class="sd">             if extra_args &lt;= 0:</span>
+<span class="ne">---&gt; </span><span class="mi">63</span><span class="sd">                 return f(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">             # extra_args &gt; 0</span>
 
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">unique</span><span class="nt">(*args, **kwargs)</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/metrics/_classification.py</span> in <span class="ni">precision_recall_fscore_support</span><span class="nt">(y_true, y_pred, beta, labels, pos_label, average, warn_for, sample_weight, zero_division)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1462</span><span class="sd">     if beta &lt; 0:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1463</span><span class="sd">         raise ValueError(&quot;beta should be &gt;=0 in the F-beta score&quot;)</span>
+<span class="ne">-&gt; </span><span class="mi">1464</span><span class="sd">     labels = _check_set_wise_labels(y_true, y_pred, average, labels,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1465</span><span class="sd">                                     pos_label)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1466</span><span class="sd"> </span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/arraysetops.py</span> in <span class="ni">unique</span><span class="nt">(ar, return_index, return_inverse, return_counts, axis)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span><span class="s2">     ar = np.asanyarray(ar)</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span><span class="s2">     if axis is None:</span>
-<span class="ne">--&gt; </span><span class="mi">262</span><span class="s2">         ret = _unique1d(ar, return_index, return_inverse, return_counts)</span>
-<span class="g g-Whitespace">    </span><span class="mi">263</span><span class="s2">         return _unpack_tuple(ret)</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span><span class="s2"> </span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/metrics/_classification.py</span> in <span class="ni">_check_set_wise_labels</span><span class="nt">(y_true, y_pred, average, labels, pos_label)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1275</span><span class="sd">                          str(average_options))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1276</span><span class="sd"> </span>
+<span class="ne">-&gt; </span><span class="mi">1277</span><span class="sd">     y_type, y_true, y_pred = _check_targets(y_true, y_pred)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1278</span><span class="sd">     # Convert to Python primitive type to avoid NumPy type / Python str</span>
+<span class="g g-Whitespace">   </span><span class="mi">1279</span><span class="sd">     # comparison. See https://github.com/numpy/numpy/issues/6784</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/arraysetops.py</span> in <span class="ni">_unique1d</span><span class="nt">(ar, return_index, return_inverse, return_counts)</span>
-<span class="g g-Whitespace">    </span><span class="mi">331</span><span class="s2">         ret += (perm[mask],)</span>
-<span class="g g-Whitespace">    </span><span class="mi">332</span><span class="s2">     if return_inverse:</span>
-<span class="ne">--&gt; </span><span class="mi">333</span><span class="s2">         imask = np.cumsum(mask) - 1</span>
-<span class="g g-Whitespace">    </span><span class="mi">334</span><span class="s2">         inv_idx = np.empty(mask.shape, dtype=np.intp)</span>
-<span class="g g-Whitespace">    </span><span class="mi">335</span><span class="s2">         inv_idx[perm] = imask</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/metrics/_classification.py</span> in <span class="ni">_check_targets</span><span class="nt">(y_true, y_pred)</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span>     <span class="n">check_consistent_length</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">84</span>     <span class="n">type_true</span> <span class="o">=</span> <span class="n">type_of_target</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span>     <span class="n">type_pred</span> <span class="o">=</span> <span class="n">type_of_target</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/multiclass.py</span> in <span class="ni">type_of_target</span><span class="nt">(y)</span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;y cannot be class &#39;SparseSeries&#39; or &#39;SparseArray&#39;&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> 
+<span class="ne">--&gt; </span><span class="mi">261</span>     <span class="k">if</span> <span class="n">is_multilabel</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>         <span class="k">return</span> <span class="s1">&#39;multilabel-indicator&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/multiclass.py</span> in <span class="ni">is_multilabel</span><span class="nt">(y)</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span>                 <span class="c1"># dtype=object should be provided explicitly for ragged arrays,</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span>                 <span class="c1"># see NEP 34</span>
+<span class="ne">--&gt; </span><span class="mi">151</span>                 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span> 
+<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
+
+<span class="nn">/usr/local/Cellar/python@3.9/3.9.6/Frameworks/Python.framework/Versions/3.9/lib/python3.9/warnings.py</span> in <span class="ni">__exit__</span><span class="nt">(self, *exc_info)</span>
+<span class="g g-Whitespace">    </span><span class="mi">476</span> 
+<span class="g g-Whitespace">    </span><span class="mi">477</span>     <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_info</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">478</span>         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entered</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">479</span>             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Cannot exit </span><span class="si">%r</span><span class="s2"> without entering first&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">480</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_module</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filters</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

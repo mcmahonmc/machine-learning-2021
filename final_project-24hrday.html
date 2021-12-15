@@ -1643,33 +1643,33 @@ targets
   <tbody>
     <tr>
       <th>0</th>
-      <td>-0.138629</td>
-      <td>-0.007404</td>
-      <td>0.334554</td>
+      <td>-0.105603</td>
+      <td>-0.094381</td>
+      <td>-0.101843</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.663463</td>
-      <td>0.014221</td>
-      <td>-0.229063</td>
+      <td>0.709165</td>
+      <td>0.201417</td>
+      <td>0.179667</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.260730</td>
-      <td>0.293797</td>
-      <td>1.011903</td>
+      <td>-0.130048</td>
+      <td>0.212591</td>
+      <td>0.434678</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>-0.483604</td>
-      <td>-0.322695</td>
-      <td>0.324577</td>
+      <td>0.010207</td>
+      <td>0.005099</td>
+      <td>-0.824349</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-0.240078</td>
-      <td>0.015612</td>
-      <td>-0.118652</td>
+      <td>0.156104</td>
+      <td>0.890895</td>
+      <td>0.287203</td>
     </tr>
   </tbody>
 </table>
@@ -1720,33 +1720,33 @@ targets
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.149887</td>
-      <td>-0.321229</td>
-      <td>-2.078607</td>
+      <td>-1.173643</td>
+      <td>0.484801</td>
+      <td>-0.407523</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.018327</td>
-      <td>-0.562491</td>
-      <td>0.229046</td>
+      <td>2.201556</td>
+      <td>-0.838120</td>
+      <td>-0.310910</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.077199</td>
-      <td>-0.232956</td>
-      <td>0.782557</td>
+      <td>-1.052742</td>
+      <td>0.368753</td>
+      <td>-0.608193</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.390127</td>
-      <td>0.736825</td>
-      <td>-2.111939</td>
+      <td>-0.601736</td>
+      <td>-0.427573</td>
+      <td>1.413294</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-0.571028</td>
-      <td>1.331454</td>
-      <td>-0.942162</td>
+      <td>-0.538373</td>
+      <td>0.205113</td>
+      <td>-1.486434</td>
     </tr>
   </tbody>
 </table>
@@ -1798,33 +1798,33 @@ targets
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.149887</td>
-      <td>-0.321229</td>
-      <td>-2.078607</td>
+      <td>-1.173643</td>
+      <td>0.484801</td>
+      <td>-0.407523</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.018327</td>
-      <td>-0.562491</td>
-      <td>0.229046</td>
+      <td>2.201556</td>
+      <td>-0.838120</td>
+      <td>-0.310910</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.077199</td>
-      <td>-0.232956</td>
-      <td>0.782557</td>
+      <td>-1.052742</td>
+      <td>0.368753</td>
+      <td>-0.608193</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.390127</td>
-      <td>0.736825</td>
-      <td>-2.111939</td>
+      <td>-0.601736</td>
+      <td>-0.427573</td>
+      <td>1.413294</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-0.571028</td>
-      <td>1.331454</td>
-      <td>-0.942162</td>
+      <td>-0.538373</td>
+      <td>0.205113</td>
+      <td>-1.486434</td>
     </tr>
   </tbody>
 </table>
@@ -2556,7 +2556,7 @@ CVLT L Delay Recall, MAE: 0.81, RMSE: 0.90
         <span class="n">na_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="n">X</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;manifold_2D_&#39;</span> <span class="o">+</span> <span class="n">reduction_method</span> <span class="o">+</span> <span class="s1">&#39;_n&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">na_idx</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">na_idx</span><span class="p">)</span> 
+        <span class="n">y_true</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">na_idx</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 
         <span class="n">result</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">bootstrap_svm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="s1">&#39;age group&#39;</span><span class="p">,</span> <span class="n">n_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">,</span> 
                                            <span class="n">kernel_methods</span><span class="o">=</span><span class="n">kernel_methods</span><span class="p">)</span>
@@ -2578,61 +2578,61 @@ CVLT L Delay Recall, MAE: 0.81, RMSE: 0.90
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_99029</span><span class="o">/</span><span class="mf">4209974685.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">na_idx</span><span class="p">)</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_99305</span><span class="o">/</span><span class="mf">3087884254.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">y_true</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">na_idx</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 <span class="g g-Whitespace">     </span><span class="mi">10</span> 
 <span class="ne">---&gt; </span><span class="mi">11</span>         <span class="n">result</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">bootstrap_svm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="s1">&#39;age group&#39;</span><span class="p">,</span> <span class="n">n_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">,</span> 
 <span class="g g-Whitespace">     </span><span class="mi">12</span>                                            <span class="n">kernel_methods</span><span class="o">=</span><span class="n">kernel_methods</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span>         <span class="n">result</span><span class="p">[</span><span class="s1">&#39;dim_redx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduction_method</span>
 
-<span class="nn">/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_99029/1302757920.py</span> in <span class="ni">bootstrap_svm</span><span class="nt">(X, y_true, target_label, n_size, n_iterations, kernel_methods)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>                 <span class="c1"># evaluate model</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>                 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">25</span>                 <span class="n">stats</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>                                      <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">),</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>                                      <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)},</span>
+<span class="nn">/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_99305/1302757920.py</span> in <span class="ni">bootstrap_svm</span><span class="nt">(X, y_true, target_label, n_size, n_iterations, kernel_methods)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>             <span class="n">stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iterations</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">13</span>                 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">14</span>                                                                     <span class="n">test_size</span><span class="o">=</span><span class="n">n_size</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>                                                                     <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/frame.py</span> in <span class="ni">append</span><span class="nt">(self, other, ignore_index, verify_integrity, sort)</span>
-<span class="g g-Whitespace">   </span><span class="mi">8926</span>                 <span class="k">if</span> <span class="ow">not</span> <span class="n">ignore_index</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">8927</span>                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can only append a dict if ignore_index=True&quot;</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">8928</span>                 <span class="n">other</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">8929</span>             <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ignore_index</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">8930</span>                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/model_selection/_split.py</span> in <span class="ni">train_test_split</span><span class="nt">(test_size, train_size, random_state, shuffle, stratify, *arrays)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2195</span>                      <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2196</span> 
+<span class="ne">-&gt; </span><span class="mi">2197</span>         <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">stratify</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">2198</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2199</span>     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">((</span><span class="n">_safe_indexing</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">train</span><span class="p">),</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">__init__</span><span class="nt">(self, data, index, dtype, name, copy, fastpath)</span>
-<span class="g g-Whitespace">    </span><span class="mi">403</span>                 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">_mgr</span>
-<span class="g g-Whitespace">    </span><span class="mi">404</span>             <span class="k">elif</span> <span class="n">is_dict_like</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">405</span>                 <span class="n">data</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">406</span>                 <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">407</span>                 <span class="n">copy</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/model_selection/_split.py</span> in <span class="ni">split</span><span class="nt">(self, X, y, groups)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1385</span>         <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1386</span><span class="sd">         X, y, groups = indexable(X, y, groups)</span>
+<span class="ne">-&gt; </span><span class="mi">1387</span><span class="sd">         for train, test in self._iter_indices(X, y, groups):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1388</span><span class="sd">             yield train, test</span>
+<span class="g g-Whitespace">   </span><span class="mi">1389</span><span class="sd"> </span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">_init_dict</span><span class="nt">(self, data, index, dtype)</span>
-<span class="g g-Whitespace">    </span><span class="mi">488</span> 
-<span class="g g-Whitespace">    </span><span class="mi">489</span>         <span class="c1"># TODO: passing np.float64 to not break anything yet. See GH-17261</span>
-<span class="ne">--&gt; </span><span class="mi">490</span>         <span class="n">s</span> <span class="o">=</span> <span class="n">create_series_with_explicit_dtype</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">491</span>             <span class="c1"># error: Argument &quot;index&quot; to &quot;create_series_with_explicit_dtype&quot; has</span>
-<span class="g g-Whitespace">    </span><span class="mi">492</span>             <span class="c1"># incompatible type &quot;Tuple[Any, ...]&quot;; expected &quot;Union[ExtensionArray,</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/model_selection/_split.py</span> in <span class="ni">_iter_indices</span><span class="nt">(self, X, y, groups)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1698</span><span class="sd">     def _iter_indices(self, X, y, groups=None):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1699</span><span class="sd">         n_samples = _num_samples(X)</span>
+<span class="ne">-&gt; </span><span class="mi">1700</span><span class="sd">         y = check_array(y, ensure_2d=False, dtype=None)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1701</span><span class="sd">         n_train, n_test = _validate_shuffle_split(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1702</span><span class="sd">             n_samples, self.test_size, self.train_size,</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/construction.py</span> in <span class="ni">create_series_with_explicit_dtype</span><span class="nt">(data, index, dtype, name, copy, fastpath, dtype_if_empty)</span>
-<span class="g g-Whitespace">    </span><span class="mi">830</span>     <span class="k">if</span> <span class="n">is_empty_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">831</span>         <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype_if_empty</span>
-<span class="ne">--&gt; </span><span class="mi">832</span>     <span class="k">return</span> <span class="n">Series</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">833</span>         <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span> <span class="n">fastpath</span><span class="o">=</span><span class="n">fastpath</span>
-<span class="g g-Whitespace">    </span><span class="mi">834</span>     <span class="p">)</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span><span class="sd">             extra_args = len(args) - len(all_args)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span><span class="sd">             if extra_args &lt;= 0:</span>
+<span class="ne">---&gt; </span><span class="mi">63</span><span class="sd">                 return f(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">             # extra_args &gt; 0</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/series.py</span> in <span class="ni">__init__</span><span class="nt">(self, data, index, dtype, name, copy, fastpath)</span>
-<span class="g g-Whitespace">    </span><span class="mi">446</span> 
-<span class="g g-Whitespace">    </span><span class="mi">447</span>         <span class="n">generic</span><span class="o">.</span><span class="n">NDFrame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">448</span>         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-<span class="g g-Whitespace">    </span><span class="mi">449</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_set_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">fastpath</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">450</span> 
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">check_array</span><span class="nt">(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator)</span>
+<span class="g g-Whitespace">    </span><span class="mi">722</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">723</span><span class="sd">     if ensure_min_samples &gt; 0:</span>
+<span class="ne">--&gt; </span><span class="mi">724</span><span class="sd">         n_samples = _num_samples(array)</span>
+<span class="g g-Whitespace">    </span><span class="mi">725</span><span class="sd">         if n_samples &lt; ensure_min_samples:</span>
+<span class="g g-Whitespace">    </span><span class="mi">726</span><span class="sd">             raise ValueError(&quot;Found array with %d sample(s) (shape=%s) while a&quot;</span>
 
-<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/generic.py</span> in <span class="ni">__setattr__</span><span class="nt">(self, name, value)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5487</span>         <span class="c1"># the same attribute.</span>
-<span class="g g-Whitespace">   </span><span class="mi">5488</span> 
-<span class="ne">-&gt; </span><span class="mi">5489</span>         <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">5490</span>             <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">5491</span>             <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">_num_samples</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">245</span><span class="sd">     &quot;&quot;&quot;</span><span class="n">Return</span> <span class="n">number</span> <span class="n">of</span> <span class="n">samples</span> <span class="ow">in</span> <span class="n">array</span><span class="o">-</span><span class="n">like</span> <span class="n">x</span><span class="o">.</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span><span class="s2">     message = &#39;Expected sequence or array-like, got </span><span class="si">%s</span><span class="s2">&#39; % type(x)</span>
+<span class="ne">--&gt; </span><span class="mi">247</span><span class="s2">     if hasattr(x, &#39;fit&#39;) and callable(x.fit):</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span><span class="s2">         # Don&#39;t get num_samples from an ensembles length!</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span><span class="s2">         raise TypeError(message)</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -2646,7 +2646,7 @@ CVLT L Delay Recall, MAE: 0.81, RMSE: 0.90
 <span class="k">for</span> <span class="n">reduction_method</span> <span class="ow">in</span> <span class="n">reduction_methods</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">reduction_method</span><span class="p">)</span>
     
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_bin&#39;</span><span class="p">)]]:</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_bin&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;pvt_rt_mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs_bin&#39;</span><span class="p">]]:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">na_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2976,82 +2976,12 @@ The least populated class in y has only 1 member, which is too few. The minimum 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;trails_b_z_score_x&#39;, &#39;trails_a_z_score&#39;, &#39;cvlt_b_zscore&#39;,
-       &#39;cvlt_sdelay_recall_zscore&#39;, &#39;cvlt_sdelay_cued_zscore&#39;,
-       &#39;cvlt_ldelay_recall_zscore&#39;, &#39;cvlt_ldelay_cue_recall_zscore&#39;,
-       &#39;cvlt_recognition_hits_zscore&#39;, &#39;cvlt_recognition_fp_zscore&#39;,
-       &#39;cvlt_zscore&#39;, &#39;vc_zscore&#39;, &#39;ds_zscore&#39;, &#39;stoop_i_zscore&#39;,
-       &#39;cowat_zscore&#39;, &#39;pvt_rt_mean&#39;, &#39;pvt_fs&#39;, &#39;group&#39;,
-       &#39;trails_a_z_score_bin&#39;, &#39;cvlt_b_zscore_bin&#39;,
-       &#39;cvlt_sdelay_recall_zscore_bin&#39;, &#39;cvlt_sdelay_cued_zscore_bin&#39;,
-       &#39;cvlt_ldelay_recall_zscore_bin&#39;, &#39;cvlt_ldelay_cue_recall_zscore_bin&#39;,
-       &#39;cvlt_recognition_hits_zscore_bin&#39;, &#39;cvlt_recognition_fp_zscore_bin&#39;,
-       &#39;cvlt_zscore_bin&#39;, &#39;vc_zscore_bin&#39;, &#39;ds_zscore_bin&#39;,
-       &#39;stoop_i_zscore_bin&#39;, &#39;cowat_zscore_bin&#39;, &#39;trails_b_z_score_x_bin&#39;,
-       &#39;pvt_rt_mean_bin&#39;, &#39;pvt_fs_bin&#39;],
-      dtype=&#39;object&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">reduction_method</span> <span class="ow">in</span> <span class="n">reduction_methods</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">reduction_method</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;pvt_rt_mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs_bin&#39;</span><span class="p">]]:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">na_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
-            <span class="n">X</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;manifold_2D_&#39;</span> <span class="o">+</span> <span class="n">reduction_method</span> <span class="o">+</span> <span class="s1">&#39;_n&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">na_idx</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-            <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">na_idx</span><span class="p">)</span> 
-
-            <span class="n">result</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">bootstrap_svm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">,</span> <span class="n">kernel_methods</span><span class="o">=</span><span class="n">kernel_methods</span><span class="p">)</span>
-            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;dim_redx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduction_method</span>
-            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
-            <span class="n">results_n</span> <span class="o">=</span> <span class="n">results_n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-     
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                         
-<span class="n">sil_idx</span> <span class="o">=</span> <span class="n">results_n</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;target&#39;</span><span class="p">])[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">==</span> <span class="n">results_n</span><span class="p">[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span>
-<span class="n">results_n_best</span> <span class="o">=</span> <span class="n">results_n</span><span class="p">[</span><span class="n">sil_idx</span><span class="p">]</span>
-<span class="n">acc_idx</span> <span class="o">=</span> <span class="n">results_n_best</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;target&#39;</span><span class="p">])[</span><span class="s1">&#39;svm_accuracy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">==</span> <span class="n">results_n_best</span><span class="p">[</span><span class="s1">&#39;svm_accuracy&#39;</span><span class="p">]</span>
-<span class="n">results_n_best</span> <span class="o">=</span> <span class="n">results_n_best</span><span class="p">[</span><span class="n">acc_idx</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-
-<span class="n">results_n_best</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;results_random.tex&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">results_n_best</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_36288</span><span class="o">/</span><span class="mf">1739660432.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">for</span> <span class="n">reduction_method</span> <span class="ow">in</span> <span class="n">reduction_methods</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="nb">print</span><span class="p">(</span><span class="n">reduction_method</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;pvt_rt_mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs_bin&#39;</span><span class="p">]]:</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="k">try</span><span class="p">:</span>
-
-<span class="ne">NameError</span>: name &#39;reduction_methods&#39; is not defined
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">reduction_method</span> <span class="ow">in</span> <span class="n">reduction_methods</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">reduction_method</span><span class="p">)</span>
     
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_bin&#39;</span><span class="p">)]]:</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_bin&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;pvt_rt_mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs_bin&#39;</span><span class="p">]]:</span>
         <span class="k">try</span><span class="p">:</span>
 
             <span class="n">na_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -3323,338 +3253,6 @@ The least populated class in y has only 1 member, which is too few. The minimum 
       <td>[0.292, 0.781]</td>
       <td>0.550</td>
       <td>[0.333, 0.722]</td>
-      <td>pca</td>
-      <td>0.009</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>trails_a_z_score_bin</td>
-      <td>59.000</td>
-      <td>41.000</td>
-      <td>17.000</td>
-      <td>sigmoid</td>
-      <td>500.000</td>
-      <td>0.680</td>
-      <td>[0.582, 0.778]</td>
-      <td>0.563</td>
-      <td>[0.444, 0.833]</td>
-      <td>0.680</td>
-      <td>[0.582, 0.778]</td>
-      <td>iso</td>
-      <td>-0.012</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>trails_b_z_score_x_bin</td>
-      <td>81.000</td>
-      <td>56.000</td>
-      <td>24.000</td>
-      <td>poly</td>
-      <td>500.000</td>
-      <td>0.569</td>
-      <td>[0.419, 0.72]</td>
-      <td>0.569</td>
-      <td>[0.314, 0.781]</td>
-      <td>0.569</td>
-      <td>[0.419, 0.72]</td>
-      <td>pca</td>
-      <td>0.004</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>vc_zscore_bin</td>
-      <td>90.000</td>
-      <td>62.000</td>
-      <td>27.000</td>
-      <td>rbf</td>
-      <td>500.000</td>
-      <td>0.946</td>
-      <td>[0.926, 0.963]</td>
-      <td>0.895</td>
-      <td>[0.857, 0.927]</td>
-      <td>0.946</td>
-      <td>[0.926, 0.963]</td>
-      <td>lle</td>
-      <td>-0.006</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">reduction_method</span> <span class="ow">in</span> <span class="n">reduction_methods</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">reduction_method</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;pvt_rt_mean_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;pvt_fs_bin&#39;</span><span class="p">]]:</span>
-        <span class="k">try</span><span class="p">:</span>
-
-            <span class="n">na_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
-            <span class="n">X</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;manifold_2D_&#39;</span> <span class="o">+</span> <span class="n">reduction_method</span> <span class="o">+</span> <span class="s1">&#39;_n&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">na_idx</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-            <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">na_idx</span><span class="p">)</span> 
-
-            <span class="n">result</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">bootstrap_svm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">n_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">,</span> 
-                                               <span class="n">kernel_methods</span><span class="o">=</span><span class="n">kernel_methods</span><span class="p">)</span>
-            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;dim_redx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduction_method</span>
-            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-    
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                         
-<span class="n">sil_idx</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;target&#39;</span><span class="p">])[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">==</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;sil_score&#39;</span><span class="p">]</span>
-<span class="n">results_best</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">sil_idx</span><span class="p">]</span>
-<span class="n">acc_idx</span> <span class="o">=</span> <span class="n">results_best</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;target&#39;</span><span class="p">])[</span><span class="s1">&#39;svm_accuracy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span> <span class="o">==</span> <span class="n">results_best</span><span class="p">[</span><span class="s1">&#39;svm_accuracy&#39;</span><span class="p">]</span>
-<span class="n">results_best</span> <span class="o">=</span> <span class="n">results_best</span><span class="p">[</span><span class="n">acc_idx</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-
-<span class="n">results_best</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;n_iterations&#39;</span><span class="p">,</span> <span class="s1">&#39;sil_score&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">results_dir</span> <span class="o">+</span> <span class="s1">&#39;results.tex&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">results_best</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pca
-iso
-lle
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>target</th>
-      <th>total_sample_size</th>
-      <th>train_sample_size</th>
-      <th>test_sample_size</th>
-      <th>svm_kernel</th>
-      <th>n_iterations</th>
-      <th>svm_accuracy</th>
-      <th>svm_accuracy_ci</th>
-      <th>svm_precision</th>
-      <th>svm_precision_ci</th>
-      <th>svm_recall</th>
-      <th>svm_recall_ci</th>
-      <th>dim_redx</th>
-      <th>sil_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>cowat_zscore_bin</td>
-      <td>33.000</td>
-      <td>23.000</td>
-      <td>9.000</td>
-      <td>rbf</td>
-      <td>500.000</td>
-      <td>0.669</td>
-      <td>[0.4, 0.9]</td>
-      <td>0.679</td>
-      <td>[0.32, 0.914]</td>
-      <td>0.669</td>
-      <td>[0.4, 0.9]</td>
-      <td>iso</td>
-      <td>0.039</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>cvlt_b_zscore_bin</td>
-      <td>30.000</td>
-      <td>21.000</td>
-      <td>9.000</td>
-      <td>linear</td>
-      <td>500.000</td>
-      <td>0.597</td>
-      <td>[0.333, 0.778]</td>
-      <td>0.603</td>
-      <td>[0.278, 0.841]</td>
-      <td>0.597</td>
-      <td>[0.333, 0.778]</td>
-      <td>iso</td>
-      <td>0.029</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>cvlt_ldelay_cue_recall_zscore_bin</td>
-      <td>38.000</td>
-      <td>26.000</td>
-      <td>11.000</td>
-      <td>linear</td>
-      <td>500.000</td>
-      <td>0.833</td>
-      <td>[0.833, 0.833]</td>
-      <td>0.694</td>
-      <td>[0.694, 0.694]</td>
-      <td>0.833</td>
-      <td>[0.833, 0.833]</td>
-      <td>iso</td>
-      <td>-0.056</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>cvlt_ldelay_recall_zscore_bin</td>
-      <td>37.000</td>
-      <td>25.000</td>
-      <td>11.000</td>
-      <td>sigmoid</td>
-      <td>500.000</td>
-      <td>0.834</td>
-      <td>[0.833, 0.833]</td>
-      <td>0.696</td>
-      <td>[0.694, 0.694]</td>
-      <td>0.834</td>
-      <td>[0.833, 0.833]</td>
-      <td>pca</td>
-      <td>0.009</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>cvlt_recognition_fp_zscore_bin</td>
-      <td>40.000</td>
-      <td>28.000</td>
-      <td>12.000</td>
-      <td>sigmoid</td>
-      <td>500.000</td>
-      <td>0.670</td>
-      <td>[0.417, 0.917]</td>
-      <td>0.693</td>
-      <td>[0.448, 0.927]</td>
-      <td>0.670</td>
-      <td>[0.417, 0.917]</td>
-      <td>pca</td>
-      <td>0.057</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>cvlt_recognition_hits_zscore_bin</td>
-      <td>35.000</td>
-      <td>24.000</td>
-      <td>10.000</td>
-      <td>rbf</td>
-      <td>500.000</td>
-      <td>0.633</td>
-      <td>[0.455, 0.727]</td>
-      <td>0.508</td>
-      <td>[0.367, 0.809]</td>
-      <td>0.633</td>
-      <td>[0.455, 0.727]</td>
-      <td>pca</td>
-      <td>0.002</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>cvlt_sdelay_cued_zscore_bin</td>
-      <td>38.000</td>
-      <td>26.000</td>
-      <td>11.000</td>
-      <td>linear</td>
-      <td>500.000</td>
-      <td>0.833</td>
-      <td>[0.833, 0.833]</td>
-      <td>0.694</td>
-      <td>[0.694, 0.694]</td>
-      <td>0.833</td>
-      <td>[0.833, 0.833]</td>
-      <td>pca</td>
-      <td>-0.035</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>cvlt_sdelay_recall_zscore_bin</td>
-      <td>43.000</td>
-      <td>30.000</td>
-      <td>12.000</td>
-      <td>poly</td>
-      <td>500.000</td>
-      <td>0.786</td>
-      <td>[0.692, 0.887]</td>
-      <td>0.693</td>
-      <td>[0.577, 0.902]</td>
-      <td>0.786</td>
-      <td>[0.692, 0.887]</td>
-      <td>pca</td>
-      <td>0.050</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>cvlt_zscore_bin</td>
-      <td>32.000</td>
-      <td>22.000</td>
-      <td>9.000</td>
-      <td>linear</td>
-      <td>500.000</td>
-      <td>0.693</td>
-      <td>[0.6, 0.7]</td>
-      <td>0.492</td>
-      <td>[0.467, 0.49]</td>
-      <td>0.693</td>
-      <td>[0.6, 0.7]</td>
-      <td>pca</td>
-      <td>0.016</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>ds_zscore_bin</td>
-      <td>60.000</td>
-      <td>42.000</td>
-      <td>18.000</td>
-      <td>poly</td>
-      <td>500.000</td>
-      <td>0.649</td>
-      <td>[0.5, 0.778]</td>
-      <td>0.583</td>
-      <td>[0.417, 0.833]</td>
-      <td>0.649</td>
-      <td>[0.5, 0.778]</td>
-      <td>lle</td>
-      <td>0.011</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>pvt_fs_bin</td>
-      <td>79.000</td>
-      <td>55.000</td>
-      <td>23.000</td>
-      <td>poly</td>
-      <td>500.000</td>
-      <td>0.624</td>
-      <td>[0.5, 0.708]</td>
-      <td>0.572</td>
-      <td>[0.369, 0.801]</td>
-      <td>0.624</td>
-      <td>[0.5, 0.708]</td>
-      <td>iso</td>
-      <td>0.017</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>pvt_rt_mean_bin</td>
-      <td>60.000</td>
-      <td>42.000</td>
-      <td>18.000</td>
-      <td>sigmoid</td>
-      <td>500.000</td>
-      <td>0.556</td>
-      <td>[0.36, 0.722]</td>
-      <td>0.560</td>
-      <td>[0.292, 0.781]</td>
-      <td>0.556</td>
-      <td>[0.36, 0.722]</td>
       <td>pca</td>
       <td>0.009</td>
     </tr>

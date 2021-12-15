@@ -34,6 +34,6 @@ Here is a preview of the cell contents:
 -------------------
 ['import scipy.stats as stats', 'from scipy.interpolate import interp1d', '', 'actdf = pd.DataFrame()', '']
 ...
-['', '    else:', '        ', "        print('sub-%s discarded, recording period %s days' % ", '              (subject, act.last_valid_index() - act.first_valid_index()))']
+["            print('sub-%s discarded, recording period %s days' % ", '                  (subject, act.last_valid_index() - act.first_valid_index()))', '    ', '    except Exception as e:', '        print(e)']
 -------------------
 

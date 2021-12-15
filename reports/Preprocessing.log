@@ -32,8 +32,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['actdf = pd.DataFrame()', '', "weekday_map= {0:'Mon', 1:'Tue', 2:'Wed', 3:'Thu',", "              4:'Fri', 5:'Sat', 6:'Sun'}", '']
+['for file in actig_files[100:101]:', '    ', "    subject = file.split('raw/')[1][:5]", '#     print(subject)', '    ']
 ...
-['    ', '    else:', '        ', "        print('sub-%s discarded, recording period %s days' % ", '              (subject, act.last_valid_index() - act.first_valid_index()))']
+['    act = hampel(act, window_size=5, n=1, imputation=True)', '    act.plot()', '    act_new.plot()', '    plt.show()', '    plt.close()']
 -------------------
 

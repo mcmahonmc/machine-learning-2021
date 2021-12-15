@@ -72,6 +72,11 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/actigraphy_ex_24h_hourly.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">PSY 394S Final Project</h1>
@@ -91,7 +96,7 @@
 </ul>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
+  <a class="reference internal" href="input_preprocessing.html">
    Actigraphy Preprocessing
   </a>
  </li>
@@ -739,7 +744,7 @@ RMSE: Lower the RMSE, the more closely a model is able to predict the actual obs
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_422</span><span class="o">/</span><span class="mf">3536998282.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1389</span><span class="o">/</span><span class="mf">3536998282.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>                  <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Older Adults&#39;</span><span class="p">)]</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> 
 <span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">y</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">ya_idx</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Young Adults&#39;</span><span class="p">)</span>
@@ -781,75 +786,54 @@ RMSE: Lower the RMSE, the more closely a model is able to predict the actual obs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1389</span><span class="o">/</span><span class="mf">3087884254.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">y_true</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">na_idx</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> 
+<span class="ne">---&gt; </span><span class="mi">11</span>         <span class="n">result</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">cis</span> <span class="o">=</span> <span class="n">bootstrap_svm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="s1">&#39;age group&#39;</span><span class="p">,</span> <span class="n">n_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">12</span>                                            <span class="n">kernel_methods</span><span class="o">=</span><span class="n">kernel_methods</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>         <span class="n">result</span><span class="p">[</span><span class="s1">&#39;dim_redx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduction_method</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+<span class="nn">/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_1389/1302757920.py</span> in <span class="ni">bootstrap_svm</span><span class="nt">(X, y_true, target_label, n_size, n_iterations, kernel_methods)</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>                 <span class="c1"># evaluate model</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>                 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">25</span>                 <span class="n">stats</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>                                      <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>                                      <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">metrics</span><span class="o">.</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)},</span>
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>total_sample_size</th>
-      <th>train_sample_size</th>
-      <th>test_sample_size</th>
-      <th>svm_kernel</th>
-      <th>n_iterations</th>
-      <th>svm_accuracy</th>
-      <th>svm_accuracy_ci</th>
-      <th>svm_precision</th>
-      <th>svm_precision_ci</th>
-      <th>svm_recall</th>
-      <th>svm_recall_ci</th>
-      <th>dim_redx</th>
-      <th>sil_score</th>
-    </tr>
-    <tr>
-      <th>target</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>age group</th>
-      <td>112.000</td>
-      <td>78.000</td>
-      <td>33.000</td>
-      <td>linear</td>
-      <td>500.000</td>
-      <td>0.525</td>
-      <td>[0.353, 0.559]</td>
-      <td>0.345</td>
-      <td>[0.303, 0.513]</td>
-      <td>0.525</td>
-      <td>[0.353, 0.559]</td>
-      <td>pca</td>
-      <td>-0.009</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span>             <span class="n">extra_args</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_args</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>             <span class="k">if</span> <span class="n">extra_args</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">63</span>                 <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span> 
+<span class="g g-Whitespace">     </span><span class="mi">65</span>             <span class="c1"># extra_args &gt; 0</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/metrics/_classification.py</span> in <span class="ni">accuracy_score</span><span class="nt">(y_true, y_pred, normalize, sample_weight)</span>
+<span class="g g-Whitespace">    </span><span class="mi">200</span> 
+<span class="g g-Whitespace">    </span><span class="mi">201</span>     <span class="c1"># Compute accuracy for each possible representation</span>
+<span class="ne">--&gt; </span><span class="mi">202</span>     <span class="n">y_type</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">_check_targets</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span>     <span class="n">check_consistent_length</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span>     <span class="k">if</span> <span class="n">y_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;multilabel&#39;</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/metrics/_classification.py</span> in <span class="ni">_check_targets</span><span class="nt">(y_true, y_pred)</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span><span class="s2">     check_consistent_length(y_true, y_pred)</span>
+<span class="ne">---&gt; </span><span class="mi">84</span><span class="s2">     type_true = type_of_target(y_true)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span><span class="s2">     type_pred = type_of_target(y_pred)</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span><span class="s2"> </span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/sklearn/utils/multiclass.py</span> in <span class="ni">type_of_target</span><span class="nt">(y)</span>
+<span class="g g-Whitespace">    </span><span class="mi">265</span><span class="s2">     # https://numpy.org/neps/nep-0034-infer-dtype-is-object.html</span>
+<span class="g g-Whitespace">    </span><span class="mi">266</span><span class="s2">     with warnings.catch_warnings():</span>
+<span class="ne">--&gt; </span><span class="mi">267</span><span class="s2">         warnings.simplefilter(&#39;error&#39;, np.VisibleDeprecationWarning)</span>
+<span class="g g-Whitespace">    </span><span class="mi">268</span><span class="s2">         try:</span>
+<span class="g g-Whitespace">    </span><span class="mi">269</span><span class="s2">             y = np.asarray(y)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

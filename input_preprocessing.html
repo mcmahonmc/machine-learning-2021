@@ -1,0 +1,2635 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actigraphy Preprocessing &#8212; PSY 394S Final Project</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Standard rest-activity measure calculation" href="rar_measures.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/actigraphy_ex_24h_hourly.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">PSY 394S Final Project</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Actigraphy Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="rar_measures.html">
+   Standard rest-activity measure calculation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dimensionality.html">
+   Dimensionality reduction for novel rest-activity measures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification.html">
+   Classification of cogntive performance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="references.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/input_preprocessing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Finput_preprocessing.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/input_preprocessing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#week-data">
+   Week Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cyclic-week">
+   Cyclic week
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hr-day">
+   24 hr day
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="actigraphy-preprocessing">
+<h1>Actigraphy Preprocessing<a class="headerlink" href="#actigraphy-preprocessing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="week-data">
+<h2>Week Data<a class="headerlink" href="#week-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.dates</span> <span class="kn">import</span> <span class="n">WeekdayLocator</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">wearables</span> <span class="kn">import</span> <span class="n">preproc</span>
+<span class="kn">from</span> <span class="nn">hampel</span> <span class="kn">import</span> <span class="n">hampel</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actig_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/*.csv&#39;</span><span class="p">))</span>
+
+<span class="c1"># actig_files_ = random.sample(actig_files, 10)</span>
+
+<span class="n">actig_files</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30004_10_23_2017_10_20_00_AM_New_Analysis.csv&#39;,
+ &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30008_11_9_2017_11_38_00_AM_New_Analysis.csv&#39;,
+ &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30009_10_27_2017_6_35_00_PM_New_Analysis.csv&#39;,
+ &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30012_10_30_2017_6_24_00_PM_New_Analysis.csv&#39;,
+ &#39;/Users/mcmahonmc/Box/CogNeuroLab/Aging Decision Making R01/data/actigraphy/raw/30015_11_10_2017_4_15_00_PM_New_Analysis.csv&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="cyclic-week">
+<h2>Cyclic week<a class="headerlink" href="#cyclic-week" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+
+<span class="n">actdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="n">weekday_map</span><span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;Mon&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Tue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Wed&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Thu&#39;</span><span class="p">,</span>
+              <span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="s1">&#39;Sun&#39;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">actig_files</span><span class="p">:</span>
+    
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1">#     print(subject)</span>
+
+    <span class="c1"># read in actigraphy data</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+    <span class="c1"># find first Monday midnight and start data from there so all subjects starting on same day of the week</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">act</span><span class="p">[(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># cyclically wrap days that were cut off so not losing data</span>
+    <span class="n">wrap</span> <span class="o">=</span> <span class="n">act</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span>
+    <span class="n">wrap</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+                                  <span class="n">end</span><span class="o">=</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">wrap</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">wrap</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+                                  <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30S&#39;</span><span class="p">)</span>
+
+    <span class="n">act</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:],</span> <span class="n">wrap</span><span class="p">))</span>
+
+    <span class="c1"># keep only seven days of data</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))]</span>
+
+    <span class="c1"># interpolate outliers</span>
+    <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
+
+    <span class="c1"># plot</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="c1"># if subject has &lt; 7 days data, discard, else add to dataset</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="p">):</span>
+
+        <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">values</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">)</span><span class="c1">#.set(title=&#39;sub-%s&#39; % subject)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/results/actigraphy_ex_hourly.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> discarded, recording period </span><span class="si">%s</span><span class="s1"> days&#39;</span> <span class="o">%</span> 
+              <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">()))</span>
+    
+
+    
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>successfully read Actiware data file
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>record 30004
+30004 missing 0 values out of 29404 total (0.00 percent)
+interpolated - now missing 0 values out of 29404 total (0.0 percent)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_1417/3569606880.py:40: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_4_4.png" src="_images/input_preprocessing_4_4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(169,)
+(169, 1)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_1417/3569606880.py:57: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_4_7.png" src="_images/input_preprocessing_4_7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>successfully read Actiware data file
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>record 30008
+30008 missing 0 values out of 31919 total (0.00 percent)
+interpolated - now missing 0 values out of 31919 total (0.0 percent)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1417</span><span class="o">/</span><span class="mf">3569606880.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="c1"># interpolate outliers</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="ne">---&gt; </span><span class="mi">33</span>     <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> 
+<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/hampel.py</span> in <span class="ni">hampel</span><span class="nt">(ts, window_size, n, imputation)</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>     <span class="n">rolling_ts</span> <span class="o">=</span> <span class="n">ts_cleaned</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window_size</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span>     <span class="n">rolling_median</span> <span class="o">=</span> <span class="n">rolling_ts</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">50</span>     <span class="n">rolling_sigma</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">rolling_ts</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">median_absolute_deviation</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfill&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ffill&#39;</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span> 
+<span class="g g-Whitespace">     </span><span class="mi">52</span>     <span class="n">outlier_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">apply</span><span class="nt">(self, func, raw, engine, engine_kwargs, args, kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1640</span>         <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1641</span>     <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1642</span>         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1643</span>             <span class="n">func</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1644</span>             <span class="n">raw</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">apply</span><span class="nt">(self, func, raw, engine, engine_kwargs, args, kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1181</span>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;engine must be either &#39;numba&#39; or &#39;cython&#39;&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1182</span> 
+<span class="ne">-&gt; </span><span class="mi">1183</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1184</span>             <span class="n">apply_func</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1185</span>             <span class="n">numba_cache_key</span><span class="o">=</span><span class="n">numba_cache_key</span><span class="p">,</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">_apply</span><span class="nt">(self, func, name, numba_cache_key, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">537</span> 
+<span class="g g-Whitespace">    </span><span class="mi">538</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;single&quot;</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">539</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_blockwise</span><span class="p">(</span><span class="n">homogeneous_func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">540</span>         <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">541</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_tablewise</span><span class="p">(</span><span class="n">homogeneous_func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">_apply_blockwise</span><span class="nt">(self, homogeneous_func, name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">415</span>         <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">416</span><span class="sd">         if self._selected_obj.ndim == 1:</span>
+<span class="ne">--&gt; </span><span class="mi">417</span><span class="sd">             return self._apply_series(homogeneous_func, name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">418</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">419</span><span class="sd">         obj = self._create_data(self._selected_obj)</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">_apply_series</span><span class="nt">(self, homogeneous_func, name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">404</span><span class="sd">             raise DataError(&quot;No numeric types to aggregate&quot;) from err</span>
+<span class="g g-Whitespace">    </span><span class="mi">405</span><span class="sd"> </span>
+<span class="ne">--&gt; </span><span class="mi">406</span><span class="sd">         result = homogeneous_func(values)</span>
+<span class="g g-Whitespace">    </span><span class="mi">407</span><span class="sd">         return obj._constructor(result, index=obj.index, name=obj.name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">408</span><span class="sd"> </span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">homogeneous_func</span><span class="nt">(values)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span><span class="sd">                     result = np.apply_along_axis(calc, self.axis, values)</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span><span class="sd">                 else:</span>
+<span class="ne">--&gt; </span><span class="mi">531</span><span class="sd">                     result = calc(values)</span>
+<span class="g g-Whitespace">    </span><span class="mi">532</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">533</span><span class="sd">             if numba_cache_key is not None:</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">calc</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">523</span><span class="sd">                     closed=self.closed,</span>
+<span class="g g-Whitespace">    </span><span class="mi">524</span><span class="sd">                 )</span>
+<span class="ne">--&gt; </span><span class="mi">525</span><span class="sd">                 return func(x, start, end, min_periods)</span>
+<span class="g g-Whitespace">    </span><span class="mi">526</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">527</span><span class="sd">             with np.errstate(all=&quot;ignore&quot;):</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/core/window/rolling.py</span> in <span class="ni">apply_func</span><span class="nt">(values, begin, end, min_periods, raw)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1206</span><span class="sd">             if not raw:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1207</span><span class="sd">                 values = Series(values, index=self.obj.index)</span>
+<span class="ne">-&gt; </span><span class="mi">1208</span><span class="sd">             return window_func(values, begin, end, min_periods)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1209</span><span class="sd"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1210</span><span class="sd">         return apply_func</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/_libs/window/aggregations.pyx</span> in <span class="ni">pandas._libs.window.aggregations.roll_apply</span><span class="nt">()</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/hampel.py</span> in <span class="ni">median_absolute_deviation</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span><span class="sd">     :return: MAD</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">11</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> 
+<span class="g g-Whitespace">     </span><span class="mi">13</span> 
+
+<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">median</span><span class="nt">(*args, **kwargs)</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">median</span><span class="nt">(a, axis, out, overwrite_input, keepdims)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3604</span> 
+<span class="g g-Whitespace">   </span><span class="mi">3605</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">3606</span><span class="s2">     r, k = _ureduce(a, func=_median, axis=axis, out=out,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3607</span><span class="s2">                     overwrite_input=overwrite_input)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3608</span><span class="s2">     if keepdims:</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">_ureduce</span><span class="nt">(a, func, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3513</span><span class="s2">         keepdim = (1,) * a.ndim</span>
+<span class="g g-Whitespace">   </span><span class="mi">3514</span><span class="s2"> </span>
+<span class="ne">-&gt; </span><span class="mi">3515</span><span class="s2">     r = func(a, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3516</span><span class="s2">     return r, keepdim</span>
+<span class="g g-Whitespace">   </span><span class="mi">3517</span><span class="s2"> </span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/lib/function_base.py</span> in <span class="ni">_median</span><span class="nt">(a, axis, out, overwrite_input)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3659</span><span class="s2">     if np.issubdtype(a.dtype, np.inexact) and sz &gt; 0:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3660</span><span class="s2">         # warn and return nans like mean would</span>
+<span class="ne">-&gt; </span><span class="mi">3661</span><span class="s2">         rout = mean(part[indexer], axis=axis, out=out)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3662</span><span class="s2">         return np.lib.utils._median_nancheck(part, rout, axis, out)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3663</span><span class="s2">     else:</span>
+
+<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">mean</span><span class="nt">(*args, **kwargs)</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/numpy/core/fromnumeric.py</span> in <span class="ni">_mean_dispatcher</span><span class="nt">(a, axis, dtype, out, keepdims, where)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3294</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">3295</span><span class="s2"> </span>
+<span class="ne">-&gt; </span><span class="mi">3296</span><span class="s2"> def _mean_dispatcher(a, axis=None, dtype=None, out=None, keepdims=None, *,</span>
+<span class="g g-Whitespace">   </span><span class="mi">3297</span><span class="s2">                      where=None):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3298</span><span class="s2">     return (a, where, out)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/data/actigraphy_data_week-hourly_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="hr-day">
+<h2>24 hr day<a class="headerlink" href="#hr-day" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="n">weekday_map</span><span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;Mon&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s1">&#39;Tue&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;Wed&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;Thu&#39;</span><span class="p">,</span>
+              <span class="mi">4</span><span class="p">:</span><span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="s1">&#39;Sun&#39;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">actig_files</span><span class="p">:</span>
+    
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;raw/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1">#     print(subject)</span>
+    
+    <span class="c1"># read in actigraphy data</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;actiwatch&#39;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="s1">&#39;.5T&#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">recording_period_min</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    
+    <span class="n">start</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+    
+    <span class="c1"># keep only seven days of data</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="p">[</span><span class="n">act</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))]</span>
+    
+    <span class="c1"># interpolate outliers</span>
+    <span class="n">act0</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">hampel</span><span class="p">(</span><span class="n">act</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">imputation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">x_dates</span> <span class="o">=</span> <span class="p">[</span> <span class="n">weekday_map</span><span class="p">[</span><span class="n">day</span><span class="p">]</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dayofweek</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">]</span>
+    
+    <span class="c1"># plot</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act0</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act0</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;original&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> week&#39;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;w/o outliers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> week&#39;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">x_dates</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Day of Week&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1"># if subject has &lt; 7 days data, discard, else add to dataset</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="p">):</span>
+        
+        <span class="c1"># bin into hours and take activity mean</span>
+        <span class="n">act</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="c1">#         print(act.head())</span>
+        <span class="n">act24</span> <span class="o">=</span> <span class="n">act</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">act24_0</span> <span class="o">=</span> <span class="n">act0</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;60min&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">act</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1">#         print(act24.head())</span>
+        
+        <span class="c1"># plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act24</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act24_0</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;original&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> 24 hr&#39;</span> <span class="o">%</span> <span class="n">subject</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">act24</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">act24</span><span class="p">,</span> <span class="n">drawstyle</span><span class="o">=</span><span class="s1">&#39;steps-post&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;w/o outliers&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="c1">#         ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Hour&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activity&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+        <span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">act24</span><span class="o">.</span><span class="n">values</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sub-</span><span class="si">%s</span><span class="s1"> discarded, recording period </span><span class="si">%s</span><span class="s1"> days&#39;</span> <span class="o">%</span> 
+              <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">act</span><span class="o">.</span><span class="n">last_valid_index</span><span class="p">()</span> <span class="o">-</span> <span class="n">act</span><span class="o">.</span><span class="n">first_valid_index</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>successfully read Actiware data file
+record 30004
+30004 missing 0 values out of 29404 total (0.00 percent)
+interpolated - now missing 0 values out of 29404 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_2.png" src="_images/input_preprocessing_7_2.png" />
+<img alt="_images/input_preprocessing_7_3.png" src="_images/input_preprocessing_7_3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 1)
+successfully read Actiware data file
+record 30008
+30008 missing 0 values out of 31919 total (0.00 percent)
+interpolated - now missing 0 values out of 31919 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_6.png" src="_images/input_preprocessing_7_6.png" />
+<img alt="_images/input_preprocessing_7_7.png" src="_images/input_preprocessing_7_7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 2)
+successfully read Actiware data file
+record 30009
+30009 missing 0 values out of 29134 total (0.00 percent)
+interpolated - now missing 0 values out of 29134 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_10.png" src="_images/input_preprocessing_7_10.png" />
+<img alt="_images/input_preprocessing_7_11.png" src="_images/input_preprocessing_7_11.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 3)
+successfully read Actiware data file
+record 30012
+30012 missing 0 values out of 28788 total (0.00 percent)
+interpolated - now missing 0 values out of 28788 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_14.png" src="_images/input_preprocessing_7_14.png" />
+<img alt="_images/input_preprocessing_7_15.png" src="_images/input_preprocessing_7_15.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 4)
+successfully read Actiware data file
+record 30015
+30015 missing 0 values out of 31899 total (0.00 percent)
+interpolated - now missing 0 values out of 31899 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_18.png" src="_images/input_preprocessing_7_18.png" />
+<img alt="_images/input_preprocessing_7_19.png" src="_images/input_preprocessing_7_19.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 5)
+successfully read Actiware data file
+record 30015
+30015 missing 0 values out of 34422 total (0.00 percent)
+interpolated - now missing 0 values out of 34422 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_22.png" src="_images/input_preprocessing_7_22.png" />
+<img alt="_images/input_preprocessing_7_23.png" src="_images/input_preprocessing_7_23.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 5)
+successfully read Actiware data file
+record 30019
+30019 missing 0 values out of 32118 total (0.00 percent)
+interpolated - now missing 0 values out of 32118 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_26.png" src="_images/input_preprocessing_7_26.png" />
+<img alt="_images/input_preprocessing_7_27.png" src="_images/input_preprocessing_7_27.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 6)
+successfully read Actiware data file
+record 30020
+30020 missing 0 values out of 28913 total (0.00 percent)
+interpolated - now missing 0 values out of 28913 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_30.png" src="_images/input_preprocessing_7_30.png" />
+<img alt="_images/input_preprocessing_7_31.png" src="_images/input_preprocessing_7_31.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 7)
+successfully read Actiware data file
+record 30023
+30023 missing 0 values out of 28874 total (0.00 percent)
+interpolated - now missing 0 values out of 28874 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_34.png" src="_images/input_preprocessing_7_34.png" />
+<img alt="_images/input_preprocessing_7_35.png" src="_images/input_preprocessing_7_35.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 8)
+successfully read Actiware data file
+record 30027
+30027 missing 0 values out of 34716 total (0.00 percent)
+interpolated - now missing 0 values out of 34716 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_38.png" src="_images/input_preprocessing_7_38.png" />
+<img alt="_images/input_preprocessing_7_39.png" src="_images/input_preprocessing_7_39.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 9)
+successfully read Actiware data file
+record 30040
+30040 missing 0 values out of 29813 total (0.00 percent)
+interpolated - now missing 0 values out of 29813 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_42.png" src="_images/input_preprocessing_7_42.png" />
+<img alt="_images/input_preprocessing_7_43.png" src="_images/input_preprocessing_7_43.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 10)
+successfully read Actiware data file
+record 30057
+30057 missing 0 values out of 29359 total (0.00 percent)
+interpolated - now missing 0 values out of 29359 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_46.png" src="_images/input_preprocessing_7_46.png" />
+<img alt="_images/input_preprocessing_7_47.png" src="_images/input_preprocessing_7_47.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 11)
+successfully read Actiware data file
+record 30064
+30064 missing 0 values out of 31880 total (0.00 percent)
+interpolated - now missing 0 values out of 31880 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_50.png" src="_images/input_preprocessing_7_50.png" />
+<img alt="_images/input_preprocessing_7_51.png" src="_images/input_preprocessing_7_51.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 12)
+successfully read Actiware data file
+record 30066
+30066 missing 0 values out of 28615 total (0.00 percent)
+interpolated - now missing 0 values out of 28615 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_54.png" src="_images/input_preprocessing_7_54.png" />
+<img alt="_images/input_preprocessing_7_55.png" src="_images/input_preprocessing_7_55.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 13)
+successfully read Actiware data file
+record 30069
+30069 missing 0 values out of 34292 total (0.00 percent)
+interpolated - now missing 0 values out of 34292 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_58.png" src="_images/input_preprocessing_7_58.png" />
+<img alt="_images/input_preprocessing_7_59.png" src="_images/input_preprocessing_7_59.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 14)
+successfully read Actiware data file
+record 30074
+30074 missing 0 values out of 40250 total (0.00 percent)
+interpolated - now missing 0 values out of 40250 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_62.png" src="_images/input_preprocessing_7_62.png" />
+<img alt="_images/input_preprocessing_7_63.png" src="_images/input_preprocessing_7_63.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 15)
+successfully read Actiware data file
+record 30085
+30085 missing 0 values out of 28779 total (0.00 percent)
+interpolated - now missing 0 values out of 28779 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_66.png" src="_images/input_preprocessing_7_66.png" />
+<img alt="_images/input_preprocessing_7_67.png" src="_images/input_preprocessing_7_67.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 16)
+successfully read Actiware data file
+record 30088
+30088 missing 0 values out of 40314 total (0.00 percent)
+interpolated - now missing 0 values out of 40314 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_70.png" src="_images/input_preprocessing_7_70.png" />
+<img alt="_images/input_preprocessing_7_71.png" src="_images/input_preprocessing_7_71.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 17)
+successfully read Actiware data file
+record 30090
+30090 missing 0 values out of 29517 total (0.00 percent)
+interpolated - now missing 0 values out of 29517 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_74.png" src="_images/input_preprocessing_7_74.png" />
+<img alt="_images/input_preprocessing_7_75.png" src="_images/input_preprocessing_7_75.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 18)
+successfully read Actiware data file
+record 30091
+30091 missing 0 values out of 39897 total (0.00 percent)
+interpolated - now missing 0 values out of 39897 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_78.png" src="_images/input_preprocessing_7_78.png" />
+<img alt="_images/input_preprocessing_7_79.png" src="_images/input_preprocessing_7_79.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 19)
+successfully read Actiware data file
+record 30091
+30091 missing 0 values out of 34504 total (0.00 percent)
+interpolated - now missing 0 values out of 34504 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_82.png" src="_images/input_preprocessing_7_82.png" />
+<img alt="_images/input_preprocessing_7_83.png" src="_images/input_preprocessing_7_83.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 19)
+successfully read Actiware data file
+record 30095
+30095 missing 0 values out of 40298 total (0.00 percent)
+interpolated - now missing 0 values out of 40298 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_86.png" src="_images/input_preprocessing_7_86.png" />
+<img alt="_images/input_preprocessing_7_87.png" src="_images/input_preprocessing_7_87.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 20)
+successfully read Actiware data file
+record 30096
+30096 missing 0 values out of 31775 total (0.00 percent)
+interpolated - now missing 0 values out of 31775 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_90.png" src="_images/input_preprocessing_7_90.png" />
+<img alt="_images/input_preprocessing_7_91.png" src="_images/input_preprocessing_7_91.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 21)
+successfully read Actiware data file
+record 30101
+30101 missing 0 values out of 28105 total (0.00 percent)
+interpolated - now missing 0 values out of 28105 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_94.png" src="_images/input_preprocessing_7_94.png" />
+<img alt="_images/input_preprocessing_7_95.png" src="_images/input_preprocessing_7_95.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 22)
+successfully read Actiware data file
+record 30116
+30116 missing 0 values out of 32569 total (0.00 percent)
+interpolated - now missing 0 values out of 32569 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_98.png" src="_images/input_preprocessing_7_98.png" />
+<img alt="_images/input_preprocessing_7_99.png" src="_images/input_preprocessing_7_99.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 23)
+successfully read Actiware data file
+record 30118
+30118 missing 0 values out of 28530 total (0.00 percent)
+interpolated - now missing 0 values out of 28530 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_102.png" src="_images/input_preprocessing_7_102.png" />
+<img alt="_images/input_preprocessing_7_103.png" src="_images/input_preprocessing_7_103.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 24)
+successfully read Actiware data file
+record 30119
+30119 missing 0 values out of 34829 total (0.00 percent)
+interpolated - now missing 0 values out of 34829 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_106.png" src="_images/input_preprocessing_7_106.png" />
+<img alt="_images/input_preprocessing_7_107.png" src="_images/input_preprocessing_7_107.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 25)
+successfully read Actiware data file
+record 30119
+30119 missing 0 values out of 35158 total (0.00 percent)
+interpolated - now missing 0 values out of 35158 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_110.png" src="_images/input_preprocessing_7_110.png" />
+<img alt="_images/input_preprocessing_7_111.png" src="_images/input_preprocessing_7_111.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 25)
+successfully read Actiware data file
+record 30128
+30128 missing 0 values out of 28788 total (0.00 percent)
+interpolated - now missing 0 values out of 28788 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_114.png" src="_images/input_preprocessing_7_114.png" />
+<img alt="_images/input_preprocessing_7_115.png" src="_images/input_preprocessing_7_115.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 26)
+successfully read Actiware data file
+record 30181
+30181 missing 0 values out of 29933 total (0.00 percent)
+interpolated - now missing 0 values out of 29933 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_118.png" src="_images/input_preprocessing_7_118.png" />
+<img alt="_images/input_preprocessing_7_119.png" src="_images/input_preprocessing_7_119.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 27)
+successfully read Actiware data file
+record 30217
+30217 missing 0 values out of 37960 total (0.00 percent)
+interpolated - now missing 0 values out of 37960 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_122.png" src="_images/input_preprocessing_7_122.png" />
+<img alt="_images/input_preprocessing_7_123.png" src="_images/input_preprocessing_7_123.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 28)
+successfully read Actiware data file
+record 30227
+30227 missing 0 values out of 34368 total (0.00 percent)
+interpolated - now missing 0 values out of 34368 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_126.png" src="_images/input_preprocessing_7_126.png" />
+<img alt="_images/input_preprocessing_7_127.png" src="_images/input_preprocessing_7_127.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 29)
+successfully read Actiware data file
+record 30236
+30236 missing 0 values out of 35048 total (0.00 percent)
+interpolated - now missing 0 values out of 35048 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_130.png" src="_images/input_preprocessing_7_130.png" />
+<img alt="_images/input_preprocessing_7_131.png" src="_images/input_preprocessing_7_131.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 30)
+successfully read Actiware data file
+record 30242
+30242 missing 0 values out of 31757 total (0.00 percent)
+interpolated - now missing 0 values out of 31757 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_134.png" src="_images/input_preprocessing_7_134.png" />
+<img alt="_images/input_preprocessing_7_135.png" src="_images/input_preprocessing_7_135.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 31)
+successfully read Actiware data file
+record 30242
+30242 missing 0 values out of 37316 total (0.00 percent)
+interpolated - now missing 0 values out of 37316 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_138.png" src="_images/input_preprocessing_7_138.png" />
+<img alt="_images/input_preprocessing_7_139.png" src="_images/input_preprocessing_7_139.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 31)
+successfully read Actiware data file
+record 30255
+30255 missing 0 values out of 28951 total (0.00 percent)
+interpolated - now missing 0 values out of 28951 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_142.png" src="_images/input_preprocessing_7_142.png" />
+<img alt="_images/input_preprocessing_7_143.png" src="_images/input_preprocessing_7_143.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 32)
+successfully read Actiware data file
+record 30274
+30274 missing 0 values out of 31471 total (0.00 percent)
+interpolated - now missing 0 values out of 31471 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_146.png" src="_images/input_preprocessing_7_146.png" />
+<img alt="_images/input_preprocessing_7_147.png" src="_images/input_preprocessing_7_147.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 33)
+successfully read Actiware data file
+record 30283
+30283 missing 0 values out of 31814 total (0.00 percent)
+interpolated - now missing 0 values out of 31814 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_150.png" src="_images/input_preprocessing_7_150.png" />
+<img alt="_images/input_preprocessing_7_151.png" src="_images/input_preprocessing_7_151.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 34)
+successfully read Actiware data file
+record 30295
+30295 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_154.png" src="_images/input_preprocessing_7_154.png" />
+<img alt="_images/input_preprocessing_7_155.png" src="_images/input_preprocessing_7_155.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 35)
+successfully read Actiware data file
+record 30330
+30330 missing 0 values out of 31950 total (0.00 percent)
+interpolated - now missing 0 values out of 31950 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_158.png" src="_images/input_preprocessing_7_158.png" />
+<img alt="_images/input_preprocessing_7_159.png" src="_images/input_preprocessing_7_159.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 36)
+successfully read Actiware data file
+record 30346
+30346 missing 0 values out of 40133 total (0.00 percent)
+interpolated - now missing 0 values out of 40133 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_162.png" src="_images/input_preprocessing_7_162.png" />
+<img alt="_images/input_preprocessing_7_163.png" src="_images/input_preprocessing_7_163.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 37)
+successfully read Actiware data file
+record 30376
+30376 missing 0 values out of 40216 total (0.00 percent)
+interpolated - now missing 0 values out of 40216 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_166.png" src="_images/input_preprocessing_7_166.png" />
+<img alt="_images/input_preprocessing_7_167.png" src="_images/input_preprocessing_7_167.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 38)
+successfully read Actiware data file
+record 30395
+30395 missing 0 values out of 32249 total (0.00 percent)
+interpolated - now missing 0 values out of 32249 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_170.png" src="_images/input_preprocessing_7_170.png" />
+<img alt="_images/input_preprocessing_7_171.png" src="_images/input_preprocessing_7_171.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 39)
+successfully read Actiware data file
+record 30400
+30400 missing 0 values out of 40251 total (0.00 percent)
+interpolated - now missing 0 values out of 40251 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_174.png" src="_images/input_preprocessing_7_174.png" />
+<img alt="_images/input_preprocessing_7_175.png" src="_images/input_preprocessing_7_175.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 40)
+successfully read Actiware data file
+record 30403
+30403 missing 0 values out of 40307 total (0.00 percent)
+interpolated - now missing 0 values out of 40307 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_178.png" src="_images/input_preprocessing_7_178.png" />
+<img alt="_images/input_preprocessing_7_179.png" src="_images/input_preprocessing_7_179.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 41)
+successfully read Actiware data file
+record 30407
+30407 missing 0 values out of 31308 total (0.00 percent)
+interpolated - now missing 0 values out of 31308 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_182.png" src="_images/input_preprocessing_7_182.png" />
+<img alt="_images/input_preprocessing_7_183.png" src="_images/input_preprocessing_7_183.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 42)
+successfully read Actiware data file
+record 30412
+30412 missing 0 values out of 40147 total (0.00 percent)
+interpolated - now missing 0 values out of 40147 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_186.png" src="_images/input_preprocessing_7_186.png" />
+<img alt="_images/input_preprocessing_7_187.png" src="_images/input_preprocessing_7_187.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 43)
+successfully read Actiware data file
+record 30417
+30417 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_190.png" src="_images/input_preprocessing_7_190.png" />
+<img alt="_images/input_preprocessing_7_191.png" src="_images/input_preprocessing_7_191.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 44)
+successfully read Actiware data file
+record 30426
+30426 missing 0 values out of 40182 total (0.00 percent)
+interpolated - now missing 0 values out of 40182 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_194.png" src="_images/input_preprocessing_7_194.png" />
+<img alt="_images/input_preprocessing_7_195.png" src="_images/input_preprocessing_7_195.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 45)
+successfully read Actiware data file
+record 30432
+30432 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_198.png" src="_images/input_preprocessing_7_198.png" />
+<img alt="_images/input_preprocessing_7_199.png" src="_images/input_preprocessing_7_199.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 46)
+successfully read Actiware data file
+record 30433
+30433 missing 0 values out of 40293 total (0.00 percent)
+interpolated - now missing 0 values out of 40293 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_202.png" src="_images/input_preprocessing_7_202.png" />
+<img alt="_images/input_preprocessing_7_203.png" src="_images/input_preprocessing_7_203.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 47)
+successfully read Actiware data file
+record 30466
+30466 missing 0 values out of 32176 total (0.00 percent)
+interpolated - now missing 0 values out of 32176 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_206.png" src="_images/input_preprocessing_7_206.png" />
+<img alt="_images/input_preprocessing_7_207.png" src="_images/input_preprocessing_7_207.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 48)
+successfully read Actiware data file
+record 30469
+30469 missing 0 values out of 39773 total (0.00 percent)
+interpolated - now missing 0 values out of 39773 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_210.png" src="_images/input_preprocessing_7_210.png" />
+<img alt="_images/input_preprocessing_7_211.png" src="_images/input_preprocessing_7_211.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 49)
+successfully read Actiware data file
+record 30476
+30476 missing 0 values out of 32408 total (0.00 percent)
+interpolated - now missing 0 values out of 32408 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_214.png" src="_images/input_preprocessing_7_214.png" />
+<img alt="_images/input_preprocessing_7_215.png" src="_images/input_preprocessing_7_215.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 50)
+successfully read Actiware data file
+record 30478
+30478 missing 0 values out of 40237 total (0.00 percent)
+interpolated - now missing 0 values out of 40237 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_218.png" src="_images/input_preprocessing_7_218.png" />
+<img alt="_images/input_preprocessing_7_219.png" src="_images/input_preprocessing_7_219.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 51)
+successfully read Actiware data file
+record 30568
+30568 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_222.png" src="_images/input_preprocessing_7_222.png" />
+<img alt="_images/input_preprocessing_7_223.png" src="_images/input_preprocessing_7_223.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 52)
+successfully read Actiware data file
+record 30570
+30570 missing 0 values out of 34547 total (0.00 percent)
+interpolated - now missing 0 values out of 34547 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_226.png" src="_images/input_preprocessing_7_226.png" />
+<img alt="_images/input_preprocessing_7_227.png" src="_images/input_preprocessing_7_227.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 53)
+successfully read Actiware data file
+record 30581
+30581 missing 0 values out of 29244 total (0.00 percent)
+interpolated - now missing 0 values out of 29244 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_230.png" src="_images/input_preprocessing_7_230.png" />
+<img alt="_images/input_preprocessing_7_231.png" src="_images/input_preprocessing_7_231.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 54)
+successfully read Actiware data file
+record 30584
+30584 missing 0 values out of 40099 total (0.00 percent)
+interpolated - now missing 0 values out of 40099 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_234.png" src="_images/input_preprocessing_7_234.png" />
+<img alt="_images/input_preprocessing_7_235.png" src="_images/input_preprocessing_7_235.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 55)
+successfully read Actiware data file
+record 30588
+30588 missing 0 values out of 21829 total (0.00 percent)
+interpolated - now missing 0 values out of 21829 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_238.png" src="_images/input_preprocessing_7_238.png" />
+<img alt="_images/input_preprocessing_7_239.png" src="_images/input_preprocessing_7_239.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 56)
+successfully read Actiware data file
+record 40160
+40160 missing 0 values out of 20560 total (0.00 percent)
+interpolated - now missing 0 values out of 20560 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_242.png" src="_images/input_preprocessing_7_242.png" />
+<img alt="_images/input_preprocessing_7_243.png" src="_images/input_preprocessing_7_243.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 57)
+successfully read Actiware data file
+record 40160
+40160 missing 0 values out of 37677 total (0.00 percent)
+interpolated - now missing 0 values out of 37677 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_246.png" src="_images/input_preprocessing_7_246.png" />
+<img alt="_images/input_preprocessing_7_247.png" src="_images/input_preprocessing_7_247.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 57)
+successfully read Actiware data file
+record 40170
+40170 missing 0 values out of 31771 total (0.00 percent)
+interpolated - now missing 0 values out of 31771 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_250.png" src="_images/input_preprocessing_7_250.png" />
+<img alt="_images/input_preprocessing_7_251.png" src="_images/input_preprocessing_7_251.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 58)
+successfully read Actiware data file
+record 40175
+40175 missing 0 values out of 40309 total (0.00 percent)
+interpolated - now missing 0 values out of 40309 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_254.png" src="_images/input_preprocessing_7_254.png" />
+<img alt="_images/input_preprocessing_7_255.png" src="_images/input_preprocessing_7_255.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 59)
+successfully read Actiware data file
+record 40288
+40288 missing 0 values out of 40170 total (0.00 percent)
+interpolated - now missing 0 values out of 40170 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_258.png" src="_images/input_preprocessing_7_258.png" />
+<img alt="_images/input_preprocessing_7_259.png" src="_images/input_preprocessing_7_259.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 60)
+successfully read Actiware data file
+record 40351
+40351 missing 0 values out of 29423 total (0.00 percent)
+interpolated - now missing 0 values out of 29423 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_262.png" src="_images/input_preprocessing_7_262.png" />
+<img alt="_images/input_preprocessing_7_263.png" src="_images/input_preprocessing_7_263.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 61)
+successfully read Actiware data file
+record 40490
+40490 missing 0 values out of 35015 total (0.00 percent)
+interpolated - now missing 0 values out of 35015 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_266.png" src="_images/input_preprocessing_7_266.png" />
+<img alt="_images/input_preprocessing_7_267.png" src="_images/input_preprocessing_7_267.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 62)
+successfully read Actiware data file
+record 40496
+40496 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_270.png" src="_images/input_preprocessing_7_270.png" />
+<img alt="_images/input_preprocessing_7_271.png" src="_images/input_preprocessing_7_271.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 63)
+successfully read Actiware data file
+record 40500
+40500 missing 0 values out of 34786 total (0.00 percent)
+interpolated - now missing 0 values out of 34786 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_274.png" src="_images/input_preprocessing_7_274.png" />
+<img alt="_images/input_preprocessing_7_275.png" src="_images/input_preprocessing_7_275.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 64)
+successfully read Actiware data file
+record 40511
+40511 missing 0 values out of 36850 total (0.00 percent)
+interpolated - now missing 0 values out of 36850 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_278.png" src="_images/input_preprocessing_7_278.png" />
+<img alt="_images/input_preprocessing_7_279.png" src="_images/input_preprocessing_7_279.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 65)
+successfully read Actiware data file
+record 40512
+40512 missing 0 values out of 20679 total (0.00 percent)
+interpolated - now missing 0 values out of 20679 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_282.png" src="_images/input_preprocessing_7_282.png" />
+<img alt="_images/input_preprocessing_7_283.png" src="_images/input_preprocessing_7_283.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 66)
+successfully read Actiware data file
+record 40515
+40515 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_286.png" src="_images/input_preprocessing_7_286.png" />
+<img alt="_images/input_preprocessing_7_287.png" src="_images/input_preprocessing_7_287.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 67)
+successfully read Actiware data file
+record 40516
+40516 missing 0 values out of 39762 total (0.00 percent)
+interpolated - now missing 0 values out of 39762 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_290.png" src="_images/input_preprocessing_7_290.png" />
+<img alt="_images/input_preprocessing_7_291.png" src="_images/input_preprocessing_7_291.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 68)
+successfully read Actiware data file
+record 40519
+40519 missing 0 values out of 37402 total (0.00 percent)
+interpolated - now missing 0 values out of 37402 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_294.png" src="_images/input_preprocessing_7_294.png" />
+<img alt="_images/input_preprocessing_7_295.png" src="_images/input_preprocessing_7_295.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 69)
+successfully read Actiware data file
+record 40520
+40520 missing 0 values out of 40163 total (0.00 percent)
+interpolated - now missing 0 values out of 40163 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_298.png" src="_images/input_preprocessing_7_298.png" />
+<img alt="_images/input_preprocessing_7_299.png" src="_images/input_preprocessing_7_299.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 70)
+successfully read Actiware data file
+record 40522
+40522 missing 0 values out of 40247 total (0.00 percent)
+interpolated - now missing 0 values out of 40247 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_302.png" src="_images/input_preprocessing_7_302.png" />
+<img alt="_images/input_preprocessing_7_303.png" src="_images/input_preprocessing_7_303.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 71)
+successfully read Actiware data file
+record 40524
+40524 missing 0 values out of 40299 total (0.00 percent)
+interpolated - now missing 0 values out of 40299 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_306.png" src="_images/input_preprocessing_7_306.png" />
+<img alt="_images/input_preprocessing_7_307.png" src="_images/input_preprocessing_7_307.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 72)
+successfully read Actiware data file
+record 40538
+40538 missing 0 values out of 22609 total (0.00 percent)
+interpolated - now missing 0 values out of 22609 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_310.png" src="_images/input_preprocessing_7_310.png" />
+<img alt="_images/input_preprocessing_7_311.png" src="_images/input_preprocessing_7_311.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 73)
+successfully read Actiware data file
+record 40547
+40547 missing 0 values out of 40251 total (0.00 percent)
+interpolated - now missing 0 values out of 40251 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_314.png" src="_images/input_preprocessing_7_314.png" />
+<img alt="_images/input_preprocessing_7_315.png" src="_images/input_preprocessing_7_315.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 74)
+successfully read Actiware data file
+record 40547
+40547 missing 0 values out of 34482 total (0.00 percent)
+interpolated - now missing 0 values out of 34482 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_318.png" src="_images/input_preprocessing_7_318.png" />
+<img alt="_images/input_preprocessing_7_319.png" src="_images/input_preprocessing_7_319.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 74)
+successfully read Actiware data file
+record 40550
+40550 missing 0 values out of 40311 total (0.00 percent)
+interpolated - now missing 0 values out of 40311 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_322.png" src="_images/input_preprocessing_7_322.png" />
+<img alt="_images/input_preprocessing_7_323.png" src="_images/input_preprocessing_7_323.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 75)
+successfully read Actiware data file
+record 40564
+40564 missing 0 values out of 37716 total (0.00 percent)
+interpolated - now missing 0 values out of 37716 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_326.png" src="_images/input_preprocessing_7_326.png" />
+<img alt="_images/input_preprocessing_7_327.png" src="_images/input_preprocessing_7_327.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 76)
+successfully read Actiware data file
+record 40601
+40601 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_330.png" src="_images/input_preprocessing_7_330.png" />
+<img alt="_images/input_preprocessing_7_331.png" src="_images/input_preprocessing_7_331.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 77)
+successfully read Actiware data file
+record 40608
+40608 missing 0 values out of 35320 total (0.00 percent)
+interpolated - now missing 0 values out of 35320 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_334.png" src="_images/input_preprocessing_7_334.png" />
+<img alt="_images/input_preprocessing_7_335.png" src="_images/input_preprocessing_7_335.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 78)
+successfully read Actiware data file
+record 40615
+40615 missing 0 values out of 40318 total (0.00 percent)
+interpolated - now missing 0 values out of 40318 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_338.png" src="_images/input_preprocessing_7_338.png" />
+<img alt="_images/input_preprocessing_7_339.png" src="_images/input_preprocessing_7_339.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 79)
+successfully read Actiware data file
+record 40619
+40619 missing 0 values out of 29087 total (0.00 percent)
+interpolated - now missing 0 values out of 29087 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_342.png" src="_images/input_preprocessing_7_342.png" />
+<img alt="_images/input_preprocessing_7_343.png" src="_images/input_preprocessing_7_343.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 80)
+successfully read Actiware data file
+record 40623
+40623 missing 0 values out of 38013 total (0.00 percent)
+interpolated - now missing 0 values out of 38013 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_346.png" src="_images/input_preprocessing_7_346.png" />
+<img alt="_images/input_preprocessing_7_347.png" src="_images/input_preprocessing_7_347.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 81)
+successfully read Actiware data file
+record 40629
+40629 missing 0 values out of 40215 total (0.00 percent)
+interpolated - now missing 0 values out of 40215 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_350.png" src="_images/input_preprocessing_7_350.png" />
+<img alt="_images/input_preprocessing_7_351.png" src="_images/input_preprocessing_7_351.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 82)
+successfully read Actiware data file
+record 40638
+40638 missing 0 values out of 37843 total (0.00 percent)
+interpolated - now missing 0 values out of 37843 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_354.png" src="_images/input_preprocessing_7_354.png" />
+<img alt="_images/input_preprocessing_7_355.png" src="_images/input_preprocessing_7_355.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 83)
+successfully read Actiware data file
+record 40649
+40649 missing 0 values out of 21839 total (0.00 percent)
+interpolated - now missing 0 values out of 21839 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_358.png" src="_images/input_preprocessing_7_358.png" />
+<img alt="_images/input_preprocessing_7_359.png" src="_images/input_preprocessing_7_359.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 84)
+successfully read Actiware data file
+record 40650
+40650 missing 0 values out of 31822 total (0.00 percent)
+interpolated - now missing 0 values out of 31822 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_362.png" src="_images/input_preprocessing_7_362.png" />
+<img alt="_images/input_preprocessing_7_363.png" src="_images/input_preprocessing_7_363.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 85)
+successfully read Actiware data file
+record 40653
+40653 missing 0 values out of 30324 total (0.00 percent)
+interpolated - now missing 0 values out of 30324 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_366.png" src="_images/input_preprocessing_7_366.png" />
+<img alt="_images/input_preprocessing_7_367.png" src="_images/input_preprocessing_7_367.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 86)
+successfully read Actiware data file
+record 40655
+40655 missing 0 values out of 37963 total (0.00 percent)
+interpolated - now missing 0 values out of 37963 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_370.png" src="_images/input_preprocessing_7_370.png" />
+<img alt="_images/input_preprocessing_7_371.png" src="_images/input_preprocessing_7_371.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 87)
+successfully read Actiware data file
+record 40656
+40656 missing 0 values out of 40312 total (0.00 percent)
+interpolated - now missing 0 values out of 40312 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_374.png" src="_images/input_preprocessing_7_374.png" />
+<img alt="_images/input_preprocessing_7_375.png" src="_images/input_preprocessing_7_375.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 88)
+successfully read Actiware data file
+record 40658
+40658 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_378.png" src="_images/input_preprocessing_7_378.png" />
+<img alt="_images/input_preprocessing_7_379.png" src="_images/input_preprocessing_7_379.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 89)
+successfully read Actiware data file
+record 40664
+40664 missing 0 values out of 32254 total (0.00 percent)
+interpolated - now missing 0 values out of 32254 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_382.png" src="_images/input_preprocessing_7_382.png" />
+<img alt="_images/input_preprocessing_7_383.png" src="_images/input_preprocessing_7_383.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 90)
+successfully read Actiware data file
+record 40665
+40665 missing 0 values out of 40133 total (0.00 percent)
+interpolated - now missing 0 values out of 40133 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_386.png" src="_images/input_preprocessing_7_386.png" />
+<img alt="_images/input_preprocessing_7_387.png" src="_images/input_preprocessing_7_387.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 91)
+successfully read Actiware data file
+record 40668
+40668 missing 0 values out of 31564 total (0.00 percent)
+interpolated - now missing 0 values out of 31564 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_390.png" src="_images/input_preprocessing_7_390.png" />
+<img alt="_images/input_preprocessing_7_391.png" src="_images/input_preprocessing_7_391.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 92)
+successfully read Actiware data file
+record 40672
+40672 missing 0 values out of 31772 total (0.00 percent)
+interpolated - now missing 0 values out of 31772 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_394.png" src="_images/input_preprocessing_7_394.png" />
+<img alt="_images/input_preprocessing_7_395.png" src="_images/input_preprocessing_7_395.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 93)
+successfully read Actiware data file
+record 40685
+40685 missing 0 values out of 28623 total (0.00 percent)
+interpolated - now missing 0 values out of 28623 total (0.0 percent)
+----- success: 0.00 percent NaN, 9 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_398.png" src="_images/input_preprocessing_7_398.png" />
+<img alt="_images/input_preprocessing_7_399.png" src="_images/input_preprocessing_7_399.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 94)
+successfully read Actiware data file
+record 40694
+40694 missing 0 values out of 34676 total (0.00 percent)
+interpolated - now missing 0 values out of 34676 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_402.png" src="_images/input_preprocessing_7_402.png" />
+<img alt="_images/input_preprocessing_7_403.png" src="_images/input_preprocessing_7_403.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 95)
+successfully read Actiware data file
+record 40707
+40707 missing 0 values out of 34508 total (0.00 percent)
+interpolated - now missing 0 values out of 34508 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_406.png" src="_images/input_preprocessing_7_406.png" />
+<img alt="_images/input_preprocessing_7_407.png" src="_images/input_preprocessing_7_407.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 96)
+successfully read Actiware data file
+record 40720
+40720 missing 0 values out of 39995 total (0.00 percent)
+interpolated - now missing 0 values out of 39995 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_410.png" src="_images/input_preprocessing_7_410.png" />
+<img alt="_images/input_preprocessing_7_411.png" src="_images/input_preprocessing_7_411.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 97)
+successfully read Actiware data file
+record 40728
+40728 missing 0 values out of 40278 total (0.00 percent)
+interpolated - now missing 0 values out of 40278 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_414.png" src="_images/input_preprocessing_7_414.png" />
+<img alt="_images/input_preprocessing_7_415.png" src="_images/input_preprocessing_7_415.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 98)
+successfully read Actiware data file
+record 40730
+40730 missing 0 values out of 40255 total (0.00 percent)
+interpolated - now missing 0 values out of 40255 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_418.png" src="_images/input_preprocessing_7_418.png" />
+<img alt="_images/input_preprocessing_7_419.png" src="_images/input_preprocessing_7_419.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 99)
+successfully read Actiware data file
+record 40733
+40733 missing 0 values out of 37582 total (0.00 percent)
+interpolated - now missing 0 values out of 37582 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_422.png" src="_images/input_preprocessing_7_422.png" />
+<img alt="_images/input_preprocessing_7_423.png" src="_images/input_preprocessing_7_423.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 100)
+successfully read Actiware data file
+record 40738
+40738 missing 0 values out of 37749 total (0.00 percent)
+interpolated - now missing 0 values out of 37749 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_426.png" src="_images/input_preprocessing_7_426.png" />
+<img alt="_images/input_preprocessing_7_427.png" src="_images/input_preprocessing_7_427.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 101)
+successfully read Actiware data file
+record 40750
+40750 missing 0 values out of 31131 total (0.00 percent)
+interpolated - now missing 0 values out of 31131 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_431.png" src="_images/input_preprocessing_7_431.png" />
+<img alt="_images/input_preprocessing_7_432.png" src="_images/input_preprocessing_7_432.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 102)
+successfully read Actiware data file
+record 40756
+40756 missing 0 values out of 20212 total (0.00 percent)
+interpolated - now missing 0 values out of 20212 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_436.png" src="_images/input_preprocessing_7_436.png" />
+<img alt="_images/input_preprocessing_7_437.png" src="_images/input_preprocessing_7_437.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 103)
+successfully read Actiware data file
+record 40758
+40758 missing 0 values out of 37659 total (0.00 percent)
+interpolated - now missing 0 values out of 37659 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_441.png" src="_images/input_preprocessing_7_441.png" />
+<img alt="_images/input_preprocessing_7_442.png" src="_images/input_preprocessing_7_442.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 104)
+successfully read Actiware data file
+record 40767
+40767 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_446.png" src="_images/input_preprocessing_7_446.png" />
+<img alt="_images/input_preprocessing_7_447.png" src="_images/input_preprocessing_7_447.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 105)
+successfully read Actiware data file
+record 40768
+40768 missing 0 values out of 40261 total (0.00 percent)
+interpolated - now missing 0 values out of 40261 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_451.png" src="_images/input_preprocessing_7_451.png" />
+<img alt="_images/input_preprocessing_7_452.png" src="_images/input_preprocessing_7_452.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 106)
+successfully read Actiware data file
+record 40769
+40769 missing 0 values out of 40278 total (0.00 percent)
+interpolated - now missing 0 values out of 40278 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_456.png" src="_images/input_preprocessing_7_456.png" />
+<img alt="_images/input_preprocessing_7_457.png" src="_images/input_preprocessing_7_457.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 107)
+successfully read Actiware data file
+record 40773
+40773 missing 0 values out of 35185 total (0.00 percent)
+interpolated - now missing 0 values out of 35185 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_461.png" src="_images/input_preprocessing_7_461.png" />
+<img alt="_images/input_preprocessing_7_462.png" src="_images/input_preprocessing_7_462.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 108)
+successfully read Actiware data file
+record 40775
+40775 missing 0 values out of 29016 total (0.00 percent)
+interpolated - now missing 0 values out of 29016 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_466.png" src="_images/input_preprocessing_7_466.png" />
+<img alt="_images/input_preprocessing_7_467.png" src="_images/input_preprocessing_7_467.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 109)
+successfully read Actiware data file
+record 40777
+40777 missing 0 values out of 37239 total (0.00 percent)
+interpolated - now missing 0 values out of 37239 total (0.0 percent)
+----- success: 0.00 percent NaN, 12 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_471.png" src="_images/input_preprocessing_7_471.png" />
+<img alt="_images/input_preprocessing_7_472.png" src="_images/input_preprocessing_7_472.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 110)
+successfully read Actiware data file
+record 40778
+40778 missing 0 values out of 31879 total (0.00 percent)
+interpolated - now missing 0 values out of 31879 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_476.png" src="_images/input_preprocessing_7_476.png" />
+<img alt="_images/input_preprocessing_7_477.png" src="_images/input_preprocessing_7_477.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 111)
+successfully read Actiware data file
+record 40779
+40779 missing 0 values out of 39861 total (0.00 percent)
+interpolated - now missing 0 values out of 39861 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_481.png" src="_images/input_preprocessing_7_481.png" />
+<img alt="_images/input_preprocessing_7_482.png" src="_images/input_preprocessing_7_482.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 112)
+successfully read Actiware data file
+record 40782
+40782 missing 0 values out of 40088 total (0.00 percent)
+interpolated - now missing 0 values out of 40088 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_486.png" src="_images/input_preprocessing_7_486.png" />
+<img alt="_images/input_preprocessing_7_487.png" src="_images/input_preprocessing_7_487.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 113)
+successfully read Actiware data file
+record 40784
+40784 missing 0 values out of 37492 total (0.00 percent)
+interpolated - now missing 0 values out of 37492 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_491.png" src="_images/input_preprocessing_7_491.png" />
+<img alt="_images/input_preprocessing_7_492.png" src="_images/input_preprocessing_7_492.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 114)
+successfully read Actiware data file
+record 40788
+40788 missing 0 values out of 37767 total (0.00 percent)
+interpolated - now missing 0 values out of 37767 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_496.png" src="_images/input_preprocessing_7_496.png" />
+<img alt="_images/input_preprocessing_7_497.png" src="_images/input_preprocessing_7_497.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 115)
+successfully read Actiware data file
+record 40796
+40796 missing 0 values out of 40265 total (0.00 percent)
+interpolated - now missing 0 values out of 40265 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_501.png" src="_images/input_preprocessing_7_501.png" />
+<img alt="_images/input_preprocessing_7_502.png" src="_images/input_preprocessing_7_502.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 116)
+successfully read Actiware data file
+record 40803
+40803 missing 0 values out of 34525 total (0.00 percent)
+interpolated - now missing 0 values out of 34525 total (0.0 percent)
+----- success: 0.00 percent NaN, 11 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_506.png" src="_images/input_preprocessing_7_506.png" />
+<img alt="_images/input_preprocessing_7_507.png" src="_images/input_preprocessing_7_507.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 117)
+successfully read Actiware data file
+record 40811
+40811 missing 0 values out of 40318 total (0.00 percent)
+interpolated - now missing 0 values out of 40318 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_511.png" src="_images/input_preprocessing_7_511.png" />
+<img alt="_images/input_preprocessing_7_512.png" src="_images/input_preprocessing_7_512.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 118)
+successfully read Actiware data file
+record 40825
+40825 missing 0 values out of 40318 total (0.00 percent)
+interpolated - now missing 0 values out of 40318 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_516.png" src="_images/input_preprocessing_7_516.png" />
+<img alt="_images/input_preprocessing_7_517.png" src="_images/input_preprocessing_7_517.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 119)
+successfully read Actiware data file
+record 40855
+40855 missing 0 values out of 40319 total (0.00 percent)
+interpolated - now missing 0 values out of 40319 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_521.png" src="_images/input_preprocessing_7_521.png" />
+<img alt="_images/input_preprocessing_7_522.png" src="_images/input_preprocessing_7_522.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 120)
+successfully read Actiware data file
+record 40859
+40859 missing 0 values out of 29425 total (0.00 percent)
+interpolated - now missing 0 values out of 29425 total (0.0 percent)
+----- success: 0.00 percent NaN, 10 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_526.png" src="_images/input_preprocessing_7_526.png" />
+<img alt="_images/input_preprocessing_7_527.png" src="_images/input_preprocessing_7_527.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 121)
+successfully read Actiware data file
+record 40861
+40861 missing 0 values out of 37464 total (0.00 percent)
+interpolated - now missing 0 values out of 37464 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_531.png" src="_images/input_preprocessing_7_531.png" />
+<img alt="_images/input_preprocessing_7_532.png" src="_images/input_preprocessing_7_532.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 122)
+successfully read Actiware data file
+record 40876
+40876 missing 0 values out of 40307 total (0.00 percent)
+interpolated - now missing 0 values out of 40307 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_536.png" src="_images/input_preprocessing_7_536.png" />
+<img alt="_images/input_preprocessing_7_537.png" src="_images/input_preprocessing_7_537.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 123)
+successfully read Actiware data file
+record 40878
+40878 missing 0 values out of 40147 total (0.00 percent)
+interpolated - now missing 0 values out of 40147 total (0.0 percent)
+----- success: 0.00 percent NaN, 13 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_541.png" src="_images/input_preprocessing_7_541.png" />
+<img alt="_images/input_preprocessing_7_542.png" src="_images/input_preprocessing_7_542.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 124)
+successfully read Actiware data file
+record 40891
+40891 missing 0 values out of 21821 total (0.00 percent)
+interpolated - now missing 0 values out of 21821 total (0.0 percent)
+----- success: 0.00 percent NaN, 7 recording period
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:30: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels(labels=x_dates, rotation=45, ha=&#39;left&#39;)
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_7_546.png" src="_images/input_preprocessing_7_546.png" />
+<img alt="_images/input_preprocessing_7_547.png" src="_images/input_preprocessing_7_547.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(24, 125)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_18165/752698654.py:52: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider using pd.concat instead.  To get a de-fragmented frame, use `newframe = frame.copy()`
+  actdf[subject] = act24.values
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">actdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/data/actigraphy_data_24hrday_df.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">actdf</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/input_preprocessing_9_1.png" src="_images/input_preprocessing_9_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="intro.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Introduction</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="rar_measures.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Standard rest-activity measure calculation</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Megan McMahon<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

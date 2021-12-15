@@ -44,7 +44,7 @@ rar
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mValueError[0m                                Traceback (most recent call last)
-[0;32m/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_583/2543959315.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/var/folders/ld/qzxjl7f92_5gzy756sfjkjfh0000gn/T/ipykernel_1223/2543959315.py[0m in [0;36m<module>[0;34m[0m
 [1;32m      6[0m [0;32mfor[0m [0msubject[0m [0;32min[0m [0mactdf[0m[0;34m.[0m[0mcolumns[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 [1;32m      7[0m [0;34m[0m[0m
 [0;32m----> 8[0;31m     df = pd.DataFrame(actdf[subject][:-2]).set_index(pd.to_datetime(

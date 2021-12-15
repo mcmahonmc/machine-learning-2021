@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction &#8212; PSY 394S Final Project</title>
+    <title>Standard and data-driven approaches to rest-activity rhythm assessment and relevance to cognitive aging &#8212; PSY 394S Final Project</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -52,7 +52,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Actigraphy Preprocessing" href="preprocessing.html" />
+    <link rel="next" title="Actigraphy Preprocessing" href="input_preprocessing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -71,6 +71,11 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/actigraphy_ex_24h_hourly.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">PSY 394S Final Project</h1>
@@ -84,13 +89,13 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 current">
   <a class="reference internal" href="#">
-   Introduction
+   Standard and data-driven approaches to rest-activity rhythm assessment and relevance  to cognitive aging
   </a>
  </li>
 </ul>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="preprocessing.html">
+  <a class="reference internal" href="input_preprocessing.html">
    Actigraphy Preprocessing
   </a>
  </li>
@@ -201,32 +206,44 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#rest-activity-rhythms-and-cognitive-aging">
-   Rest-activity rhythms and cognitive aging
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Standard and data-driven approaches to rest-activity rhythm assessment and relevance  to cognitive aging
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#rest-activity-rhythm-assessment">
-   Rest-activity rhythm assessment
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#extended-cosinor-model">
-     Extended cosinor model
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rest-activity-rhythms-and-cognitive-aging">
+     Rest-activity rhythms and cognitive aging
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#non-parametric-methods">
-     Non-parametric methods
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rest-activity-rhythm-assessment">
+     Rest-activity rhythm assessment
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#extended-cosinor-model">
+       Extended cosinor model
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#non-parametric-methods">
+       Non-parametric methods
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#limitations-to-standard-rest-activity-rhythm-assessment">
+     Limitations to standard rest-activity rhythm assessment
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#limitations-to-standard-rest-activity-rhythm-assessment">
-   Limitations to standard rest-activity rhythm assessment
-  </a>
  </li>
 </ul>
 
@@ -239,7 +256,12 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
+  <div class="tex2jax_ignore mathjax_ignore section" id="standard-and-data-driven-approaches-to-rest-activity-rhythm-assessment-and-relevance-to-cognitive-aging">
+<h1>Standard and data-driven approaches to rest-activity rhythm assessment and relevance  to cognitive aging<a class="headerlink" href="#standard-and-data-driven-approaches-to-rest-activity-rhythm-assessment-and-relevance-to-cognitive-aging" title="Permalink to this headline">¶</a></h1>
+<p>Megan McMahon <br>
+December 2021</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="rest-activity-rhythms-and-cognitive-aging">
 <h2>Rest-activity rhythms and cognitive aging<a class="headerlink" href="#rest-activity-rhythms-and-cognitive-aging" title="Permalink to this headline">¶</a></h2>
@@ -297,7 +319,7 @@
 <div class='prev-next-bottom'>
     
      <div id="next">
-        <a class="right-next" href="preprocessing.html" title="next page">
+        <a class="right-next" href="input_preprocessing.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
                 <p class="prevnext-title">Actigraphy Preprocessing</p>

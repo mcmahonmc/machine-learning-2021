@@ -53,7 +53,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Dimensionality reduction for novel rest-activity measures" href="dimensionality.html" />
-    <link rel="prev" title="Actigraphy Preprocessing" href="Preprocessing.html" />
+    <link rel="prev" title="Actigraphy Preprocessing" href="input_preprocessing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -72,6 +72,11 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/actigraphy_ex_24h_hourly.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">PSY 394S Final Project</h1>
@@ -91,7 +96,7 @@
 </ul>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
+  <a class="reference internal" href="input_preprocessing.html">
    Actigraphy Preprocessing
   </a>
  </li>
@@ -283,7 +288,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_583</span><span class="o">/</span><span class="mf">2543959315.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">2543959315.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
 <span class="g g-Whitespace">      </span><span class="mi">7</span> 
 <span class="ne">----&gt; </span><span class="mi">8</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">actdf</span><span class="p">[</span><span class="n">subject</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
@@ -322,7 +327,72 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(116, 8)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">469686921.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">rar</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">drop_subs</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="k">for</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">rar</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actdf</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">drop_subs</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/util/_decorators.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span>                     <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span>                 <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">311</span>             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">312</span> 
+<span class="g g-Whitespace">    </span><span class="mi">313</span>         <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">584</span>     <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">585</span> 
+<span class="ne">--&gt; </span><span class="mi">586</span>     <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">587</span> 
+<span class="g g-Whitespace">    </span><span class="mi">588</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">480</span> 
+<span class="g g-Whitespace">    </span><span class="mi">481</span>     <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">482</span>     <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">483</span> 
+<span class="g g-Whitespace">    </span><span class="mi">484</span>     <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">809</span>             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">810</span> 
+<span class="ne">--&gt; </span><span class="mi">811</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">812</span> 
+<span class="g g-Whitespace">    </span><span class="mi">813</span>     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_make_engine</span><span class="nt">(self, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1038</span>             <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1039</span>         <span class="c1"># error: Too many arguments for &quot;ParserBase&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1040</span>         <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">engine</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1041</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1042</span>     <span class="k">def</span> <span class="nf">_failover_to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/c_parser_wrapper.py</span> in <span class="ni">__init__</span><span class="nt">(self, src, **kwds)</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> 
+<span class="g g-Whitespace">     </span><span class="mi">50</span>         <span class="c1"># open handles</span>
+<span class="ne">---&gt; </span><span class="mi">51</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_open_handles</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/base_parser.py</span> in <span class="ni">_open_handles</span><span class="nt">(self, src, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span>         <span class="n">Let</span> <span class="n">the</span> <span class="n">readers</span> <span class="nb">open</span> <span class="n">IOHandles</span> <span class="n">after</span> <span class="n">they</span> <span class="n">are</span> <span class="n">done</span> <span class="k">with</span> <span class="n">their</span> <span class="n">potential</span> <span class="n">raises</span><span class="o">.</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">222</span><span class="s2">         self.handles = get_handle(</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span><span class="s2">             src,</span>
+<span class="g g-Whitespace">    </span><span class="mi">224</span><span class="s2">             &quot;r&quot;,</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/common.py</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">699</span><span class="s2">         if ioargs.encoding and &quot;b&quot; not in ioargs.mode:</span>
+<span class="g g-Whitespace">    </span><span class="mi">700</span><span class="s2">             # Encoding</span>
+<span class="ne">--&gt; </span><span class="mi">701</span><span class="s2">             handle = open(</span>
+<span class="g g-Whitespace">    </span><span class="mi">702</span><span class="s2">                 handle,</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span><span class="s2">                 ioargs.mode,</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;
 </pre></div>
 </div>
 </div>
@@ -334,7 +404,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_active&#39;, &#39;total_ac_mean_active&#39;, &#39;sleep_time_mean_active&#39;]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">3169885412.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_active&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+
+<span class="ne">NameError</span>: name &#39;targets&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -346,11 +421,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_sleep&#39;,
- &#39;total_ac_mean_sleep&#39;,
- &#39;onset_latency_mean_sleep&#39;,
- &#39;efficiency_mean_sleep&#39;,
- &#39;sleep_time_mean_sleep&#39;]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">1959152629.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_sleep&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+
+<span class="ne">NameError</span>: name &#39;targets&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -371,10 +447,18 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">1792034747.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">rar2</span> <span class="o">=</span> <span class="n">rar2</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">targets</span><span class="p">[[</span><span class="s1">&#39;total_ac_mean_active&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>                     <span class="s1">&#39;duration_mean_sleep&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>                     <span class="s1">&#39;total_ac_mean_sleep&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>                    <span class="s1">&#39;efficiency_mean_sleep&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>                    <span class="s1">&#39;sleep_time_mean_sleep&#39;</span><span class="p">,</span>
+
+<span class="ne">NameError</span>: name &#39;rar2&#39; is not defined
 </pre></div>
 </div>
-<img alt="_images/rar_measures_7_1.png" src="_images/rar_measures_7_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -393,6 +477,75 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">4054432005.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">rar</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/target_data.csv&#39;</span><span class="p">)</span>
+<span class="nn">      4 targets[&#39;edge_mean&#39;] = targets[[x for x</span> in <span class="ni">targets.columns if x.startswith(&#39;edge_&#39;)]].mean</span><span class="nt">(axis=1)</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/util/_decorators.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span>                     <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span>                 <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">311</span>             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">312</span> 
+<span class="g g-Whitespace">    </span><span class="mi">313</span>         <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">584</span>     <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">585</span> 
+<span class="ne">--&gt; </span><span class="mi">586</span>     <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">587</span> 
+<span class="g g-Whitespace">    </span><span class="mi">588</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">480</span> 
+<span class="g g-Whitespace">    </span><span class="mi">481</span>     <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">482</span>     <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">483</span> 
+<span class="g g-Whitespace">    </span><span class="mi">484</span>     <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">809</span>             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">810</span> 
+<span class="ne">--&gt; </span><span class="mi">811</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">812</span> 
+<span class="g g-Whitespace">    </span><span class="mi">813</span>     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_make_engine</span><span class="nt">(self, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1038</span>             <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1039</span>         <span class="c1"># error: Too many arguments for &quot;ParserBase&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1040</span>         <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">engine</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1041</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1042</span>     <span class="k">def</span> <span class="nf">_failover_to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/c_parser_wrapper.py</span> in <span class="ni">__init__</span><span class="nt">(self, src, **kwds)</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> 
+<span class="g g-Whitespace">     </span><span class="mi">50</span>         <span class="c1"># open handles</span>
+<span class="ne">---&gt; </span><span class="mi">51</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_open_handles</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> 
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/parsers/base_parser.py</span> in <span class="ni">_open_handles</span><span class="nt">(self, src, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span>         <span class="n">Let</span> <span class="n">the</span> <span class="n">readers</span> <span class="nb">open</span> <span class="n">IOHandles</span> <span class="n">after</span> <span class="n">they</span> <span class="n">are</span> <span class="n">done</span> <span class="k">with</span> <span class="n">their</span> <span class="n">potential</span> <span class="n">raises</span><span class="o">.</span>
+<span class="g g-Whitespace">    </span><span class="mi">221</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">222</span><span class="s2">         self.handles = get_handle(</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span><span class="s2">             src,</span>
+<span class="g g-Whitespace">    </span><span class="mi">224</span><span class="s2">             &quot;r&quot;,</span>
+
+<span class="nn">/usr/local/lib/python3.9/site-packages/pandas/io/common.py</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">699</span><span class="s2">         if ioargs.encoding and &quot;b&quot; not in ioargs.mode:</span>
+<span class="g g-Whitespace">    </span><span class="mi">700</span><span class="s2">             # Encoding</span>
+<span class="ne">--&gt; </span><span class="mi">701</span><span class="s2">             handle = open(</span>
+<span class="g g-Whitespace">    </span><span class="mi">702</span><span class="s2">                 handle,</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span><span class="s2">                 ioargs.mode,</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/Users/mcmahonmc/Github/machine-learning-2021/final_project/rar_df.csv&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -401,316 +554,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">2910888924.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">rar</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;subject&#39;</span><span class="p">)</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Unnamed: 0_x</th>
-      <th>actmin</th>
-      <th>amp</th>
-      <th>alpha</th>
-      <th>beta</th>
-      <th>phi</th>
-      <th>IS</th>
-      <th>IV</th>
-      <th>RA</th>
-      <th>Unnamed: 0_y</th>
-      <th>...</th>
-      <th>Left.hippocampal.fissure</th>
-      <th>Left.Whole_hippocampal_body</th>
-      <th>Left.Whole_hippocampal_head</th>
-      <th>Left.Whole_hippocampus</th>
-      <th>Right.Hippocampal_tail</th>
-      <th>Right.hippocampal.fissure</th>
-      <th>Right.Whole_hippocampal_body</th>
-      <th>Right.Whole_hippocampal_head</th>
-      <th>Right.Whole_hippocampus</th>
-      <th>cc_fa</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>30004</td>
-      <td>0.696391</td>
-      <td>2.000000</td>
-      <td>-0.839879</td>
-      <td>12.174420</td>
-      <td>15.700554</td>
-      <td>0.237301</td>
-      <td>0.497090</td>
-      <td>0.978493</td>
-      <td>0</td>
-      <td>...</td>
-      <td>103.610701</td>
-      <td>1044.195719</td>
-      <td>1398.964955</td>
-      <td>2907.251396</td>
-      <td>468.379186</td>
-      <td>106.077142</td>
-      <td>1020.857892</td>
-      <td>1441.995366</td>
-      <td>2931.232444</td>
-      <td>0.582804</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>30008</td>
-      <td>1.047358</td>
-      <td>1.552863</td>
-      <td>-0.853070</td>
-      <td>325.423752</td>
-      <td>16.600185</td>
-      <td>0.261227</td>
-      <td>0.524768</td>
-      <td>0.961466</td>
-      <td>1</td>
-      <td>...</td>
-      <td>144.813418</td>
-      <td>1204.042983</td>
-      <td>1634.228393</td>
-      <td>3445.750080</td>
-      <td>618.218806</td>
-      <td>145.052717</td>
-      <td>1213.668913</td>
-      <td>1635.260923</td>
-      <td>3467.148642</td>
-      <td>0.559800</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>30009</td>
-      <td>1.088250</td>
-      <td>1.621375</td>
-      <td>-0.839957</td>
-      <td>385.754408</td>
-      <td>14.813229</td>
-      <td>0.236853</td>
-      <td>0.194339</td>
-      <td>0.965710</td>
-      <td>2</td>
-      <td>...</td>
-      <td>136.160494</td>
-      <td>1192.518585</td>
-      <td>1599.914291</td>
-      <td>3328.766941</td>
-      <td>543.045786</td>
-      <td>146.643748</td>
-      <td>1232.700746</td>
-      <td>1807.269141</td>
-      <td>3583.015674</td>
-      <td>0.601367</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>30012</td>
-      <td>1.384584</td>
-      <td>1.437337</td>
-      <td>-0.613403</td>
-      <td>7.015407</td>
-      <td>15.689278</td>
-      <td>0.268342</td>
-      <td>0.299328</td>
-      <td>0.954806</td>
-      <td>3</td>
-      <td>...</td>
-      <td>161.352783</td>
-      <td>1288.481710</td>
-      <td>1835.814889</td>
-      <td>3751.599484</td>
-      <td>663.701747</td>
-      <td>133.943847</td>
-      <td>1328.224316</td>
-      <td>1944.852320</td>
-      <td>3936.778383</td>
-      <td>0.587033</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>30015</td>
-      <td>1.070629</td>
-      <td>1.605177</td>
-      <td>-0.690900</td>
-      <td>419.617253</td>
-      <td>14.554844</td>
-      <td>0.214801</td>
-      <td>0.286109</td>
-      <td>0.974820</td>
-      <td>4</td>
-      <td>...</td>
-      <td>148.140462</td>
-      <td>1356.785914</td>
-      <td>1886.936232</td>
-      <td>3894.608270</td>
-      <td>704.116073</td>
-      <td>154.378972</td>
-      <td>1418.849716</td>
-      <td>1858.631846</td>
-      <td>3981.597634</td>
-      <td>0.586247</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>111</th>
-      <td>40855</td>
-      <td>0.968828</td>
-      <td>1.611690</td>
-      <td>-0.441357</td>
-      <td>278.707630</td>
-      <td>15.357639</td>
-      <td>0.281765</td>
-      <td>0.393956</td>
-      <td>0.929667</td>
-      <td>111</td>
-      <td>...</td>
-      <td>170.593990</td>
-      <td>1076.777270</td>
-      <td>1435.407917</td>
-      <td>3107.817477</td>
-      <td>635.886503</td>
-      <td>175.417475</td>
-      <td>1094.449991</td>
-      <td>1575.843183</td>
-      <td>3306.179677</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>112</th>
-      <td>40859</td>
-      <td>1.762660</td>
-      <td>0.910938</td>
-      <td>-0.580580</td>
-      <td>435.862944</td>
-      <td>14.358228</td>
-      <td>0.260628</td>
-      <td>0.715527</td>
-      <td>0.881364</td>
-      <td>112</td>
-      <td>...</td>
-      <td>134.776211</td>
-      <td>1083.616531</td>
-      <td>1292.730790</td>
-      <td>2990.671483</td>
-      <td>588.987373</td>
-      <td>131.490185</td>
-      <td>1022.651680</td>
-      <td>1264.980072</td>
-      <td>2876.619125</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>113</th>
-      <td>40861</td>
-      <td>2.000000</td>
-      <td>0.557801</td>
-      <td>-0.612585</td>
-      <td>10.996928</td>
-      <td>11.843457</td>
-      <td>0.211993</td>
-      <td>0.442061</td>
-      <td>0.719981</td>
-      <td>113</td>
-      <td>...</td>
-      <td>194.849007</td>
-      <td>1233.935858</td>
-      <td>1884.858216</td>
-      <td>3705.570884</td>
-      <td>606.106704</td>
-      <td>199.832531</td>
-      <td>1257.263536</td>
-      <td>1893.275499</td>
-      <td>3756.645739</td>
-      <td>0.488233</td>
-    </tr>
-    <tr>
-      <th>114</th>
-      <td>40876</td>
-      <td>0.601127</td>
-      <td>2.000000</td>
-      <td>-0.899820</td>
-      <td>8.769209</td>
-      <td>16.459194</td>
-      <td>0.259224</td>
-      <td>0.467280</td>
-      <td>0.885357</td>
-      <td>114</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.524456</td>
-    </tr>
-    <tr>
-      <th>115</th>
-      <td>40878</td>
-      <td>1.154834</td>
-      <td>1.431509</td>
-      <td>-0.865762</td>
-      <td>10.464622</td>
-      <td>14.759844</td>
-      <td>0.254082</td>
-      <td>0.611118</td>
-      <td>0.878301</td>
-      <td>115</td>
-      <td>...</td>
-      <td>173.884635</td>
-      <td>957.505865</td>
-      <td>1449.357878</td>
-      <td>2856.082443</td>
-      <td>453.440177</td>
-      <td>156.191287</td>
-      <td>948.369133</td>
-      <td>1403.563066</td>
-      <td>2805.372376</td>
-      <td>0.511366</td>
-    </tr>
-  </tbody>
-</table>
-<p>116 rows × 289 columns</p>
-</div></div></div>
+<span class="ne">NameError</span>: name &#39;targets&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -719,7 +571,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;duration_mean_active&#39;, &#39;total_ac_mean_active&#39;, &#39;sleep_time_mean_active&#39;]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">3169885412.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;mean_active&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+
+<span class="ne">NameError</span>: name &#39;targets&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -738,10 +595,18 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">ld</span><span class="o">/</span><span class="n">qzxjl7f92_5gzy756sfjkjfh0000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_1429</span><span class="o">/</span><span class="mf">2543713390.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">corr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">rar</span><span class="p">,</span> <span class="n">targets</span><span class="p">[[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;z_score&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>                                    <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;zscore&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span> <span class="o">+</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>                              <span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]],</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>                 <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;subject&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+
+<span class="ne">NameError</span>: name &#39;targets&#39; is not defined
 </pre></div>
 </div>
-<img alt="_images/rar_measures_12_1.png" src="_images/rar_measures_12_1.png" />
 </div>
 </div>
 </div>
@@ -776,7 +641,7 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Preprocessing.html" title="previous page">
+        <a class="left-prev" href="input_preprocessing.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>

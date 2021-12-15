@@ -1,3 +1,7 @@
+# Standard and data-driven approaches to rest-activity rhythm assessment and relevance  to cognitive aging
+Megan McMahon <br>
+December 2021
+
 # Introduction
 
 ## Rest-activity rhythms and cognitive aging

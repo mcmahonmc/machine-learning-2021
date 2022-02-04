@@ -7,3 +7,6 @@ chapters:
 - file: Preprocessing.ipynb
 - file: rar_measures.ipynb
 - file: final_project-24hrday.ipynb
+
+```{bibliography}
+```
